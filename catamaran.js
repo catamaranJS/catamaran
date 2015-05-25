@@ -1,6 +1,8 @@
 var CATAMARAN = CATAMARAN || function () {
     'use strict';
     var _catamaran = this;
+    
+
     _catamaran.Utils = (function(){
 
         function extend( ns, ns_string ) {
@@ -70,5 +72,42 @@ var CATAMARAN = CATAMARAN || function () {
             _isInteger: isInteger
         }
     })();
+
+    _catamaran.Events = (function(){
+        function on(elementArr, event, fn) {
+            if (typeof elementArr == 'string')
+            elementArr = document.querySelectorAll(elementArr);
+            for (var i = 0, len = elementArr.length; i < len; i++) {
+                var listener = new EventListener(elementArr[i], fn);
+            }
+            if (listener['on' + event.toLowerCase()])
+            return listener['on' + event.toLowerCase()].call();
+        }
+        return {
+            _on: on
+        }
+
+     })();
+
+    Element.prototype.isVisible = function() {
+     return this.offsetWidth > 0 && this.offsetHeight > 0;
+    }
+
+    Element.prototype.onVisible = function (callback) {
+                var self = this;
+                if (self.isVisible()) {
+                    callback.call(self);
+                } else {
+                    var timer = setInterval(function() {
+                        if (self.isVisible()) {
+                            callback.call(self);
+                            clearInterval(timer);
+                        }
+                    }, 50);
+                }
+    }
+
+
 };
 
+var catamaranJS = new CATAMARAN();
