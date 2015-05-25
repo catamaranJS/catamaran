@@ -5,6 +5,7 @@ var CATAMARAN = CATAMARAN || function () {
     
     _catamaran.Ui = (function(){
         function carousel(selector, settings){
+            _carousel = this;
             var _settings = settings || {
                         speed: 4,
                         fadeIn: true,
@@ -103,29 +104,35 @@ var CATAMARAN = CATAMARAN || function () {
 
                     
                     window.onload = function() {
-                        reelWidth = reel[0].scrollWidth;
+                        _carousel.setupCarousel();
                         window.onresize = function() {
-                            reelWidth = reel[0].scrollWidth;
-                            if (_catamaran.Utils._isMobile()) {
-                                reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
-                                reel[0].scrollLeft(0);
-                                forward.extend.hide();
-                                backward.extend.hide();
-                            }
-                            else {
-                                reel[0].setAttribute('style', 'overflow:visible');
-                                reel[0].scrollLeft(0);
-                                forward.extend.show();
-                                backward.extend.show();
-                            }
-                            self._update();
+                            _carousel.setupCarousel();
                         };
 
                     };
 
 
             }
+
+            function setupCarousel(){
+                reelWidth = reel[0].scrollWidth;
+                if (_catamaran.Utils._isMobile()) {
+                    reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
+                    reel[0].scrollLeft(0);
+                    forward.extend.hide();
+                    backward.extend.hide();
+                }
+                else {
+                    reel[0].setAttribute('style', 'overflow:visible');
+                    reel[0].scrollLeft(0);
+                    forward.extend.show();
+                    backward.extend.show();
+                }
+                self._update();
+            }
         }
+        
+
         return {
             _carousel: carousel
         }
