@@ -1,7 +1,137 @@
 var CATAMARAN = CATAMARAN || function () {
     'use strict';
     var _catamaran = this;
+    _catamaran.interval;
     
+    _catamaran.Ui = (function(){
+        function carousel(selector, settings){
+            var _settings = settings || {
+                        speed: 4,
+                        fadeIn: true,
+                        fadeDelay: 250
+            }
+
+            var _selectorArr = document.querySelectorAll(selector);
+
+            for (var i = 0, len = _selectorArr.length; i < len; i++) {
+                    var self = _selectorArr[i],
+                    forward = '<span class="forward"></span>',
+                    backward = '<span class="backward"></span>',
+                    reel = self.extend.children('.reel'),
+                    items = self.extend.children('article'),
+                    pos = 0,
+                    leftLimit,
+                    rightLimit,
+                    itemWidth,
+                    reelWidth,
+                    timerId;
+
+                if (_settings.fadeIn) {
+                        for(var i = 0, len = items.length; i < len; i++){
+                            items[i].classList.add('loading');
+                        }
+
+                        self.extend.onVisible(function() {
+                            var timerId,
+                                limit = items.length - Math.ceil(window.innerWidth / itemWidth);
+
+                            timerId = window.setInterval(function() {
+                                var x = self.extend.children('.loading'), xf = x[0];
+
+                                if (x.length <= limit) {
+
+                                    window.clearInterval(timerId);
+
+                                    for(var i = 0, len = items.length; i < len; i++){
+                                        items[i].classList.remove('loading');
+                                    }   
+                                    return;
+
+                                }
+                                if(typeof xf != 'undefined'){
+                                    xf.classList.remove('loading');
+                                }
+                            }, _settings.fadeDelay);
+                        }, 50);
+                    }
+
+                self._update = function() {
+                        pos = 0;
+                        rightLimit = (-1 * reelWidth) + window.innerWidth;
+                        leftLimit = 0;
+                        self._updatePos();
+                };
+
+                
+                self._updatePos = function() { reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0)')};
+                    self.insertAdjacentHTML('beforeEnd',forward);
+                    var _forward = self.querySelector('.forward');
+                    _forward.extend.hide();
+                    _catamaran.Events._on('.forward', 'mouseenter', function(e) {
+                            _catamaran.interval  = window.setInterval(function() {
+                                pos -= _settings.speed;
+                                if (pos <= rightLimit)
+                                {
+                                    window.clearInterval(timerId);
+                                    pos = rightLimit;
+                                }
+                                self._updatePos();
+                            }, 10);
+                    });
+
+                    _catamaran.Events._on('.forward', 'mouseleave', function(e) {
+                        window.clearInterval(_catamaran.interval);     
+                    });
+
+                    self.insertAdjacentHTML('beforeEnd',backward);
+                    var _backward = self.querySelector('.backward');
+                    _backward.extend.hide();
+                    _catamaran.Events._on('.backward', 'mouseenter', function(e) {
+                            _catamaran.interval  = window.setInterval(function() {
+                                pos += _settings.speed;
+                                if (pos >= leftLimit) {
+                                    window.clearInterval(timerId);
+                                    pos = leftLimit;
+                                }
+                                self._updatePos();
+                            }, 10);
+                    });
+
+                    _catamaran.Events._on('.backward', 'mouseleave', function(e) {
+                        window.clearInterval(_catamaran.interval);     
+                    });
+
+                    
+                    window.onload = function() {
+                        reelWidth = reel[0].scrollWidth;
+                        window.onresize = function() {
+                            reelWidth = reel[0].scrollWidth;
+                            if (_catamaran.Utils._isMobile()) {
+                                reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
+                                reel[0].scrollLeft(0);
+                                forward.extend.hide();
+                                backward.extend.hide();
+                            }
+                            else {
+                                reel[0].setAttribute('style', 'overflow:visible');
+                                reel[0].scrollLeft(0);
+                                forward.extend.show();
+                                backward.extend.show();
+                            }
+                            self._update();
+                        };
+
+                    };
+
+
+            }
+        }
+        return {
+            _carousel: carousel
+        }
+
+    })();
+
 
     _catamaran.Utils = (function(){
 
@@ -78,10 +208,8 @@ var CATAMARAN = CATAMARAN || function () {
             if (typeof elementArr == 'string')
             elementArr = document.querySelectorAll(elementArr);
             for (var i = 0, len = elementArr.length; i < len; i++) {
-                var listener = new EventListener(elementArr[i], fn);
+                elementArr[i].addEventListener('on' + event.toLowerCase(), fn)
             }
-            if (listener['on' + event.toLowerCase()])
-            return listener['on' + event.toLowerCase()].call();
         }
         return {
             _on: on
@@ -89,24 +217,49 @@ var CATAMARAN = CATAMARAN || function () {
 
      })();
 
-    Element.prototype.isVisible = function() {
-     return this.offsetWidth > 0 && this.offsetHeight > 0;
-    }
 
-    Element.prototype.onVisible = function (callback) {
-                var self = this;
-                if (self.isVisible()) {
-                    callback.call(self);
-                } else {
-                    var timer = setInterval(function() {
-                        if (self.isVisible()) {
-                            callback.call(self);
-                            clearInterval(timer);
-                        }
-                    }, 50);
-                }
-    }
+    var extend = function(element) {
+        this.element = element;
+    };
 
+    extend.prototype = {
+        hide: function() {
+            return this.element.style.display = 'none';
+        },
+        show: function() {
+            return this.element.style.display = 'block';
+        },
+        isVisible: function() {
+             return this.element.offsetWidth > 0 && this.element.offsetHeight > 0;
+        },
+        onVisible: function(callback) {
+            var self = this.element;
+            if (self.extend.isVisible()) {
+                callback.call(self);
+            } else {
+                var timer = setInterval(function() {
+                    if (self.extend.isVisible()) {
+                        callback.call(self);
+                        clearInterval(timer);
+                    }
+                }, 50);
+            }
+        },
+        children: function(selector){
+            return this.element.querySelectorAll(selector);
+        }
+    };
+
+    Object.defineProperty(Element.prototype, "extend", {
+        get: function () {
+            Object.defineProperty(this, "extend", {
+                value: new extend(this)
+            });
+            return this.extend;
+        },
+        configurable: true,
+        writeable: false
+    });
 
 };
 
