@@ -5,7 +5,7 @@ var CATAMARAN = CATAMARAN || function () {
     
     _catamaran.Ui = (function(){
         function carousel(selector, settings){
-            _carousel = this;
+            var _carousel = this;
             var _settings = settings || {
                         speed: 4,
                         fadeIn: true,
@@ -65,6 +65,7 @@ var CATAMARAN = CATAMARAN || function () {
 
                 
                 self._updatePos = function() { reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0)')};
+
                     self.insertAdjacentHTML('beforeEnd',forward);
                     var _forward = self.querySelector('.forward');
                     _forward.extend.hide();
@@ -98,18 +99,13 @@ var CATAMARAN = CATAMARAN || function () {
                             }, 10);
                     });
 
-                    _catamaran.Events._on('.backward', 'mouseleave', function(e) {
-                        window.clearInterval(_catamaran.interval);     
+                    setupCarousel();  
+
+                    _catamaran.Events._on('body', 'resize', function(e) {
+                        setupCarousel();   
                     });
-
                     
-                    window.onload = function() {
-                        _carousel.setupCarousel();
-                        window.onresize = function() {
-                            _carousel.setupCarousel();
-                        };
-
-                    };
+                   
 
 
             }
@@ -118,15 +114,15 @@ var CATAMARAN = CATAMARAN || function () {
                 reelWidth = reel[0].scrollWidth;
                 if (_catamaran.Utils._isMobile()) {
                     reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
-                    reel[0].scrollLeft(0);
+                    reel[0].scrollLeft = 0;
                     forward.extend.hide();
                     backward.extend.hide();
                 }
                 else {
                     reel[0].setAttribute('style', 'overflow:visible');
-                    reel[0].scrollLeft(0);
-                    forward.extend.show();
-                    backward.extend.show();
+                    reel[0].scrollLeft = 0;
+                    document.querySelector('.forward').extend.show();
+                    document.querySelector('.backward').extend.show();
                 }
                 self._update();
             }
@@ -215,7 +211,7 @@ var CATAMARAN = CATAMARAN || function () {
             if (typeof elementArr == 'string')
             elementArr = document.querySelectorAll(elementArr);
             for (var i = 0, len = elementArr.length; i < len; i++) {
-                elementArr[i].addEventListener('on' + event.toLowerCase(), fn)
+                elementArr[i].addEventListener(event.toLowerCase(), fn)
             }
         }
         return {
@@ -269,5 +265,6 @@ var CATAMARAN = CATAMARAN || function () {
     });
 
 };
+
 
 var catamaranJS = new CATAMARAN();
