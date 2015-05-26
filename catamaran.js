@@ -11,7 +11,6 @@ var CATAMARAN = CATAMARAN || function () {
                         fadeIn: true,
                         fadeDelay: 250
             }
-
             var _selectorArr = document.querySelectorAll(selector);
 
             for (var i = 0, len = _selectorArr.length; i < len; i++) {
@@ -74,7 +73,7 @@ var CATAMARAN = CATAMARAN || function () {
                                 pos -= _settings.speed;
                                 if (pos <= rightLimit)
                                 {
-                                    window.clearInterval(timerId);
+                                    window.clearInterval(_catamaran.interval);
                                     pos = rightLimit;
                                 }
                                 self._updatePos();
@@ -98,9 +97,10 @@ var CATAMARAN = CATAMARAN || function () {
                                 self._updatePos();
                             }, 10);
                     });
-
+                    _catamaran.Events._on('.backward', 'mouseleave', function(e) {
+                        window.clearInterval(_catamaran.interval);     
+                    });
                     setupCarousel();  
-
                     _catamaran.Events._on('body', 'resize', function(e) {
                         setupCarousel();   
                     });
