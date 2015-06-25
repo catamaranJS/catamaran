@@ -1,0 +1,33 @@
+{
+    "name": "CatamaranJS",
+    "private": false,
+    "description": "",
+    "version": "0.1.0",
+    "author": {
+        "name": "Brendon Smith",
+        "email": "brendonsmith@seacloud9.org",
+        "url": "http://seacloud9.org"
+    },
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://github.com/seacloud9/CatamaranJS/blob/master/LICENSE-MIT"
+    }],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "start": "node_modules/.bin/browservefy index.js 8080 -- -d"
+    },
+    "dependencies": {
+        "babel": "5.6.6",
+        "traceur": "0.0.90",
+        "systemjs": "0.18.3"
+    },
+    "devDependencies": {
+        "browservefy": "0.0.10"
+    },
+    "keywords": [
+        "CatamaranJS",
+        "js"
+    ]
+}
