@@ -1,8 +1,14 @@
-import Events from "events/Events";
-import Extend from "extend/Extend";
+var Events = require('./events/Events-compiled');
+var Extend = require('./extend/Extend-compiled');
+
+
 
 class Catamaran {
-
+    
+    constructor(){
+       this.Events = Events;
+       this.Extend = Extend;
+    }
 
     extend(ns, ns_string) {
         var parts = ns_string.split('.');
@@ -22,19 +28,19 @@ class Catamaran {
         return parent;
     }
 
-    static isInteger(x) {
+    isInteger(x) {
         return (x ^ 0) === x;
     }
 
-    static findCenter(selector) {
+    findCenter(selector) {
         return document.querySelector(selector).offsetWidth / 2;
     }
 
-    static getRandomArr(arr) {
+    getRandomArr(arr) {
         return Math.floor(Math.random() * arr.length)
     }
 
-    static isMobile() {
+    isMobile() {
         switch (true) {
             case /Android/i.test(navigator.userAgent):
                 _catamaran.Utils._mobileOS = 'android';
@@ -64,4 +70,4 @@ class Catamaran {
 }
 
 
-
+window.CATAMARAN =  new Catamaran();

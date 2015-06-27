@@ -1,4 +1,4 @@
-class Extend {
+class Extend extend Element {
     constructor(_element) {
    
         this.element = _element;
@@ -32,3 +32,5 @@ class Extend {
         return this.element.querySelectorAll(selector);
     }
 }
+
+module.exports = Extend;
