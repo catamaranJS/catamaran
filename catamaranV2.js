@@ -1,13 +1,18 @@
 var Events = require('./events/Events-compiled');
 var Extend = require('./extend/Extend-compiled');
+var Carousel = require('./ui/Carousel-compiled');
 
 
 
 class Catamaran {
-    
+
     constructor(){
        this.Events = Events;
        this.Extend = Extend;
+       this.UI = {};
+       this.interval = {};
+       this.UI.Carousel = Carousel;
+
     }
 
     extend(ns, ns_string) {
@@ -43,25 +48,25 @@ class Catamaran {
     isMobile() {
         switch (true) {
             case /Android/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'android';
+                this._mobileOS = 'android';
                 return true;
             case /webOS/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'webos';
+                this._mobileOS = 'webos';
                 return true;
             case /iPhone/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'iphone';
+                this._mobileOS = 'iphone';
                 return true;
             case /iPad/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'ipad';
+                this._mobileOS = 'ipad';
                 return true;
             case /iPod/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'ipod';
+                this._mobileOS = 'ipod';
                 return true;
             case /BlackBerry/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'blackberry';
+                this._mobileOS = 'blackberry';
                 return true;
             case /Windows Phone/i.test(navigator.userAgent):
-                _catamaran.Utils._mobileOS = 'windows';
+                this._mobileOS = 'windows';
                 return true;
             default:
                 return false;
