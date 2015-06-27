@@ -70,7 +70,7 @@ class Carousel{
                                 pos -= _carousel._settings.speed;
                                 if (pos <= rightLimit)
                                 {
-                                    window.clearInterval(_catamaran.interval);
+                                    window.clearInterval(CATAMARAN.interval);
                                     pos = rightLimit;
                                 }
                                 elm._updatePos();
@@ -119,7 +119,7 @@ class Carousel{
                     reel[0].setAttribute('style', 'overflow:visible');
                     reel[0].scrollLeft = 0;
                     var forwardC =  new CATAMARAN.Extend('.forward');
-                    var backwardC =  new CATAMARAN.Extend('.forward');
+                    var backwardC =  new CATAMARAN.Extend('.backward');
                     forwardC.show();
                     backwardC.show();
                 }

@@ -80,7 +80,7 @@ var Carousel = (function () {
                     CATAMARAN.interval = window.setInterval(function () {
                         pos -= _carousel._settings.speed;
                         if (pos <= rightLimit) {
-                            window.clearInterval(_catamaran.interval);
+                            window.clearInterval(CATAMARAN.interval);
                             pos = rightLimit;
                         }
                         elm._updatePos();
@@ -124,7 +124,7 @@ var Carousel = (function () {
                     reel[0].setAttribute('style', 'overflow:visible');
                     reel[0].scrollLeft = 0;
                     var forwardC = new CATAMARAN.Extend('.forward');
-                    var backwardC = new CATAMARAN.Extend('.forward');
+                    var backwardC = new CATAMARAN.Extend('.backward');
                     forwardC.show();
                     backwardC.show();
                 }
