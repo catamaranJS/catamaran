@@ -35,6 +35,16 @@ catamaranJS
                                                  .`                                                                                                                                    
 </pre>
 <div style="float:left; width:700px; margin-top:20px;">
-  <p>Catamaran is a light weight library to speed up basic websites and also allowing rapid development with webGL 2d/3d for those who want more interactive websites. Catamaran can be used for simple mobile portfolio, wordpress sites, and interactive sites that take use of PhaserJS / PixiJS / BabylonJS / Ash-HaXe.  Catamaran comes with a baisic component library of ui tools for use including but not limited to carousels, menus, sliders, etc.. Catamaran is made to stand alone it also includes a lightweight CSS library that has a basic grid, menu component, and normalizes html5 content.  This library is in an alpha phase it is a WIP.
+  <p>Catamaran is a light weight library to speed up basic websites and also allowing rapid development with webGL 2d/3d for those who want more interactive websites. Catamaran can be used for simple mobile portfolio, wordpress sites, and interactive sites that take use of PhaserJS / PixiJS / BabylonJS / Ash-HaXe.  Catamaran comes with a baisic component library of ui tools for use including but not limited to carousels, menus, sliders, etc.. Catamaran is made to stand alone it also includes a lightweight CSS library that has a basic grid, menu component, and normalizes html5 content.  This library is in an alpha phase it is a WIP. This frameworks is expermental.
    </p>
+
 </div>
+**TODO:**
+* build json format to handle 3d / 2d scene managment
+* build menu, slider components
+* build jsDoc integration 
+* ASH / Babylon / Phaser integration with examples
+* Non webGL portfolio example 
+* unit tests built into gulp
+* bdd tests built into gulp
+* travis integration built
