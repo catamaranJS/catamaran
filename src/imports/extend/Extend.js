@@ -151,11 +151,11 @@ class Extend {
     
     onVisible(callback) {
         return this.each(function() {
-            if (CATAMARAN.Extend.isVisible(this)) {
+            if (CATAMARAN.core.Extend.isVisible(this)) {
                 callback.call(this);
             } else {
                 var timer = setInterval(function() {
-                    if (CATAMARAN.Extend.isVisible(this)) {
+                    if (CATAMARAN.core.Extend.isVisible(this)) {
                         callback.call(this);
                         clearInterval(timer);
                     }

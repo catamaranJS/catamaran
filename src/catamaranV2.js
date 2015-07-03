@@ -13,20 +13,33 @@ if (typeof console == "undefined") {
 class Catamaran {
    /**
    * Represents Catamaran builds main library for use exports as window.CATAMARAN for use.
+   * Catamaran is a light weight library to speed up basic websites and also allowing rapid webGL 2d/3d for those who want more interactive websites.
+   * Catamaran can be used for simple mobile portfolio, wordpress sites, and interactive sites that take use of PhaserJS / PixiJS / BabylonJS.  Catamaran
+   * comes with a baisic component library of ui tools for use including but not limited to carousels, menus, sliders, etc.. Catamaran is made to stand alone it also includes
+   * a lightweight CSS library that has a basic grid, menu component, and normalizes html5 content.
    * @constructor
    * @param {object} default object sent to setup various options.
    */
-    constructor(opts = {usesPhaser:false}){
-       this.Events = _Events;
-       this.Extend = _Extend;
+    constructor(opts = {usesPhaser:false, components:{carousel:false}}){
+       this.core = {};
        this.ui = {};
        this.ui.two = {};
-       this.ui.Animation = {};
        this.ui.components = {};
-       this.interval = {};
-       this.ui.components.Carousel = _Carousel;
-       this.ui.two.Phaser = _Phaser;
+       this.ui.Animation = {};
+       this.core.interval = {};
+
+       this.core.Events = _Events;
+       this.core.Extend = _Extend;
        this.ui.Animation = new _Animation();
+       
+       if(opts.components.carousel){
+        this.ui.components.Carousel = _Carousel;
+       }
+       
+       if(opts.usesPhaser){
+            this.ui.two.Phaser = _Phaser;
+       }
+       
 
     }
 
@@ -92,4 +105,4 @@ class Catamaran {
 }
 
 
-window.CATAMARAN =  new Catamaran();
+window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true}});

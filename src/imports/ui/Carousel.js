@@ -10,14 +10,14 @@ class Carousel{
 		constructor(selector, settings = { speed: 4,fadeIn: true, fadeDelay: 250 }) {
             	this._settings = settings;
             	this._selectorArr = document.querySelectorAll(selector);
-            	this._elmArr = new CATAMARAN.Extend(selector);
+            	this._elmArr = new CATAMARAN.core.Extend(selector);
             	this.init()
 		}
 
 		init(){
 			var _carousel = this;
 			for (var i = 0, len = _carousel._selectorArr.length; i < len; i++) {
-                    var self = new CATAMARAN.Extend('.' + _carousel._elmArr[i].className),
+                    var self = new CATAMARAN.core.Extend('.' + _carousel._elmArr[i].className),
                     elm =  _carousel._selectorArr[i],
                     forward = '<span class="forward"></span>',
                     backward = '<span class="backward"></span>',
@@ -70,29 +70,29 @@ class Carousel{
                 elm._updatePos = function() { 
                 	reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0)')};
                     elm.insertAdjacentHTML('beforeEnd',forward);
-                    var _forward = new CATAMARAN.Extend('.forward');
+                    var _forward = new CATAMARAN.core.Extend('.forward');
                     _forward.hide();
-                    CATAMARAN.Events.on('.forward', 'mouseenter', function(e) {
-                            CATAMARAN.interval  = window.setInterval(function() {
+                    CATAMARAN.core.Events.on('.forward', 'mouseenter', function(e) {
+                            CATAMARAN.core.interval  = window.setInterval(function() {
                                 pos -= _carousel._settings.speed;
                                 if (pos <= rightLimit)
                                 {
-                                    window.clearInterval(CATAMARAN.interval);
+                                    window.clearInterval(CATAMARAN.core.interval);
                                     pos = rightLimit;
                                 }
                                 elm._updatePos();
                             }, 10);
                     });
 
-                    CATAMARAN.Events.on('.forward', 'mouseleave', function(e) {
-                        window.clearInterval(CATAMARAN.interval);     
+                    CATAMARAN.core.Events.on('.forward', 'mouseleave', function(e) {
+                        window.clearInterval(CATAMARAN.core.interval);     
                     });
 
                     elm.insertAdjacentHTML('beforeEnd',backward);
-                    var _backward =  new CATAMARAN.Extend('.backward');
+                    var _backward =  new CATAMARAN.core.Extend('.backward');
                     _backward.hide();
-                    CATAMARAN.Events.on('.backward', 'mouseenter', function(e) {
-                            CATAMARAN.interval  = window.setInterval(function() {
+                    CATAMARAN.core.Events.on('.backward', 'mouseenter', function(e) {
+                            CATAMARAN.core.interval  = window.setInterval(function() {
                                 pos += _carousel._settings.speed;
                                 if (pos >= leftLimit) {
                                     window.clearInterval(timerId);
@@ -101,11 +101,11 @@ class Carousel{
                                 elm._updatePos();
                             }, 10);
                     });
-                    CATAMARAN.Events.on('.backward', 'mouseleave', function(e) {
-                        window.clearInterval(CATAMARAN.interval);     
+                    CATAMARAN.core.Events.on('.backward', 'mouseleave', function(e) {
+                        window.clearInterval(CATAMARAN.core.interval);     
                     });
                     setupCarousel();  
-                    CATAMARAN.Events.on('body', 'resize', function(e) {
+                    CATAMARAN.core.Events.on('body', 'resize', function(e) {
                         setupCarousel();   
                     });
                     
@@ -116,8 +116,8 @@ class Carousel{
 
             function setupCarousel(){
                 reelWidth = reel[0].scrollWidth;
-                var forwardC =  new CATAMARAN.Extend('.forward');
-                var backwardC =  new CATAMARAN.Extend('.backward');
+                var forwardC =  new CATAMARAN.core.Extend('.forward');
+                var backwardC =  new CATAMARAN.core.Extend('.backward');
                 if (CATAMARAN.isMobile()) {
                     reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
                     reel[0].scrollLeft = 0;
