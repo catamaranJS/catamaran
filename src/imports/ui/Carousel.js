@@ -1,5 +1,12 @@
 class Carousel{
 
+       /**
+       * Represents Catamaran Component that creates a simple carosel window.CATAMARAN.ui.components.Carousel  
+       * @constructor
+       * @param {string} the selector uses querySelectorAll truns the object into an array of elements to use with window.CATAMARAN.Extend object 
+       * @param {object} default settings are { speed: 4,fadeIn: true, fadeDelay: 250 }.
+       */
+
 		constructor(selector, settings = { speed: 4,fadeIn: true, fadeDelay: 250 }) {
             	this._settings = settings;
             	this._selectorArr = document.querySelectorAll(selector);

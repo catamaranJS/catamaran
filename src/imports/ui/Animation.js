@@ -34,6 +34,10 @@
 
 
 class Animation {
+   /**
+   * Represents Animation builds Animation library for use exports as window.CATAMARAN.ui.Animation for use.
+   * @constructor
+   */
     constructor() {
             this.requestAnimationFrame = window.requestAnimationFrame || 
             window.mozRequestAnimationFrame || 

@@ -1,5 +1,13 @@
 class PhaserJS{
 	//phaser requires you to load phaserJS externally first to use it with catamaranJS.
+
+   /**
+   * Represents PhaserJS integration into Catamaran window.CATAMARAN.ui.tow.PhaserJS for use requires orginal constructor to have usesPhaser enabled. Requires
+   * Phaser to be included and loaded before this can be intialized. The goal of this is to speed up the use of PhaserJS by creating helpers, json obj for loading of scenes.
+   * @constructor
+   * 
+   */
+
 	constructor() {
             this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'phaser-stage', { preload: self.preload, create: self.create, update: self.update });
 	}	

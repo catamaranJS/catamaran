@@ -113,6 +113,11 @@ if (!Array.from) {
 
 
 class Extend {
+  /**
+   * Represents Extending an html element accepts array of elements.
+   * @constructor
+   * @param {array} selector accepts jquery like selector.
+   */
     constructor(selector) {
         var elements = document.querySelectorAll(selector);
         this.length = elements.length;

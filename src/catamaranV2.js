@@ -11,18 +11,22 @@ if (typeof console == "undefined") {
 };
 
 class Catamaran {
-
+   /**
+   * Represents Catamaran builds main library for use exports as window.CATAMARAN for use.
+   * @constructor
+   * @param {object} default object sent to setup various options.
+   */
     constructor(opts = {usesPhaser:false}){
        this.Events = _Events;
        this.Extend = _Extend;
-       this.UI = {};
-       this.UI.two = {};
-       this.UI.Animation = {};
-       this.UI.Components = {};
+       this.ui = {};
+       this.ui.two = {};
+       this.ui.Animation = {};
+       this.ui.components = {};
        this.interval = {};
-       this.UI.Components.Carousel = _Carousel;
-       this.UI.two.Phaser = _Phaser;
-       this.UI.Animation = new _Animation();
+       this.ui.components.Carousel = _Carousel;
+       this.ui.two.Phaser = _Phaser;
+       this.ui.Animation = new _Animation();
 
     }
 
