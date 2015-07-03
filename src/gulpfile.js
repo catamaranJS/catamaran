@@ -7,9 +7,11 @@ var uglify = require('gulp-uglify');
 var source = require('vinyl-source-stream');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
+var compass = require("gulp-compass");
+var minifyCSS = require('gulp-minify-css');
 
 var paths = {
-  scripts: ['events/Events.js', 'extend/Extend.js', 'ui/Animation.js', 'ui/Carousel.js', 'ui/Phaser.js'],
+  scripts: ['imports/**/**.js'],
   main: ["catamaranV2.js"],
   pub:["../dist/catamaranV2.js"]
 };
@@ -41,13 +43,26 @@ gulp.task("pub", function () {
     }))
     .pipe(derequire())
     .pipe(uglify())
-    .pipe(rename('bundle.js'))
+    .pipe(rename('catamaran.js'))
     .pipe(gulp.dest('../build/'));
 });
+
+gulp.task('compass', function() {
+  gulp.src('./assets/sass/*.scss')
+    .pipe(compass({
+      css: './assets/css',
+      sass: './assets/sass',
+      image: './assets/images'
+    }))
+    .pipe(minifyCSS())
+    .pipe(gulp.dest('../build/assets/css'));
+});
+
 
 gulp.task('build', function(callback) {
   runSequence('dependencies',
   			'main',
+  			'compass',
   			'pub'
   	);
 });

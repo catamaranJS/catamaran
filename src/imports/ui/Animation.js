@@ -35,7 +35,6 @@
 
 class Animation {
     constructor() {
-
             this.requestAnimationFrame = window.requestAnimationFrame || 
             window.mozRequestAnimationFrame || 
             window.webkitRequestAnimationFrame || 
@@ -43,7 +42,6 @@ class Animation {
             this.animating = true;
             this.interval = 1;
             this.timers = [];
-
     }
 
     stop(){
@@ -175,3 +173,5 @@ class Animation {
         return changeInValue / 2 * (Math.sqrt(1 - (currentIteration -= 2) * currentIteration) + 1) + startValue;
     }
 }
+
+module.exports = Animation;

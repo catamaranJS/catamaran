@@ -1,8 +1,8 @@
-var _Events = require('./Events');
-var _Extend = require('./Extend');
-var _Carousel = require('./Carousel');
-var _Phaser = require('./Phaser');
-var _Animation = require('./Animation');
+var _Events = require('./events/Events');
+var _Extend = require('./extend/Extend');
+var _Carousel = require('./ui/Carousel');
+var _Phaser = require('./ui/Phaser');
+var _Animation = require('./ui/Animation');
 
 if (typeof console == "undefined") {
   window.console = {
@@ -22,7 +22,7 @@ class Catamaran {
        this.interval = {};
        this.UI.Components.Carousel = _Carousel;
        this.UI.two.Phaser = _Phaser;
-       this.UI.Animation = _Animation;
+       this.UI.Animation = new _Animation();
 
     }
 

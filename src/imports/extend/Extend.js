@@ -181,6 +181,13 @@ class Extend {
             this.addEventListener(event, callback, false);
         });
     }
+    
+    off( event, callback ) {
+        return this.each(function() {
+            this.removeEventListener(event, callback, false);
+        });
+    }
+
 }
 
 module.exports = Extend;
