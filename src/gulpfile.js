@@ -11,7 +11,7 @@ var compass = require("gulp-compass");
 var minifyCSS = require('gulp-minify-css');
 
 var paths = {
-  scripts: ['imports/**/**.js'],
+  scripts: ['imports/**/**.js', 'imports/**/**/**.js'],
   main: ["catamaranV2.js"],
   pub:["../dist/catamaranV2.js"]
 };

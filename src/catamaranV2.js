@@ -1,5 +1,5 @@
-var _Events = require('./events/Events');
-var _Extend = require('./extend/Extend');
+var _Events = require('./core/events/Events');
+var _Extend = require('./core/extend/Extend');
 var _Carousel = require('./ui/Carousel');
 var _Phaser = require('./ui/Phaser');
 var _Animation = require('./ui/Animation');
@@ -12,7 +12,7 @@ if (typeof console == "undefined") {
 
 class Catamaran {
    /**
-   * Represents Catamaran builds main library for use exports as window.CATAMARAN for use.
+   * Catamaran builds main library for use exports as window.CATAMARAN for use.
    * Catamaran is a light weight library to speed up basic websites and also allowing rapid webGL 2d/3d for those who want more interactive websites.
    * Catamaran can be used for simple mobile portfolio, wordpress sites, and interactive sites that take use of PhaserJS / PixiJS / BabylonJS.  Catamaran
    * comes with a baisic component library of ui tools for use including but not limited to carousels, menus, sliders, etc.. Catamaran is made to stand alone it also includes
