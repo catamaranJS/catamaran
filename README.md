@@ -1,4 +1,4 @@
-catamaranJS
+catamaranJS fly weight library for Interactive development utilizing ES6.
 =============
 <pre style="background:#000; color:#FA0F9E">
 
