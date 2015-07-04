@@ -12,8 +12,8 @@ var minifyCSS = require('gulp-minify-css');
 
 var paths = {
   scripts: ['imports/**/**.js', 'imports/**/**/**.js'],
-  main: ["catamaranV2.js"],
-  pub:["../dist/catamaranV2.js"]
+  main: ["catamaran.js"],
+  pub:["../dist/catamaran.js"]
 };
 
 gulp.task("dependencies", function () {
@@ -37,7 +37,7 @@ gulp.task("main", function () {
 });
 
 gulp.task("pub", function () {
- gulp.src('../dist/catamaranV2.js', { read: false })
+ gulp.src('../dist/catamaran.js', { read: false })
     .pipe(browserify({
       insertGlobals : false
     }))
