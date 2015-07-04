@@ -1,6 +1,6 @@
 catamaranJS
 =============
-<pre style="background:#000; color:#E5062F">
+<pre style="background:#000; color:#FA0F9E">
 
                         -.......-/s-    `             .........----+s:                               
                        ----...--/s:     `            ----....-.-../s:                               
