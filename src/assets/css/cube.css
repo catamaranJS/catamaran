@@ -1,0 +1,244 @@
+/* ------------------------- Cube ------------------------- */
+@-moz-keyframes spinningH {
+  from {
+    -moz-transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    -moz-transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+@-webkit-keyframes spinningH {
+  from {
+    -webkit-transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    -webkit-transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+@-o-keyframes spinningH {
+  from {
+    -o-transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    -o-transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+@-ms-keyframes spinningH {
+  from {
+    -ms-transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    -ms-transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+@keyframes spinningH {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+.cHover {
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+}
+
+.cube {
+  position: relative;
+  margin: 0 auto;
+  height: 150px;
+  width: 150px;
+  -webkit-transition: -webkit-transform 2s linear;
+  -moz-transition: -moz-transform 2s linear;
+  -o-transition: -o-transform 2s linear;
+  -ms-transition: -ms-transform 2s linear;
+  transition: transform 2s linear;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.cube > div {
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  padding: 20px;
+  opacity: 1;
+  background-position: center center;
+}
+
+.cube div:nth-child(1) {
+  -webkit-transform: translateZ(70px);
+  -moz-transform: translateZ(70px);
+  -o-transform: translateZ(70px);
+  -ms-transform: translateZ(70px);
+  transform: translateZ(70px);
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cube div:nth-child(2) {
+  -webkit-transform: rotateY(90deg) translateZ(70px);
+  -moz-transform: rotateY(90deg) translateZ(70px);
+  -o-transform: rotateY(90deg) translateZ(70px);
+  -ms-transform: rotateY(90deg) translateZ(70px);
+  transform: rotateY(90deg) translateZ(70px);
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cube div:nth-child(3) {
+  -webkit-transform: rotateY(180deg) translateZ(70px) rotate(180deg);
+  -moz-transform: rotateY(180deg) translateZ(70px) rotate(180deg);
+  -o-transform: rotateY(180deg) translateZ(70px) rotate(180deg);
+  -ms-transform: rotateY(180deg) translateZ(70px) rotate(180deg);
+  transform: rotateY(180deg) translateZ(70px) rotate(180deg);
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cube div:nth-child(4) {
+  -webkit-transform: rotateY(-90deg) translateZ(70px);
+  -moz-transform: rotateY(-90deg) translateZ(70px);
+  -o-transform: rotateY(-90deg) translateZ(70px);
+  -ms-transform: rotateY(-90deg) translateZ(70px);
+  transform: rotateY(-90deg) translateZ(70px);
+  background-color: #FFF;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.cube div:nth-child(5) {
+  -webkit-transform: rotateX(-90deg) translateZ(70px);
+  -moz-transform: rotateX(-90deg) translateZ(70px);
+  -o-transform: rotateX(-90deg) translateZ(70px);
+  -ms-transform: rotateX(-90deg) translateZ(70px);
+  transform: rotateX(-90deg) translateZ(70px);
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cube div:nth-child(6) {
+  -webkit-transform: rotateX(90deg) translateZ(70px);
+  -moz-transform: rotateX(90deg) translateZ(70px);
+  -o-transform: rotateX(90deg) translateZ(70px);
+  -ms-transform: rotateX(90deg) translateZ(70px);
+  transform: rotateX(90deg) translateZ(70px);
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  text-align: center;
+  background-size: contain;
+}
+
+#webC div:nth-child(6) {
+  background-image: url("../images/web2ico.png");
+}
+
+#webC div:nth-child(5) {
+  background-image: url("../images/web3ico.png");
+}
+
+#webC div:nth-child(3) {
+  background-image: url("../images/web4ico.png");
+}
+
+#webC div:nth-child(1) {
+  background-image: url("../images/web1ico.png");
+}
+
+#appsC div:nth-child(6) {
+  background-image: url("../images/interActive2ico.png");
+}
+
+#appsC div:nth-child(5) {
+  background-image: url("../images/interActive3ico.png");
+}
+
+#appsC div:nth-child(3) {
+  background-image: url("../images/interActive4ico.png");
+}
+
+#appsC div:nth-child(1) {
+  background-image: url("../images/interActive1ico.png");
+}
+
+#devC div:nth-child(6) {
+  background-image: url("../images/dev2ico.png");
+}
+
+#devC div:nth-child(5) {
+  background-image: url("../images/dev3ico.png");
+}
+
+#devC div:nth-child(3) {
+  background-image: url("../images/dev4ico.png");
+}
+
+#devC div:nth-child(1) {
+  background-image: url("../images/dev1ico.png");
+}
+
+.maingPg {
+  width: 100%;
+  float: left;
+  position: relative;
+}
+
+/* Image */
+.image {
+  position: relative;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+}
+
+/* Uncomment the block below if you want linked images to highlight on hover */
+.image img {
+  display: block;
+  width: 100%;
+}
+
+.image.fit {
+  display: block;
+  width: 100%;
+}
+
+.image.featured {
+  display: block;
+  width: 100%;
+  margin: 0 0 4em 0;
+}
+
+.image.left {
+  float: left;
+  margin: 0 2em 2em 0;
+}
+
+.image.centered {
+  display: block;
+  margin: 0 0 2em 0;
+}
+
+.image.centered img {
+  margin: 0 auto;
+  width: auto;
+}
+
+/*
+		.cube:hover{
+		  transform: rotateY(-90deg);
+		  -webkit-transform: rotateX(-90deg);
+		}*/
+/* ------------------------- Cube ------------------------- */

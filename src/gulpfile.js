@@ -52,7 +52,8 @@ gulp.task('compass', function() {
     .pipe(compass({
       css: './assets/css',
       sass: './assets/sass',
-      image: './assets/images'
+      image: './assets/images',
+      fonts: './assets/fonts'
     }))
     .pipe(minifyCSS())
     .pipe(gulp.dest('../build/assets/css'));
