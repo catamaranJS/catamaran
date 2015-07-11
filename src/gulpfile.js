@@ -29,7 +29,7 @@ gulp.task("dependencies", function () {
 gulp.task("main", function () {
 	return gulp.src(paths.main)
     .pipe(sourcemaps.init())
-      .pipe(babel({modules:'common'}))
+     .pipe(babel({modules:'common'}))
     .pipe(sourcemaps.write())
     .pipe(derequire())
     .pipe(uglify())
@@ -38,10 +38,10 @@ gulp.task("main", function () {
 
 gulp.task("pub", function () {
  gulp.src('../dist/catamaran.js', { read: false })
+ .pipe(derequire())
     .pipe(browserify({
       insertGlobals : false
     }))
-    .pipe(derequire())
     .pipe(uglify())
     .pipe(rename('catamaran.js'))
     .pipe(gulp.dest('../build/'));

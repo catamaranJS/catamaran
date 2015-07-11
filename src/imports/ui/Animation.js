@@ -39,10 +39,11 @@ class Animation {
    * @constructor
    */
     constructor() {
-            this.requestAnimationFrame = window.requestAnimationFrame || 
+            this.raf = window.requestAnimationFrame || 
             window.mozRequestAnimationFrame || 
             window.webkitRequestAnimationFrame || 
-            window.msRequestAnimationFrame;
+            window.msRequestAnimationFrame ||
+            function(cb) { return window.setTimeout(cb, 1000 / 60); };
             this.animating = true;
             this.interval = 1;
             this.timers = [];
@@ -54,7 +55,7 @@ class Animation {
 
     handleAnimation() {
         if ( animating ) {
-            this.requestAnimationFrame( handleAnimation );
+            this.raf( handleAnimation );
             this.tick();
         }
     }

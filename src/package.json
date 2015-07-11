@@ -2,7 +2,7 @@
   "name": "CatamaranJS",
   "private": false,
   "description": "",
-  "version": "0.1.0",
+  "version": "0.0.611",
   "author": {
     "name": "Brendon Smith",
     "email": "brendonsmith@seacloud9.org",
@@ -39,6 +39,7 @@
     "gulp-minify-css": "1.1.0",
     "run-sequence": "1.1.1",
     "gulp-jsdoc": "0.1.4",
+    "tap.js":"2.1.1",
     "webcomponents.js": "^0.7.2"
   },
   "devDependencies": {

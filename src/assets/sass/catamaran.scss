@@ -1,10 +1,12 @@
 @import "compass/reset";
 @import "compass";
 @import "compass/css3";
+@import "global_vars";
 @import "cube";
 @import "carousel";
 @import "fonts";
-@import "portfolio";
+@import "nav";
+
 
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -17,14 +19,7 @@ body {
 
 //http://zerosixthree.se/8-sass-mixins-you-must-have-in-your-toolbox/ 
 
-// grid variables
-$grid-columns: 12;
-$grid-max-width: 65em;
- 
- 
-// breakpoints
-$breakpoint-small: "only screen and (min-width: 20em)";
-$breakpoint-medium: "only screen and (min-width: 40em)";
+
 
 @mixin breakpoint-large {
   @media only screen and (max-width: 60em) {
@@ -63,9 +58,7 @@ $breakpoint-medium: "only screen and (min-width: 40em)";
 }
 
 
-$image-path: '../img' !default;
-$fallback-extension: 'png' !default;
-$retina-suffix: '@2x';
+
 @mixin background-image($name, $size:false){
     background-image: url(#{$image-path}/#{$name}.svg);
     @if($size){
@@ -264,3 +257,6 @@ p {
             }           
         }   
    }
+
+
+   @import "portfolio";

@@ -10,14 +10,14 @@ class Carousel{
 		constructor(selector, settings = { speed: 4,fadeIn: true, fadeDelay: 250 }) {
             	this._settings = settings;
             	this._selectorArr = document.querySelectorAll(selector);
-            	this._elmArr = new CATAMARAN.core.Extend(selector);
+            	this._elmArr = new CATAMARAN.core.DOM(selector);
             	this.init()
 		}
 
 		init(){
 			var _carousel = this;
 			for (var i = 0, len = _carousel._selectorArr.length; i < len; i++) {
-                    var self = new CATAMARAN.core.Extend('.' + _carousel._elmArr[i].className),
+                    var self = new CATAMARAN.core.DOM('.' + _carousel._elmArr[i].className),
                     elm =  _carousel._selectorArr[i],
                     forward = '<span class="forward"></span>',
                     backward = '<span class="backward"></span>',
@@ -70,7 +70,7 @@ class Carousel{
                 elm._updatePos = function() { 
                 	reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0)')};
                     elm.insertAdjacentHTML('beforeEnd',forward);
-                    var _forward = new CATAMARAN.core.Extend('.forward');
+                    var _forward = new CATAMARAN.core.DOM('.forward');
                     _forward.hide();
                     CATAMARAN.core.Events.on('.forward', 'mouseenter', function(e) {
                             CATAMARAN.core.interval  = window.setInterval(function() {
@@ -89,7 +89,7 @@ class Carousel{
                     });
 
                     elm.insertAdjacentHTML('beforeEnd',backward);
-                    var _backward =  new CATAMARAN.core.Extend('.backward');
+                    var _backward =  new CATAMARAN.core.DOM('.backward');
                     _backward.hide();
                     CATAMARAN.core.Events.on('.backward', 'mouseenter', function(e) {
                             CATAMARAN.core.interval  = window.setInterval(function() {
@@ -116,8 +116,8 @@ class Carousel{
 
             function setupCarousel(){
                 reelWidth = reel[0].scrollWidth;
-                var forwardC =  new CATAMARAN.core.Extend('.forward');
-                var backwardC =  new CATAMARAN.core.Extend('.backward');
+                var forwardC =  new CATAMARAN.core.DOM('.forward');
+                var backwardC =  new CATAMARAN.core.DOM('.backward');
                 if (CATAMARAN.isMobile()) {
                     reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
                     reel[0].scrollLeft = 0;

@@ -1,8 +1,13 @@
-var _Events = require('./core/events/Events');
-var _Extend = require('./core/extend/Extend');
-var _Carousel = require('./ui/Carousel');
-var _Phaser = require('./ui/Phaser');
-var _Animation = require('./ui/Animation');
+'use strict';
+
+import _Events from './core/events/Events';
+import _DOM from './core/dom/DOM';
+import _Carousel from './ui/Carousel';
+import _Phaser from './ui/Phaser';
+import _Animation from './ui/Animation';
+import _AniDom from './ui/AniDom';
+import _Tap from '../src/node_modules/tap.js/tap.js';
+
 
 if (typeof console == "undefined") {
   window.console = {
@@ -20,17 +25,15 @@ class Catamaran {
    * @constructor
    * @param {object} default object sent to setup various options.
    */
-    constructor(opts = {usesPhaser:false, components:{carousel:false}}){
-       this.core = {};
-       this.ui = {};
-       this.ui.two = {};
-       this.ui.components = {};
-       this.ui.Animation = {};
-       this.core.interval = {};
+    constructor(opts = {usesPhaser:false, components:{carousel:false}, vendor:{waypoints:false, routie:false, tap:true}}){
+       this.core = {interval:{}};
+       this.ui = {two:{}, components:{}, Animation:{}, AniDom:{}};
+       this.vendor= {};
 
        this.core.Events = _Events;
-       this.core.Extend = _Extend;
+       this.core.DOM = _DOM;
        this.ui.Animation = new _Animation();
+       this.ui.AniDom = new _AniDom();
        
        if(opts.components.carousel){
         this.ui.components.Carousel = _Carousel;
@@ -39,8 +42,14 @@ class Catamaran {
        if(opts.usesPhaser){
             this.ui.two.Phaser = _Phaser;
        }
-       
 
+       if(opts.vendor.tap){
+        this.vendor.tap = {};
+        this.vendor.tap = _Tap;
+       }
+
+       
+       console.log("                |\n               /|\\\n              / | \\\n             /  |  \\\n            /   |   \\\n           /    |    \\\n          /     |     \\\n         /      |      \\\n        /       |       \\\n       /________|        \\\n           _____|__    ___\\_\n    ______/ = = = =\\__/__/_/\n   /                      /\n  /\\_____________________/\n / /        /  /\n/_/        /__/\n \n CatamaranJS 0.01a by Brendon Smith ")
     }
 
     extend(ns, ns_string) {
@@ -105,4 +114,4 @@ class Catamaran {
 }
 
 
-window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true}});
+window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true}, vendor:{tap:true}});
