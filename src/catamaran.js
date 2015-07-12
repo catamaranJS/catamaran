@@ -49,7 +49,7 @@ class Catamaran {
        }
 
        
-       console.log("                |\n               /|\\\n              / | \\\n             /  |  \\\n            /   |   \\\n           /    |    \\\n          /     |     \\\n         /      |      \\\n        /       |       \\\n       /________|        \\\n           _____|__    ___\\_\n    ______/ = = = =\\__/__/_/\n   /                      /\n  /\\_____________________/\n / /        /  /\n/_/        /__/\n \n CatamaranJS 0.01a by Brendon Smith ")
+       console.log("                |\n               /|\\\n              / | \\\n             /  |  \\\n            /   |   \\\n           /    |    \\\n          /     |     \\\n         /      |      \\\n        /       |       \\\n       /________|        \\\n           _____|__    ___\\_\n    ______/ = = = =\\__/__/_/\n   /                      /\n  /\\_____________________/\n / /        /  /\n/_/        /__/\n \n CatamaranJS 0.01a by Brendon Smith http://bit.ly/catamaranJS")
     }
 
     extend(ns, ns_string) {
