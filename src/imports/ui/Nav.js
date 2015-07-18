@@ -16,16 +16,20 @@ class Nav{
 
 		init(){
 		  this._settings.navButton.on('click', function(e) {
-                if(!this._settings.navLinks[0].className.includes('open')){
-                    this._settings.navLinks[0].className = this._settings.navLinks[0].className  + ' open';
-                }
-
-                if(this._settings.navLinks[0].style.maxHeight != this._settings.maxHeight){
-                    this._settings.navLinks[0].style.maxHeight = this._settings.maxHeight;
-                }else{
-                    this._settings.navLinks[0].style.maxHeight = '1px';
-                }
+                this.triggerNav();
             }.bind(this));
+        }
+
+        triggerNav(){
+            if(!this._settings.navLinks[0].className.includes('open')){
+                this._settings.navLinks[0].className = this._settings.navLinks[0].className  + ' open';
+            }
+
+            if(this._settings.navLinks[0].style.maxHeight != this._settings.maxHeight){
+                this._settings.navLinks[0].style.maxHeight = this._settings.maxHeight;
+            }else{
+                this._settings.navLinks[0].style.maxHeight = '1px';
+            }
         }
 		
            
