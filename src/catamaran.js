@@ -3,6 +3,7 @@
 import _Events from './core/events/Events';
 import _DOM from './core/dom/DOM';
 import _Carousel from './ui/Carousel';
+import _Nav from './ui/Nav';
 import _Phaser from './ui/Phaser';
 import _Animation from './ui/Animation';
 import _AniDom from './ui/AniDom';
@@ -25,7 +26,7 @@ class Catamaran {
    * @constructor
    * @param {object} default object sent to setup various options.
    */
-    constructor(opts = {usesPhaser:false, components:{carousel:false}, vendor:{waypoints:false, routie:false, tap:true}}){
+    constructor(opts = {usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
        this.core = {interval:{}};
        this.ui = {two:{}, components:{}, Animation:{}, AniDom:{}};
        this.vendor= {};
@@ -35,6 +36,10 @@ class Catamaran {
        this.ui.Animation = new _Animation();
        this.ui.AniDom = new _AniDom();
        
+       if(opts.components.nav){
+        this.ui.components.Nav = _Nav;
+       }
+
        if(opts.components.carousel){
         this.ui.components.Carousel = _Carousel;
        }
@@ -114,4 +119,4 @@ class Catamaran {
 }
 
 
-window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true}, vendor:{tap:true}});
+window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true, nav:true}, vendor:{tap:true}});

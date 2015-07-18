@@ -1,21 +1,21 @@
 /*
 Error: Undefined variable: "$navbar-height".
-        on line 79 of /Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss
+        on line 86 of /Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss
 
-74: 
-75: }
-76: 
-77: .navbar {
-78:   position: relative;
-79:   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
-80:   margin-bottom: $navbar-margin-bottom;
-81:   border: 1px solid transparent;
-82: 
-83:   // Prevent floats from breaking the navbar
-84:   @include clearfix;
+81: 
+82: }
+83: 
+84: .navbar {
+85:   position: relative;
+86:   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+87:   margin-bottom: $navbar-margin-bottom;
+88:   border: 1px solid transparent;
+89: 
+90:   // Prevent floats from breaking the navbar
+91:   @include clearfix;
 
 Backtrace:
-/Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss:79
+/Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss:86
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/script/tree/variable.rb:49:in `_perform'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/script/tree/node.rb:50:in `perform'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
@@ -50,6 +50,9 @@ Backtrace:
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/root_node.rb:36:in `css_tree'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/tree/root_node.rb:20:in `render'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/engine.rb:268:in `render'
+/Library/Ruby/Gems/2.0.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:17:in `block in render'
+/Library/Ruby/Gems/2.0.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:29:in `with_import_scope'
+/Library/Ruby/Gems/2.0.0/gems/compass-import-once-1.0.5/lib/compass/import-once/engine.rb:16:in `render'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:491:in `update_stylesheet'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.4.5/lib/sass/plugin/compiler.rb:209:in `each'
@@ -69,4 +72,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$navbar-height\".\A         on line 79 of /Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss\A \A 74: \A 75: }\A 76: \A 77: .navbar {\A 78:   position: relative;\A 79:   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)\A 80:   margin-bottom: $navbar-margin-bottom;\A 81:   border: 1px solid transparent;\A 82: \A 83:   // Prevent floats from breaking the navbar\A 84:   @include clearfix;"; }
+  content: "Error: Undefined variable: \"$navbar-height\".\A         on line 86 of /Users/brendon.smith/libs/catamaranJS/src/assets/sass/nav.scss\A \A 81: \A 82: }\A 83: \A 84: .navbar {\A 85:   position: relative;\A 86:   min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)\A 87:   margin-bottom: $navbar-margin-bottom;\A 88:   border: 1px solid transparent;\A 89: \A 90:   // Prevent floats from breaking the navbar\A 91:   @include clearfix;"; }

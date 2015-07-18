@@ -737,10 +737,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 .collapse {
   height: 1px;
+  max-height: 1px;
+  transition-property: max-height;
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+  overflow: hidden;
 }
 
 .open {
   height: auto !important;
+  max-height: 400px;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {

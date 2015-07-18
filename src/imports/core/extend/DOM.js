@@ -186,13 +186,17 @@ class DOM {
         return this[0].classList.contains(className);
     }
 
-    toggle(className){
+    toggle(className, callback = null){
       var self = this;
       return this.each(function() {
             if(this.classList.contains(className)){
               self.removeClass(className);
             }else{
               self.addClass(className);
+            }
+
+            if(callback != null){
+              callback();
             }
         });
     }
