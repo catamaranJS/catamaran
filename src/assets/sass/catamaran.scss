@@ -7,6 +7,17 @@
 @import "fonts";
 @import "nav";
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
 
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -251,12 +262,12 @@ p {
         width: 95%;
         max-width: $grid-max-width;     
         }
-    @for $i from 1 through $grid-columns {      
-        .column-#{$i} {         
+    @for $i from 2 through $grid-columns {  
+        .column-#{($i - 1)} {   
             width: 100% / $grid-columns * $i;   
             }           
         }   
    }
 
-
+    
    @import "portfolio";

@@ -13,6 +13,13 @@ h4,
   text-shadow: -1.2px 0px 0 #09f19d, 1.2px 0px 0 #ff0591;
 }
 
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 #contact,
 .contactSection {
   background-color: #080808;

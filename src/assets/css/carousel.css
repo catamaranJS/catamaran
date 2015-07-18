@@ -118,3 +118,8 @@
 .carousel article p {
   text-align: center;
 }
+
+.caroselTouch {
+  overflow-y: hidden;
+  overflow-x: scroll;
+}

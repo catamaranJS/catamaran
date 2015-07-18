@@ -119,7 +119,8 @@ class Carousel{
                 var forwardC =  new CATAMARAN.core.DOM('.forward');
                 var backwardC =  new CATAMARAN.core.DOM('.backward');
                 if (CATAMARAN.isMobile()) {
-                    reel[0].setAttribute('style', 'overflow-y:hidden; overflow-x:scroll');
+                    console.log(reel[0]);
+                    reel[0].className = reel[0].className  + ' caroselTouch';
                     reel[0].scrollLeft = 0;
                     forwardC.hide();
                     backwardC.hide();

@@ -470,6 +470,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   text-align: center;
 }
 
+.caroselTouch {
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
 @font-face {
   font-family: 'icomoon';
   src: url("../fonts/icomoon.eot?5pmkyq");
@@ -711,6 +716,67 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
   .glitch2:after {
     left: 5px;
+  }
+}
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+
+.navbar-collapse::after {
+  content: 'open';
+  display: none;
+}
+
+.collapse {
+  height: 1px;
+}
+
+.open {
+  height: auto !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-collapse::after {
+    content: 'collapsed';
+    display: none;
+  }
+
+  .collapse {
+    height: auto;
+  }
+
+  .container {
+    width: 750px;
+  }
+
+  .navbar-nav > li > a {
+    padding: 15px;
+    line-height: 20px;
+    float: left;
+  }
+
+  .navbar-nav > li {
+    box-sizing: border-box;
+    color: #333333;
+    display: block;
+    float: left;
+    font-family: Oswald, sans-serif;
+    font-size: 14px;
+    height: 50px;
+    line-height: 20px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    position: relative;
+    text-align: left;
   }
 }
 .navbar {
@@ -1236,6 +1302,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 .navbar-inverse .btn-link[disabled]:hover, .navbar-inverse .btn-link[disabled]:focus, fieldset[disabled] .navbar-inverse .btn-link:hover, fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 body {
@@ -3042,50 +3119,46 @@ p {
   }
 
   .column-1 {
-    width: 8.33333%;
-  }
-
-  .column-2 {
     width: 16.66667%;
   }
 
-  .column-3 {
+  .column-2 {
     width: 25%;
   }
 
-  .column-4 {
+  .column-3 {
     width: 33.33333%;
   }
 
-  .column-5 {
+  .column-4 {
     width: 41.66667%;
   }
 
-  .column-6 {
+  .column-5 {
     width: 50%;
   }
 
-  .column-7 {
+  .column-6 {
     width: 58.33333%;
   }
 
-  .column-8 {
+  .column-7 {
     width: 66.66667%;
   }
 
-  .column-9 {
+  .column-8 {
     width: 75%;
   }
 
-  .column-10 {
+  .column-9 {
     width: 83.33333%;
   }
 
-  .column-11 {
+  .column-10 {
     width: 91.66667%;
   }
 
-  .column-12 {
+  .column-11 {
     width: 100%;
   }
 }
@@ -3102,6 +3175,13 @@ h3,
 h4,
 .skillsTxt {
   text-shadow: -1.2px 0px 0 #09f19d, 1.2px 0px 0 #ff0591;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #contact,
