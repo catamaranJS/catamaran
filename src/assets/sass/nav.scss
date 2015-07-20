@@ -8,7 +8,14 @@
 //
 // Provide a static navbar from which we expand to create full-width, fixed, and
 // other navbar variations.
+.navbar{
+   -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0,0,0);
+}
 
+.navbar a, .navbar a:active, .navbar a:focus{
+  text-decoration: none !important;
+}
 .navbar-nav>li>a {
   padding-top: 10px;
   padding-bottom: 10px;

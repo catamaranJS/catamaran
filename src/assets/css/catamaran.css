@@ -718,6 +718,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
     left: 5px;
   }
 }
+.navbar {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.navbar a, .navbar a:active, .navbar a:focus {
+  text-decoration: none !important;
+}
+
 .navbar-nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -3484,4 +3493,8 @@ h4,
   to {
     -moz-filter: blur(0px);
   }
+}
+.noJank {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
 }

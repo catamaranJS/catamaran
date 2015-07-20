@@ -9,10 +9,12 @@ var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var compass = require("gulp-compass");
 var minifyCSS = require('gulp-minify-css');
+	  
 
 var paths = {
   scripts: ['imports/**/**.js', 'imports/**/**/**.js'],
   main: ["catamaran.js"],
+  polyfill:["polyfill.js"],
   pub:["../dist/catamaran.js"]
 };
 
@@ -20,6 +22,15 @@ gulp.task("dependencies", function () {
 	return gulp.src(paths.scripts)
     .pipe(sourcemaps.init())
       .pipe(babel())
+      .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('../dist/'));
+
+});
+
+gulp.task("polyfill", function () {
+	return gulp.src(paths.polyfill)
+    .pipe(sourcemaps.init())
       .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('../dist/'));
@@ -37,7 +48,7 @@ gulp.task("main", function () {
 });
 
 gulp.task("pub", function () {
- gulp.src('../dist/catamaran.js', { read: false })
+ gulp.src(paths.pub, { read: false })
  .pipe(derequire())
     .pipe(browserify({
       insertGlobals : false
@@ -63,6 +74,7 @@ gulp.task('compass', function() {
 gulp.task('build', function(callback) {
   runSequence('dependencies',
   			'main',
+  			'polyfill',
   			'compass',
   			'pub'
   	);

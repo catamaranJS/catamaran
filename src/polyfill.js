@@ -1,4 +1,7 @@
+
+
 //polyfill https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
 if (!Object.assign) {
   Object.defineProperty(Object, 'assign', {
     enumerable: false,
@@ -112,87 +115,20 @@ if (!Array.from) {
 }
 
 
-class Extend {
-  /**
-   * Represents Extending an html element accepts array of elements.
-   * @constructor
-   * @param {array} selector accepts jquery like selector.
-   */
-    constructor(selector) {
-        var elements = document.querySelectorAll(selector);
-        this.length = elements.length;
-        this.children = [];
-        Object.assign(this, elements);
-    }
-
-    each( callback ) {
-        for ( let el of Array.from(this) ) {
-            callback.call( el );
-        }
-        return this;
-    }
 
 
-    hide() {
-        return this.each(function() {
-            this.style.display = 'none';
-        });
-    }
 
-    show() {
-        return this.each(function() {
-            this.style.display = 'block';
-        });
-    }
-
-    static isVisible(element) {
-        return element.offsetWidth > 0 && element.offsetHeight > 0;
-    }
-    
-    onVisible(callback) {
-        return this.each(function() {
-            if (CATAMARAN.core.Extend.isVisible(this)) {
-                callback.call(this);
-            } else {
-                var timer = setInterval(function() {
-                    if (CATAMARAN.core.Extend.isVisible(this)) {
-                        callback.call(this);
-                        clearInterval(timer);
-                    }
-                }, 50);
-            }
-        });
-        
-    }
-
-    addClass( className ) {
-        return this.each(function() {
-            this.classList.add(className);
-        });
-    }
-    
-    removeClass( className ) {
-        return this.each(function() {
-            this.classList.remove(className);
-        });
-    }
-
-    hasClass( className ) {
-        return this[0].classList.contains(className);
-    }
-    
-    on( event, callback ) {
-        return this.each(function() {
-            this.addEventListener(event, callback, false);
-        });
-    }
-    
-    off( event, callback ) {
-        return this.each(function() {
-            this.removeEventListener(event, callback, false);
-        });
-    }
-
+// nasty hack thanks to safari currently babelJS will not like the code below but it is necessary! 
+window.symbolPolyFill = function(){
+	      if (Array.prototype[Symbol.iterator] === undefined) {
+	                Array.prototype[Symbol.iterator] = function () {
+	                    var _this = this;
+	                    var i = 0;
+	                    return {
+	                        next: function next() {
+	                            return { done: i >= _this.length, value: _this[i++]};
+	                        }
+	                    };
+	                };
+	    }
 }
-
-module.exports = Extend;

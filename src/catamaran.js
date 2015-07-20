@@ -1,5 +1,7 @@
 'use strict';
 
+//todo remove thsi polyfill
+import Symbol from '../src/node_modules/es6-symbol/implement.js';
 import _Events from './core/events/Events';
 import _DOM from './core/dom/DOM';
 import _Carousel from './ui/Carousel';
@@ -8,6 +10,10 @@ import _Phaser from './ui/Phaser';
 import _Animation from './ui/Animation';
 import _AniDom from './ui/AniDom';
 import _Tap from '../src/node_modules/tap.js/tap.js';
+import _Polyfill from './polyfill';
+
+
+
 
 
 if (typeof console == "undefined") {
@@ -27,6 +33,8 @@ class Catamaran {
    * @param {object} default object sent to setup various options.
    */
     constructor(opts = {usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
+
+
        this.core = {interval:{}};
        this.ui = {two:{}, components:{}, Animation:{}, AniDom:{}};
        this.vendor= {};
@@ -52,6 +60,7 @@ class Catamaran {
         this.vendor.tap = {};
         this.vendor.tap = _Tap;
        }
+
 
        
        console.log("                |\n               /|\\\n              / | \\\n             /  |  \\\n            /   |   \\\n           /    |    \\\n          /     |     \\\n         /      |      \\\n        /       |       \\\n       /________|        \\\n           _____|__    ___\\_\n    ______/ = = = =\\__/__/_/\n   /                      /\n  /\\_____________________/\n / /        /  /\n/_/        /__/\n \n CatamaranJS 0.01a by Brendon Smith http://bit.ly/catamaranJS")
@@ -117,6 +126,6 @@ class Catamaran {
 
 
 }
-
-
+//todo remove thsi polyfill hack
+window.symbolPolyFill();
 window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true, nav:true}, vendor:{tap:true}});

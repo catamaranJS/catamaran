@@ -68,7 +68,7 @@ class Carousel{
 
                 
                 elm._updatePos = function() { 
-                	reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0)')};
+                	reel[0].setAttribute('style', 'transform:translate(' + pos + 'px, 0); -moz-transform:translate(' + pos + 'px, 0); -webkit-transform:translate(' + pos + 'px, 0)')};
                     elm.insertAdjacentHTML('beforeEnd',forward);
                     var _forward = new CATAMARAN.core.DOM('.forward');
                     _forward.hide();
@@ -119,7 +119,6 @@ class Carousel{
                 var forwardC =  new CATAMARAN.core.DOM('.forward');
                 var backwardC =  new CATAMARAN.core.DOM('.backward');
                 if (CATAMARAN.isMobile()) {
-                    console.log(reel[0]);
                     reel[0].className = reel[0].className  + ' caroselTouch';
                     reel[0].scrollLeft = 0;
                     forwardC.hide();

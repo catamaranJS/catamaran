@@ -10,6 +10,7 @@ class Nav{
 		constructor(defaults = {navButton: '.navbar-toggle', navLinks: '#mainNav', maxHeight: '400px'}) {
             	this._settings = defaults;
                 this._settings.navButton = new CATAMARAN.core.DOM(this._settings.navButton);
+                this._settings.Li = new CATAMARAN.core.DOM(this._settings.navLinks + ' li');
                 this._settings.navLinks = new CATAMARAN.core.DOM(this._settings.navLinks);
             	this.init()
 		}
@@ -21,7 +22,7 @@ class Nav{
         }
 
         triggerNav(){
-            if(!this._settings.navLinks[0].className.includes('open')){
+            if(this._settings.navLinks[0].className.indexOf('open') == -1){
                 this._settings.navLinks[0].className = this._settings.navLinks[0].className  + ' open';
             }
 
@@ -30,8 +31,11 @@ class Nav{
             }else{
                 this._settings.navLinks[0].style.maxHeight = '1px';
             }
+
+            
         }
 		
+       
            
             
 
