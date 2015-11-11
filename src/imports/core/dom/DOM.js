@@ -1,4 +1,5 @@
 
+
 class DOM {
   /**
    * Represents Extending an html element accepts array of elements.
@@ -9,7 +10,12 @@ class DOM {
         var elements = document.querySelectorAll(selector);
         this.length = elements.length;
         this.children = [];
-        Object.assign(this, elements);
+        if(navigator.userAgent.indexOf('Chrome') > -1){
+          Object.assign(this, Array.prototype.slice.call(elements));
+        }else{
+          Object.assign(this, elements);
+        }
+        
     }
 
   /**

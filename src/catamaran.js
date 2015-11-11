@@ -1,6 +1,7 @@
 'use strict';
 
 //todo remove thsi polyfill
+import _Polyfill from './polyfill';
 import Symbol from '../src/node_modules/es6-symbol/implement.js';
 import _Events from './core/events/Events';
 import _DOM from './core/dom/DOM';
@@ -10,7 +11,7 @@ import _Phaser from './ui/Phaser';
 import _Animation from './ui/Animation';
 import _AniDom from './ui/AniDom';
 import _Tap from '../src/node_modules/tap.js/tap.js';
-import _Polyfill from './polyfill';
+
 
 
 
@@ -63,7 +64,7 @@ class Catamaran {
 
 
        
-       console.log("                |\n               /|\\\n              / | \\\n             /  |  \\\n            /   |   \\\n           /    |    \\\n          /     |     \\\n         /      |      \\\n        /       |       \\\n       /________|        \\\n           _____|__    ___\\_\n    ______/ = = = =\\__/__/_/\n   /                      /\n  /\\_____________________/\n / /        /  /\n/_/        /__/\n \n CatamaranJS 0.01a by Brendon Smith http://bit.ly/catamaranJS")
+       console.log("            `--.-+.        `--..--o.               \n           `.---+..``     `------o.               \n           `-.--+. .``.`:/.//:.--o.               \n           `----+ossoyyyyyys/.---o.               \n          ..:oyhysosssssoooooo/:-o.               \n        `.+sooossoo+oos-.:+++++oos:               \n           +ys++oo+++/++/--/ssyoohho-             \n            /yysoo+//+osys/..-/  ./sys/`          \n             -yyyo+oso/-`           ./sy+-        \n              `oyyy:`                  `/ss-      \n                :yys.                     `.      \n                 `oyy:                            \n                   -sy+`                          \n                     :so`                         \n                       -s`                        \n                                  CatamaranJS 0.01a by Brendon Smith http://bit.ly/catamaranJS")
     }
 
     extend(ns, ns_string) {

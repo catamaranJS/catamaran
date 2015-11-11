@@ -150,6 +150,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   position: absolute;
   width: 100%;
   z-index: 9;
+  left: 0;
 }
 
 .cube {
@@ -3178,6 +3179,10 @@ p {
     width: 100%;
   }
 }
+body {
+  display: block;
+}
+
 body,
 .navbar {
   padding: 0px;

@@ -1,3 +1,7 @@
+body {
+  display: block;
+}
+
 body,
 .navbar {
   padding: 0px;
