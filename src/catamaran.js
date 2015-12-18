@@ -125,6 +125,14 @@ class Catamaran {
         }
     }
 
+  function ready(fn) {
+  if (document.readyState != 'loading'){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
+
 
 }
 //todo remove thsi polyfill hack
