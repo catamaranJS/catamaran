@@ -40,7 +40,7 @@ class lsd{
 		        	this.canvas.heigth = window.innerHeight;
         			this.canvas.width = window.innerWidth;	
 		            this._crurrentScene.getEngine().resize();
-		        }.bind(this));
+		}.bind(this));
 	}
 
 	assetLoadingFinished(){
@@ -59,9 +59,6 @@ class lsd{
 				this._defaults._position = new BABYLON.Vector3(0, 0, 0);
 				this._e_cameravr = new e_cameravr(this._defaults);
 				this.world.addEntity(this._e_cameravr.entity);
-
-
-
 				this.initSceneAnimation();
 				this.initListners();
 		        

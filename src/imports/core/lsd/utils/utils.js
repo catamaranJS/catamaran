@@ -35,6 +35,7 @@ class utils{
 				_uOffset: 0.0,
 				_hasAlpha:false,
 				_diffuseColor: null,
+				_hasSystem:false,
 				_scene:{}
 			}
 		return _defaults;

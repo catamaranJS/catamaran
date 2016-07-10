@@ -992,12 +992,15 @@ module.exports = c_scene;
 },{"../lib/babylon":16,"ces":40}],11:[function(require,module,exports){
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var CES = require('ces');
 var BABYLON = require('../lib/babylon');
 var c_mesh = require('../components/c_mesh');
 var c_material = require('../components/c_material');
+var utils = require('../utils/utils');
 /**
  * ...
  * @author Brendon Smith
@@ -1005,23 +1008,60 @@ var c_material = require('../components/c_material');
  * LightWeight 3D System Design engine
  */
 
-var e_box = function e_box() {
-	var _defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+var e_box = function () {
+	function e_box() {
+		var _defaults = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-	_classCallCheck(this, e_box);
+		_classCallCheck(this, e_box);
 
-	this.entity = new CES.Entity();
-	var mesh = new c_mesh(_defaults);
-	this.entity.addComponent(mesh);
-	var mat = new c_material(_defaults);
-	this.entity.addComponent(mat);
-	mesh.obj.material = mat.obj;
-};
+		this.entity = new CES.Entity();
+		this.mesh;
+		this.material;
+		this._defaults = _defaults == null ? this.defaults() : _defaults;
+		this.init();
+	}
+
+	_createClass(e_box, [{
+		key: 'defaults',
+		value: function defaults() {
+			return {
+				_size: 10,
+				_type: 'Box',
+				name: 'box',
+				_position: new BABYLON.Vector3(0, 0, 0),
+				_rotation: new BABYLON.Vector3(0, 0, 0),
+				_texture: null,
+				_uScale: 1.0,
+				_vScale: 1.0,
+				_backFaceCulling: true,
+				_vOffset: 0.0,
+				_uOffset: 0.0,
+				_hasAlpha: false,
+				_diffuseColor: utils.color(),
+				_scene: {},
+				_hasSystem: false
+			};
+		}
+	}, {
+		key: 'init',
+		value: function init() {
+			this.mesh = new c_mesh(this._defaults);
+			this.entity.addComponent(this.mesh);
+			this.material = new c_material(this._defaults);
+			this.entity.addComponent(this.material);
+			this.mesh.obj.material = this.material.obj;
+		}
+	}]);
+
+	return e_box;
+}();
 
 module.exports = e_box;
 
-},{"../components/c_material":8,"../components/c_mesh":9,"../lib/babylon":16,"ces":40}],12:[function(require,module,exports){
+},{"../components/c_material":8,"../components/c_mesh":9,"../lib/babylon":16,"../utils/utils":18,"ces":40}],12:[function(require,module,exports){
 'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1037,27 +1077,57 @@ var c_material = require('../components/c_material');
  * LightWeight 3D System Design engine
  */
 
-var e_cameravr = function e_cameravr() {
-	var _defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+var e_cameravr = function () {
+	function e_cameravr() {
+		var _defaults = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-	_classCallCheck(this, e_cameravr);
+		_classCallCheck(this, e_cameravr);
 
-	this.entity = new CES.Entity();
-	this.cursor = new c_cursor(_defaults);
-	_defaults._cursor = this.cursor.obj;
-	this.camVR = new c_cameravr(_defaults);
-	this.mat = new c_material(_defaults);
-	this.cursor.material = this.mat;
-	this.entity.addComponent(this.mat);
-	this.entity.addComponent(this.cursor);
-	_defaults._positon = BABYLON.Vector3.Zero();
-	this.entity.addComponent(this.camVR);
-};
+		this._defaults = _defaults == null ? this.defaults() : _defaults;
+		this.entity = new CES.Entity();
+		this.cursor;
+		this.camVR;
+		this.material;
+		this.init();
+	}
+
+	_createClass(e_cameravr, [{
+		key: 'defaults',
+		value: function defaults() {
+			return {
+				_type: 'vrCamera',
+				_cursor: null,
+				name: 'vrCamera',
+				_position: new BABYLON.Vector3(0, 0, 0),
+				_rotation: new BABYLON.Vector3(0, 0, 0),
+				_diffuseColor: utils.color(),
+				_scene: {},
+				_hasSystem: false
+			};
+		}
+	}, {
+		key: 'init',
+		value: function init() {
+			this.cursor = new c_cursor(this._defaults);
+			this._defaults._cursor = this.cursor.obj;
+			this.camVR = new c_cameravr(this._defaults);
+			this.material = new c_material(this._defaults);
+			this.cursor.material = this.material;
+			this.entity.addComponent(this.material);
+			this.entity.addComponent(this.cursor);
+			this.entity.addComponent(this.camVR);
+		}
+	}]);
+
+	return e_cameravr;
+}();
 
 module.exports = e_cameravr;
 
 },{"../components/c_cameravr":4,"../components/c_cursor":6,"../components/c_material":8,"../lib/babylon":16,"ces":40}],13:[function(require,module,exports){
 'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1071,14 +1141,39 @@ var c_light = require('../components/c_light');
  * LightWeight 3D System Design engine
  */
 
-var e_light = function e_light() {
-  var _defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+var e_light = function () {
+	function e_light() {
+		var _defaults = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
 
-  _classCallCheck(this, e_light);
+		_classCallCheck(this, e_light);
 
-  this.entity = new CES.Entity();
-  this.entity.addComponent(new c_light(_defaults));
-};
+		this._defaults = _defaults == null ? this.defaults() : _defaults;
+		this.entity = new CES.Entity();
+		this.init();
+	}
+
+	_createClass(e_light, [{
+		key: 'defaults',
+		value: function defaults() {
+			return {
+				_type: 'Hemispheric',
+				name: 'Hemispheric',
+				_position: new BABYLON.Vector3(0, 10, 0),
+				_rotation: new BABYLON.Vector3(0, 0, 0),
+				_diffuseColor: utils.color(),
+				_scene: {},
+				_hasSystem: false
+			};
+		}
+	}, {
+		key: 'init',
+		value: function init() {
+			this.entity.addComponent(new c_light(this._defaults));
+		}
+	}]);
+
+	return e_light;
+}();
 
 module.exports = e_light;
 
@@ -1183,7 +1278,6 @@ var lsd = function () {
 			this._defaults._position = new BABYLON.Vector3(0, 0, 0);
 			this._e_cameravr = new e_cameravr(this._defaults);
 			this.world.addEntity(this._e_cameravr.entity);
-
 			this.initSceneAnimation();
 			this.initListners();
 		}
@@ -1275,6 +1369,7 @@ var utils = function () {
 				_uOffset: 0.0,
 				_hasAlpha: false,
 				_diffuseColor: null,
+				_hasSystem: false,
 				_scene: {}
 			};
 			return _defaults;
