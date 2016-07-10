@@ -178,5 +178,4 @@ class Animation {
         return changeInValue / 2 * (Math.sqrt(1 - (currentIteration -= 2) * currentIteration) + 1) + startValue;
     }
 }
-
 module.exports = Animation;

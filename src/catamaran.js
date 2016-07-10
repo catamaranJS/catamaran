@@ -1,20 +1,17 @@
 'use strict';
 
 //todo remove thsi polyfill
-import _Polyfill from './polyfill';
-import Symbol from '../src/node_modules/es6-symbol/implement.js';
-import _Events from './core/events/Events';
-import _DOM from './core/dom/DOM';
-import _Carousel from './ui/Carousel';
-import _Nav from './ui/Nav';
-import _Phaser from './ui/Phaser';
-import _Animation from './ui/Animation';
-import _AniDom from './ui/AniDom';
-import _Tap from '../src/node_modules/tap.js/tap.js';
-
-
-
-
+require('./polyfill');
+var Symbol = require('implement');
+var Events =  require('./imports/core/events/Events');
+var DOM = require('./imports/core/dom/DOM');
+var Carousel = require('./imports/ui/Carousel');
+var Nav = require('./imports/ui/Nav');
+var PhaserJS = require('./imports/ui/Phaser');
+var Animation = require('./imports/ui/Animation');
+var AniDom = require('./imports/ui/AniDom');
+var Tap = require('tap.js');
+var bces = require('./imports/core/babylonces/index.js');
 
 
 if (typeof console == "undefined") {
@@ -33,33 +30,37 @@ class Catamaran {
    * @constructor
    * @param {object} default object sent to setup various options.
    */
-    constructor(opts = {usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
+    constructor(opts = {usesBabylon:false, usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
 
 
        this.core = {interval:{}};
        this.ui = {two:{}, components:{}, Animation:{}, AniDom:{}};
-       this.vendor= {};
-
-       this.core.Events = _Events;
-       this.core.DOM = _DOM;
-       this.ui.Animation = new _Animation();
-       this.ui.AniDom = new _AniDom();
+       this.vendor= {}; 
+       this.debug = true;
+       this.core.Events = Events;
+       this.core.DOM = DOM;
+       if(opts.usesBabylon){
+          this.core.BCES = new bces();
+       }
+       
+       this.ui.Animation = new Animation();
+       this.ui.AniDom = new AniDom();
        
        if(opts.components.nav){
-        this.ui.components.Nav = _Nav;
+        this.ui.components.Nav = Nav;
        }
 
        if(opts.components.carousel){
-        this.ui.components.Carousel = _Carousel;
+        this.ui.components.Carousel = Carousel;
        }
        
        if(opts.usesPhaser){
-            this.ui.two.Phaser = _Phaser;
+            this.ui.two.Phaser = PhaserJS;
        }
 
        if(opts.vendor.tap){
         this.vendor.tap = {};
-        this.vendor.tap = _Tap;
+        this.vendor.tap = Tap;
        }
 
 
@@ -125,16 +126,17 @@ class Catamaran {
         }
     }
 
-  function ready(fn) {
-  if (document.readyState != 'loading'){
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
+  ready(fn) {
+    if (document.readyState != 'loading'){
+      fn();
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
 }
 
 
 }
 //todo remove thsi polyfill hack
 window.symbolPolyFill();
-window.CATAMARAN =  new Catamaran({usesPhaser:true, components:{carousel:true, nav:true}, vendor:{tap:true}});
+
+window.Catamaran = module.exports = Catamaran;

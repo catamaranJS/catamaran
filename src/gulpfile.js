@@ -1,4 +1,8 @@
-var browserify = require('gulp-browserify');
+//var browserify = require('gulp-browserify');
+var fs = require("fs");
+var babelify = require("babelify");
+var browserify = require("browserify");
+var source = require('vinyl-source-stream');
 var derequire = require('gulp-derequire');
 var gulp = require("gulp");
 var babel = require("gulp-babel");
@@ -13,7 +17,7 @@ var minifyCSS = require('gulp-minify-css');
 
 
 
-var paths = {
+var _paths = {
   scripts: ['imports/**/**.js', 'imports/**/**/**.js'],
   main: ["catamaran.js"],
   polyfill:["polyfill.js"],
@@ -27,7 +31,7 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task("dependencies", function () {
-	return gulp.src(paths.scripts)
+	return gulp.src(_paths.scripts)
     .pipe(sourcemaps.init())
       .pipe(babel())
       .pipe(uglify())
@@ -37,7 +41,7 @@ gulp.task("dependencies", function () {
 });
 
 gulp.task("polyfill", function () {
-	return gulp.src(paths.polyfill)
+	return gulp.src(_paths.polyfill)
     .pipe(sourcemaps.init())
       .pipe(uglify())
     .pipe(sourcemaps.write())
@@ -46,21 +50,21 @@ gulp.task("polyfill", function () {
 });
 
 gulp.task("main", function () {
-	return gulp.src(paths.main)
-    .pipe(sourcemaps.init())
-     .pipe(babel({modules:'common'}))
-    .pipe(sourcemaps.write())
-    .pipe(derequire())
-    .pipe(uglify())
-    .pipe(gulp.dest('../dist/'));
+	return browserify('./index.js')
+  .transform("babelify", {presets: ["es2015"]})
+  .bundle()
+  .pipe(fs.createWriteStream("../build/catamaran.js"));
+  //.pipe(rename('catamaran.js'))
+ //.pipe(gulp.dest('../build/'));
+  
 });
 
 gulp.task("pub", function () {
- gulp.src(paths.pub, { read: false })
+ gulp.src(_paths.pub, { read: false })
  .pipe(derequire())
-    .pipe(browserify({
+    /*.pipe(browserify({
       insertGlobals : false
-    }))
+    }))*/
     .pipe(uglify())
     .pipe(rename('catamaran.js'))
     .pipe(gulp.dest('../build/'));
@@ -79,7 +83,7 @@ gulp.task('compass', function() {
 });
 
 gulp.task('watch', function (callback) {
-    gulp.watch(paths.alljs, ['build']);
+    gulp.watch(_paths.alljs, ['build']);
 });
 
 
@@ -88,7 +92,6 @@ gulp.task('build', function(callback) {
   runSequence('dependencies',
   			'main',
   			'polyfill',
-  			'compass',
-  			'pub'
+  			'compass'
   	);
 });

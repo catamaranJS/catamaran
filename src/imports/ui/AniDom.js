@@ -1,5 +1,5 @@
 //https://github.com/wilsonpage/fastdom/blob/master/index.js 
-import Animation from "./Animation.js";
+var Animation = require("./Animation.js");
 
 class AniDom extends Animation {
 

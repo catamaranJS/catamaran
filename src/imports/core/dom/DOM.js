@@ -1,5 +1,3 @@
-
-
 class DOM {
   /**
    * Represents Extending an html element accepts array of elements.
@@ -134,5 +132,4 @@ class DOM {
 
 
 }
-
 module.exports = DOM;

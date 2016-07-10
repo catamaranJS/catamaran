@@ -34,11 +34,6 @@ class Nav{
 
             
         }
-		
-       
-           
-            
 
 }
-
 module.exports = Nav;

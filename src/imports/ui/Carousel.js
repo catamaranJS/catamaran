@@ -134,10 +134,5 @@ class Carousel{
                 elm._update();
             }
         }
-		
-           
-            
-
 }
-
 module.exports = Carousel;
