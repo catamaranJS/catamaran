@@ -5,6 +5,7 @@ var c_light = require('../components/c_light');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 class e_light{
 	constructor(_defaults = {}){

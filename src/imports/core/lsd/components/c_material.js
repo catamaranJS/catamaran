@@ -3,13 +3,12 @@ var BABYLON = require('../lib/babylon');
 var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'material';
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
-
 class c_material {
 	constructor(_opts = defaults){
 		this.name = _opts._name + utils.guid();

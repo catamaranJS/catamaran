@@ -8,8 +8,9 @@ var e_light = require('./entites/e_light');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
-class bces{
+class lsd{
 	constructor(){
 		this._defaults = utils.defaultArgs();
 		this._crurrentScene;
@@ -81,4 +82,4 @@ class bces{
 			}.bind(this));
 	}
 }
-module.exports = bces;
+module.exports = lsd;

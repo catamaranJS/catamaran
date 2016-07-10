@@ -17,7 +17,7 @@ var PhaserJS = require('./imports/ui/Phaser');
 var Animation = require('./imports/ui/Animation');
 var AniDom = require('./imports/ui/AniDom');
 var Tap = require('tap.js');
-var bces = require('./imports/core/babylonces/index.js');
+var lsd = require('./imports/core/lsd/index.js');
 
 if (typeof console == "undefined") {
     window.console = {
@@ -48,7 +48,7 @@ var Catamaran = function () {
         this.core.Events = Events;
         this.core.DOM = DOM;
         if (opts.usesBabylon) {
-            this.core.BCES = new bces();
+            this.core.lsd = new lsd();
         }
 
         this.ui.Animation = new Animation();
@@ -157,7 +157,268 @@ window.symbolPolyFill();
 
 window.Catamaran = module.exports = Catamaran;
 
-},{"./imports/core/babylonces/index.js":13,"./imports/core/dom/DOM":17,"./imports/core/events/Events":18,"./imports/ui/AniDom":19,"./imports/ui/Animation":20,"./imports/ui/Carousel":21,"./imports/ui/Nav":22,"./imports/ui/Phaser":23,"./polyfill":54,"implement":49,"tap.js":53}],2:[function(require,module,exports){
+},{"./imports/core/dom/DOM":2,"./imports/core/events/Events":3,"./imports/core/lsd/index.js":15,"./imports/ui/AniDom":19,"./imports/ui/Animation":20,"./imports/ui/Carousel":21,"./imports/ui/Nav":22,"./imports/ui/Phaser":23,"./polyfill":54,"implement":49,"tap.js":53}],2:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DOM = function () {
+    /**
+     * Represents Extending an html element accepts array of elements.
+     * @constructor
+     * @param {array} selector accepts jquery like selector.
+     */
+
+    function DOM(selector) {
+        _classCallCheck(this, DOM);
+
+        var elements = document.querySelectorAll(selector);
+        this.length = elements.length;
+        this.children = [];
+        if (navigator.userAgent.indexOf('Chrome') > -1) {
+            Object.assign(this, Array.prototype.slice.call(elements));
+        } else {
+            Object.assign(this, elements);
+        }
+    }
+
+    /**
+     * loops though every element like jquery
+     * @each
+     * @param {function}  this is the callback
+     */
+
+
+    _createClass(DOM, [{
+        key: 'each',
+        value: function each(callback) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = Array.from(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var el = _step.value;
+
+                    callback.call(el);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return this;
+        }
+    }, {
+        key: 'hide',
+        value: function hide() {
+            return this.each(function () {
+                this.style.display = 'none';
+            });
+        }
+    }, {
+        key: 'show',
+        value: function show() {
+            return this.each(function () {
+                this.style.display = 'block';
+            });
+        }
+    }, {
+        key: 'onVisible',
+        value: function onVisible(callback) {
+            return this.each(function () {
+                if (CATAMARAN.core.DOM.isVisible(this)) {
+                    callback.call(this);
+                } else {
+                    var timer = setInterval(function () {
+                        if (CATAMARAN.core.DOM.isVisible(this)) {
+                            callback.call(this);
+                            clearInterval(timer);
+                        }
+                    }, 50);
+                }
+            });
+        }
+    }, {
+        key: 'addClass',
+        value: function addClass(className) {
+            return this.each(function () {
+                this.classList.add(className);
+            });
+        }
+    }, {
+        key: 'removeClass',
+        value: function removeClass(className) {
+            return this.each(function () {
+                this.classList.remove(className);
+            });
+        }
+    }, {
+        key: 'hasClass',
+        value: function hasClass(className) {
+            return this[0].classList.contains(className);
+        }
+    }, {
+        key: 'toggle',
+        value: function toggle(className) {
+            var self = this;
+            return this.each(function () {
+                if (this.classList.contains(className)) {
+                    self.removeClass(className);
+                } else {
+                    self.addClass(className);
+                }
+            });
+        }
+    }, {
+        key: 'on',
+        value: function on(event, callback) {
+            return this.each(function () {
+                this.addEventListener(event, callback, false);
+            });
+        }
+    }, {
+        key: 'off',
+        value: function off(event, callback) {
+            return this.each(function () {
+                this.removeEventListener(event, callback, false);
+            });
+        }
+    }, {
+        key: 'width',
+        value: function width() {
+            var w = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+            var _w = w;
+            if (_w == null) {
+                return this[0].offsetWidth;
+            }
+            return this.each(function () {
+                this.style.width = _w;
+            });
+        }
+    }, {
+        key: 'height',
+        value: function height() {
+            var h = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+            var _h = h;
+            if (_h == null) {
+                return this[0].offsetHeight;
+            }
+            return this.each(function () {
+                this.style.height = _h;
+            });
+        }
+    }, {
+        key: 'css',
+        value: function css(obj) {
+            var _obj = obj;
+            return this.each(function () {
+                for (var item in _obj) {
+                    this.style[item] = _obj[item];
+                }
+            });
+        }
+    }], [{
+        key: 'isVisible',
+        value: function isVisible(element) {
+            return element.offsetWidth > 0 && element.offsetHeight > 0;
+        }
+    }]);
+
+    return DOM;
+}();
+
+module.exports = DOM;
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Events = function () {
+    function Events() {
+        _classCallCheck(this, Events);
+
+        this.topics = {};
+        this.hOP = this.topics.hasOwnProperty;
+    }
+
+    _createClass(Events, [{
+        key: 'subscribe',
+        value: function subscribe(topic, listener) {
+            var self = this;
+            if (!this.hOP.call(this.topics, topic)) this.topics[topic] = [];
+            var index = this.topics[topic].push(listener) - 1;
+            return {
+                remove: function remove() {
+                    delete self.topics[topic][index];
+                }
+            };
+        }
+    }, {
+        key: 'publish',
+        value: function publish(topic, info) {
+            if (!this.hOP.call(this.topics, topic)) return;
+            this.topics[topic].forEach(function (item) {
+                item(info != undefined ? info : {});
+            });
+        }
+    }], [{
+        key: 'on',
+        value: function on() {
+            var elementArr = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+            var event = arguments[1];
+            var fn = arguments[2];
+
+            if (typeof elementArr == 'string') {
+                elementArr = document.querySelectorAll(elementArr);
+                for (var i = 0, len = elementArr.length; i < len; i++) {
+                    elementArr[i].addEventListener(event.toLowerCase(), fn);
+                }
+            } else {
+                addEventListener(event.toLowerCase(), fn);
+            }
+        }
+    }, {
+        key: 'off',
+        value: function off() {
+            var elementArr = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+            var event = arguments[1];
+            var fn = arguments[2];
+
+            if (typeof elementArr == 'string') {
+                elementArr = document.querySelectorAll(elementArr);
+                for (var i = 0, len = elementArr.length; i < len; i++) {
+                    elementArr[i].removeEventListener(event.toLowerCase(), fn);
+                }
+            } else {
+                removeEventListener(event.toLowerCase(), fn);
+            }
+        }
+    }]);
+
+    return Events;
+}();
+
+module.exports = Events;
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -169,11 +430,11 @@ var BABYLON = require('../lib/babylon');
 var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'camera';
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_cameravr = function () {
@@ -364,7 +625,7 @@ var c_cameravr = function () {
 
 module.exports = c_cameravr;
 
-},{"../lib/babylon":14,"../utils/utils":16,"CES":25}],3:[function(require,module,exports){
+},{"../lib/babylon":16,"../utils/utils":18,"CES":25}],5:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -373,11 +634,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var CES = require('ces');
 var BABYLON = require('../lib/babylon');
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_canvas = function () {
@@ -422,7 +683,7 @@ var c_canvas = function () {
 
 module.exports = c_canvas;
 
-},{"../lib/babylon":14,"ces":40}],4:[function(require,module,exports){
+},{"../lib/babylon":16,"ces":40}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -435,6 +696,7 @@ var BABYLON = require('../lib/babylon');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_cursor = function () {
@@ -482,7 +744,7 @@ var c_cursor = function () {
 
 module.exports = c_cursor;
 
-},{"../lib/babylon":14,"ces":40}],5:[function(require,module,exports){
+},{"../lib/babylon":16,"ces":40}],7:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -493,6 +755,13 @@ var utils = require('../utils/utils');
 
 var defaults = utils.defaultArgs();
 defaults._name = 'light';
+
+/**
+ * ...
+ * @author Brendon Smith
+ * http://seacloud9.org
+ * LightWeight 3D System Design engine
+ */
 
 var c_light = function c_light() {
 	var _opts = arguments.length <= 0 || arguments[0] === undefined ? defaults : arguments[0];
@@ -524,7 +793,7 @@ var c_light = function c_light() {
 
 module.exports = c_light;
 
-},{"../lib/babylon":14,"../utils/utils":16,"ces":40}],6:[function(require,module,exports){
+},{"../lib/babylon":16,"../utils/utils":18,"ces":40}],8:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -536,11 +805,11 @@ var BABYLON = require('../lib/babylon');
 var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'material';
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_material = function () {
@@ -605,7 +874,7 @@ var c_material = function () {
 
 module.exports = c_material;
 
-},{"../lib/babylon":14,"../utils/utils":16,"ces":40}],7:[function(require,module,exports){
+},{"../lib/babylon":16,"../utils/utils":18,"ces":40}],9:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -615,11 +884,11 @@ var BABYLON = require('../lib/babylon');
 var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'mesh';
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_mesh = function c_mesh() {
@@ -663,7 +932,7 @@ var c_mesh = function c_mesh() {
 
 module.exports = c_mesh;
 
-},{"../lib/babylon":14,"../utils/utils":16,"ces":40}],8:[function(require,module,exports){
+},{"../lib/babylon":16,"../utils/utils":18,"ces":40}],10:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -676,6 +945,7 @@ var BABYLON = require('../lib/babylon');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var c_scene = function () {
@@ -719,7 +989,7 @@ var c_scene = function () {
 
 module.exports = c_scene;
 
-},{"../lib/babylon":14,"ces":40}],9:[function(require,module,exports){
+},{"../lib/babylon":16,"ces":40}],11:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -732,6 +1002,7 @@ var c_material = require('../components/c_material');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var e_box = function e_box() {
@@ -749,7 +1020,7 @@ var e_box = function e_box() {
 
 module.exports = e_box;
 
-},{"../components/c_material":6,"../components/c_mesh":7,"../lib/babylon":14,"ces":40}],10:[function(require,module,exports){
+},{"../components/c_material":8,"../components/c_mesh":9,"../lib/babylon":16,"ces":40}],12:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -763,6 +1034,7 @@ var c_material = require('../components/c_material');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var e_cameravr = function e_cameravr() {
@@ -784,7 +1056,7 @@ var e_cameravr = function e_cameravr() {
 
 module.exports = e_cameravr;
 
-},{"../components/c_cameravr":2,"../components/c_cursor":4,"../components/c_material":6,"../lib/babylon":14,"ces":40}],11:[function(require,module,exports){
+},{"../components/c_cameravr":4,"../components/c_cursor":6,"../components/c_material":8,"../lib/babylon":16,"ces":40}],13:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -796,6 +1068,7 @@ var c_light = require('../components/c_light');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var e_light = function e_light() {
@@ -809,7 +1082,7 @@ var e_light = function e_light() {
 
 module.exports = e_light;
 
-},{"../components/c_light":5,"../lib/babylon":14,"ces":40}],12:[function(require,module,exports){
+},{"../components/c_light":7,"../lib/babylon":16,"ces":40}],14:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -822,6 +1095,7 @@ var c_scene = require('../components/c_scene');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
 var e_scene = function e_scene() {
@@ -836,7 +1110,7 @@ var e_scene = function e_scene() {
 
 module.exports = e_scene;
 
-},{"../components/c_canvas":3,"../components/c_scene":8,"../lib/babylon":14,"ces":40}],13:[function(require,module,exports){
+},{"../components/c_canvas":5,"../components/c_scene":10,"../lib/babylon":16,"ces":40}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -853,11 +1127,12 @@ var e_light = require('./entites/e_light');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 
-var bces = function () {
-	function bces() {
-		_classCallCheck(this, bces);
+var lsd = function () {
+	function lsd() {
+		_classCallCheck(this, lsd);
 
 		this._defaults = utils.defaultArgs();
 		this._crurrentScene;
@@ -871,7 +1146,7 @@ var bces = function () {
 		Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
 	}
 
-	_createClass(bces, [{
+	_createClass(lsd, [{
 		key: 'init',
 		value: function init() {
 			this.canvas = document.querySelector('canvas');
@@ -930,12 +1205,12 @@ var bces = function () {
 		}
 	}]);
 
-	return bces;
+	return lsd;
 }();
 
-module.exports = bces;
+module.exports = lsd;
 
-},{"./entites/e_box":9,"./entites/e_cameravr":10,"./entites/e_light":11,"./entites/e_scene":12,"./utils/utils":16,"ces":40}],14:[function(require,module,exports){
+},{"./entites/e_box":11,"./entites/e_cameravr":12,"./entites/e_light":13,"./entites/e_scene":14,"./utils/utils":18,"ces":40}],16:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -943,13 +1218,13 @@ var BABYLON = global.BABYLON = require('babylonjs');
 module.exports = BABYLON;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"babylonjs":34}],15:[function(require,module,exports){
+},{"babylonjs":34}],17:[function(require,module,exports){
 'use strict';
 
 var CES = require('ces');
 module.exports = CES;
 
-},{"ces":40}],16:[function(require,module,exports){
+},{"ces":40}],18:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -970,6 +1245,7 @@ var utils = function () {
    * ...
    * @author Brendon Smith
    * http://seacloud9.org
+   * LightWeight 3D System Design engine
    */
 		value: function defaultArgs() {
 			var _defaults = {
@@ -1086,268 +1362,7 @@ var utils = function () {
 
 module.exports = utils;
 
-},{"../lib/babylon":14}],17:[function(require,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DOM = function () {
-    /**
-     * Represents Extending an html element accepts array of elements.
-     * @constructor
-     * @param {array} selector accepts jquery like selector.
-     */
-
-    function DOM(selector) {
-        _classCallCheck(this, DOM);
-
-        var elements = document.querySelectorAll(selector);
-        this.length = elements.length;
-        this.children = [];
-        if (navigator.userAgent.indexOf('Chrome') > -1) {
-            Object.assign(this, Array.prototype.slice.call(elements));
-        } else {
-            Object.assign(this, elements);
-        }
-    }
-
-    /**
-     * loops though every element like jquery
-     * @each
-     * @param {function}  this is the callback
-     */
-
-
-    _createClass(DOM, [{
-        key: 'each',
-        value: function each(callback) {
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = Array.from(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var el = _step.value;
-
-                    callback.call(el);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            return this;
-        }
-    }, {
-        key: 'hide',
-        value: function hide() {
-            return this.each(function () {
-                this.style.display = 'none';
-            });
-        }
-    }, {
-        key: 'show',
-        value: function show() {
-            return this.each(function () {
-                this.style.display = 'block';
-            });
-        }
-    }, {
-        key: 'onVisible',
-        value: function onVisible(callback) {
-            return this.each(function () {
-                if (CATAMARAN.core.DOM.isVisible(this)) {
-                    callback.call(this);
-                } else {
-                    var timer = setInterval(function () {
-                        if (CATAMARAN.core.DOM.isVisible(this)) {
-                            callback.call(this);
-                            clearInterval(timer);
-                        }
-                    }, 50);
-                }
-            });
-        }
-    }, {
-        key: 'addClass',
-        value: function addClass(className) {
-            return this.each(function () {
-                this.classList.add(className);
-            });
-        }
-    }, {
-        key: 'removeClass',
-        value: function removeClass(className) {
-            return this.each(function () {
-                this.classList.remove(className);
-            });
-        }
-    }, {
-        key: 'hasClass',
-        value: function hasClass(className) {
-            return this[0].classList.contains(className);
-        }
-    }, {
-        key: 'toggle',
-        value: function toggle(className) {
-            var self = this;
-            return this.each(function () {
-                if (this.classList.contains(className)) {
-                    self.removeClass(className);
-                } else {
-                    self.addClass(className);
-                }
-            });
-        }
-    }, {
-        key: 'on',
-        value: function on(event, callback) {
-            return this.each(function () {
-                this.addEventListener(event, callback, false);
-            });
-        }
-    }, {
-        key: 'off',
-        value: function off(event, callback) {
-            return this.each(function () {
-                this.removeEventListener(event, callback, false);
-            });
-        }
-    }, {
-        key: 'width',
-        value: function width() {
-            var w = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
-            var _w = w;
-            if (_w == null) {
-                return this[0].offsetWidth;
-            }
-            return this.each(function () {
-                this.style.width = _w;
-            });
-        }
-    }, {
-        key: 'height',
-        value: function height() {
-            var h = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
-            var _h = h;
-            if (_h == null) {
-                return this[0].offsetHeight;
-            }
-            return this.each(function () {
-                this.style.height = _h;
-            });
-        }
-    }, {
-        key: 'css',
-        value: function css(obj) {
-            var _obj = obj;
-            return this.each(function () {
-                for (var item in _obj) {
-                    this.style[item] = _obj[item];
-                }
-            });
-        }
-    }], [{
-        key: 'isVisible',
-        value: function isVisible(element) {
-            return element.offsetWidth > 0 && element.offsetHeight > 0;
-        }
-    }]);
-
-    return DOM;
-}();
-
-module.exports = DOM;
-
-},{}],18:[function(require,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Events = function () {
-    function Events() {
-        _classCallCheck(this, Events);
-
-        this.topics = {};
-        this.hOP = this.topics.hasOwnProperty;
-    }
-
-    _createClass(Events, [{
-        key: 'subscribe',
-        value: function subscribe(topic, listener) {
-            var self = this;
-            if (!this.hOP.call(this.topics, topic)) this.topics[topic] = [];
-            var index = this.topics[topic].push(listener) - 1;
-            return {
-                remove: function remove() {
-                    delete self.topics[topic][index];
-                }
-            };
-        }
-    }, {
-        key: 'publish',
-        value: function publish(topic, info) {
-            if (!this.hOP.call(this.topics, topic)) return;
-            this.topics[topic].forEach(function (item) {
-                item(info != undefined ? info : {});
-            });
-        }
-    }], [{
-        key: 'on',
-        value: function on() {
-            var elementArr = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-            var event = arguments[1];
-            var fn = arguments[2];
-
-            if (typeof elementArr == 'string') {
-                elementArr = document.querySelectorAll(elementArr);
-                for (var i = 0, len = elementArr.length; i < len; i++) {
-                    elementArr[i].addEventListener(event.toLowerCase(), fn);
-                }
-            } else {
-                addEventListener(event.toLowerCase(), fn);
-            }
-        }
-    }, {
-        key: 'off',
-        value: function off() {
-            var elementArr = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-            var event = arguments[1];
-            var fn = arguments[2];
-
-            if (typeof elementArr == 'string') {
-                elementArr = document.querySelectorAll(elementArr);
-                for (var i = 0, len = elementArr.length; i < len; i++) {
-                    elementArr[i].removeEventListener(event.toLowerCase(), fn);
-                }
-            } else {
-                removeEventListener(event.toLowerCase(), fn);
-            }
-        }
-    }]);
-
-    return Events;
-}();
-
-module.exports = Events;
-
-},{}],19:[function(require,module,exports){
+},{"../lib/babylon":16}],19:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -2277,12 +2292,12 @@ require('./imports/ui/Phaser');
 require('./imports/ui/Animation');
 require('./imports/ui/AniDom');
 require('tap.js');
-require('./imports/core/babylonces/lib/babylon.js');
-require('./imports/core/babylonces/lib/ces.js');
-require('./imports/core/babylonces/index.js');
+require('./imports/core/lsd/lib/babylon.js');
+require('./imports/core/lsd/lib/ces.js');
+require('./imports/core/lsd/index.js');
 require('./catamaran.js');
 
-},{"./catamaran.js":1,"./imports/core/babylonces/index.js":13,"./imports/core/babylonces/lib/babylon.js":14,"./imports/core/babylonces/lib/ces.js":15,"./imports/core/dom/DOM":17,"./imports/core/events/Events":18,"./imports/ui/AniDom":19,"./imports/ui/Animation":20,"./imports/ui/Carousel":21,"./imports/ui/Nav":22,"./imports/ui/Phaser":23,"./polyfill":54,"implement":49,"tap.js":53}],25:[function(require,module,exports){
+},{"./catamaran.js":1,"./imports/core/dom/DOM":2,"./imports/core/events/Events":3,"./imports/core/lsd/index.js":15,"./imports/core/lsd/lib/babylon.js":16,"./imports/core/lsd/lib/ces.js":17,"./imports/ui/AniDom":19,"./imports/ui/Animation":20,"./imports/ui/Carousel":21,"./imports/ui/Nav":22,"./imports/ui/Phaser":23,"./polyfill":54,"implement":49,"tap.js":53}],25:[function(require,module,exports){
 module.exports = {
     Class     : require('./src/class'),
     Component : require('./src/component'),

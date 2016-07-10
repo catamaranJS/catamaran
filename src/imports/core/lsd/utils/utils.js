@@ -4,6 +4,7 @@ class utils{
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 	static defaultArgs(){
 		var _defaults = 

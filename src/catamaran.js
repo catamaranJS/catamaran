@@ -11,7 +11,7 @@ var PhaserJS = require('./imports/ui/Phaser');
 var Animation = require('./imports/ui/Animation');
 var AniDom = require('./imports/ui/AniDom');
 var Tap = require('tap.js');
-var bces = require('./imports/core/babylonces/index.js');
+var lsd = require('./imports/core/lsd/index.js');
 
 
 if (typeof console == "undefined") {
@@ -40,7 +40,7 @@ class Catamaran {
        this.core.Events = Events;
        this.core.DOM = DOM;
        if(opts.usesBabylon){
-          this.core.BCES = new bces();
+          this.core.lsd = new lsd();
        }
        
        this.ui.Animation = new Animation();

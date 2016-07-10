@@ -7,6 +7,7 @@ var c_material = require('../components/c_material');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 class e_cameravr{
 	constructor(_defaults = {}){

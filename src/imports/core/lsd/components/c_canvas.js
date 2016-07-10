@@ -1,12 +1,11 @@
 var CES = require('ces');
 var BABYLON = require('../lib/babylon');
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
-
 class c_canvas {
 	constructor(_name = 'canvas'){
 		this.name = _name;

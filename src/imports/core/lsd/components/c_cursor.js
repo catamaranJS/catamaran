@@ -4,8 +4,8 @@ var BABYLON = require('../lib/babylon');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
- 
 class c_cursor {
 	constructor(_opts){
 		this.name = _opts._name;

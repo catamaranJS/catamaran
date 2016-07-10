@@ -3,13 +3,12 @@ var BABYLON = require('../lib/babylon');
 var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'camera';
-
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
-
 class c_cameravr {
 	constructor(_opts = defaults){
 		this.modal = document.createElement('div');

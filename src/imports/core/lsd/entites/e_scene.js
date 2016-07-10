@@ -6,6 +6,7 @@ var c_scene = require('../components/c_scene');
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
+ * LightWeight 3D System Design engine
  */
 class e_scene{
 	constructor(){

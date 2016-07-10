@@ -5,6 +5,13 @@ var utils = require('../utils/utils');
 var defaults = utils.defaultArgs();
 defaults._name = 'light';
 
+/**
+ * ...
+ * @author Brendon Smith
+ * http://seacloud9.org
+ * LightWeight 3D System Design engine
+ */
+
 class c_light {
 	constructor(_opts = defaults){
 		this.name = _opts._name + utils.guid();
