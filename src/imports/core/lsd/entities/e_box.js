@@ -23,22 +23,25 @@ class e_box{
 			_size:10,
 			_type:'Box',
 			name:'box',
+			_layerMask: "0x0FFFFFFF",
 			_position:new BABYLON.Vector3(0, 0, 0),
 			_rotation:new BABYLON.Vector3(0, 0, 0),
-			_texture:null,
-			_uScale: 1.0,
-			_vScale: 1.0,
-			_backFaceCulling:true,
-			_vOffset: 0.0,
-			_uOffset: 0.0,
-			_hasAlpha: false,
-			_diffuseColor: utils.color(),
+			_material:{
+					_texture:null,
+					_uScale: 1.0,
+					_vScale: 1.0,
+					_backFaceCulling: true,
+					_vOffset: 0.0,
+					_uOffset: 0.0,
+					_hasAlpha:false,
+					_diffuseColor: utils.color(),
+				},
 			_scene:{},
 			_hasSystem:false
 		}
 	}
 
-	init(){
+	init(){		
 		this.mesh = new c_mesh(this._defaults);
 		this.entity.addComponent(this.mesh);
 		this.material = new c_material(this._defaults);

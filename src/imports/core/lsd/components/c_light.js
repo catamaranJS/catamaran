@@ -29,6 +29,7 @@ class c_light {
 		    default:
 		        this.obj= new BABYLON.HemisphericLight(this.name,  _opts._position,  _opts._scene);
 		 }
+		 console.log( _opts._position);
 		this.options = {
 			name:this.name ,
 			init: this.constructor,

@@ -20,7 +20,6 @@ class c_material {
 		        break;
 		    case 'Shader':
 		        //todo
-				
 		        break;
 		    case 'Dynamic':
 		        //todo
@@ -44,19 +43,20 @@ class c_material {
 
 	StandardMaterial(){
 		this.obj = new BABYLON.StandardMaterial("texturePlane", this._opts._scene);
-		if(this._opts._texture != null){
-			this.obj.diffuseTexture = this._opts._texture;
-			this.obj.diffuseTexture.uScale = this._opts._uScale;//Repeat 5 times on the Vertical Axes
-			this.obj.diffuseTexture.vScale = this._opts._vScale;//Repeat 5 times on the Horizontal Axes
-			this.obj.backFaceCulling = this._opts._backFaceCulling;//Always show the front and the back of an element
-			this.obj.diffuseTexture.vOffset = this._opts._vOffset;//Vertical offset of 10%
-    		this.obj.diffuseTexture.uOffset = this._opts._uOffset;//Horizontal offset of 40%
-    		this.obj.diffuseTexture.hasAlpha = this._opts._hasAlpha;
+		if(this._opts._material._texture != null){
+			this.obj.diffuseTexture = this._opts._material._texture;
+			this.obj.diffuseTexture.uScale = this._opts._material._uScale;//Repeat 5 times on the Vertical Axes
+			this.obj.diffuseTexture.vScale = this._opts._material._vScale;//Repeat 5 times on the Horizontal Axes
+			this.obj.backFaceCulling = this._opts._material._backFaceCulling;//Always show the front and the back of an element
+			this.obj.diffuseTexture.vOffset = this._opts._material._vOffset;//Vertical offset of 10%
+    		this.obj.diffuseTexture.uOffset = this._opts._material._uOffset;//Horizontal offset of 40%
+    		this.obj.diffuseTexture.hasAlpha = this._opts._material._hasAlpha;
 		}
 		
 		
-    	if(this._opts._diffuseColor != null){
-    		this.obj.diffuseColor =this._opts._diffuseColor;
+    	if(this._opts._material._diffuseColor != null){
+    		console.log(this._opts._material._diffuseColor);
+    		this.obj.diffuseColor =this._opts._material._diffuseColor;
     	}
 	}
 

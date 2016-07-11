@@ -20,7 +20,6 @@ class e_light{
 			name:'Hemispheric',
 			_position:new BABYLON.Vector3(0, 10, 0),
 			_rotation:new BABYLON.Vector3(0, 0, 0),
-			_diffuseColor: utils.color(),
 			_scene:{},
 			_hasSystem:false
 		}

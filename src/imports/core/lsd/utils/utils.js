@@ -27,14 +27,16 @@ class utils{
 				_thickness:3,
 				_segements:10.0,
 				_canvas:null,
-				_texture:null,
-				_uScale: 1.0,
-				_vScale: 1.0,
-				_backFaceCulling: true,
-				_vOffset: 0.0,
-				_uOffset: 0.0,
-				_hasAlpha:false,
-				_diffuseColor: null,
+				_material:{
+					_texture:null,
+					_uScale: 1.0,
+					_vScale: 1.0,
+					_backFaceCulling: true,
+					_vOffset: 0.0,
+					_uOffset: 0.0,
+					_hasAlpha:false,
+					_diffuseColor: null,
+				},
 				_hasSystem:false,
 				_scene:{}
 			}
@@ -63,6 +65,35 @@ class utils{
 		}
 	}
 
+	static getMaterials(_textures, _name){
+		for(let i = 0; i < _textures.length; i++){
+			if(_textures[i].name == _name){
+				if(typeof _textures[i]._diffuseColor != undefined){
+					_textures[i]._diffuseColor = this.getColor(_textures[i]._diffuseColor);
+				}
+				return _textures[i];
+			}
+		}
+	}
+
+	static getColor(_dataString){
+		_dataString = _dataString.split(",");
+		if(_dataString.length != 4){
+			return this.color(parseInt(_dataString[0]), parseInt(_dataString[1]), parseInt(_dataString[2]));
+		}else{
+			return this.color(parseInt(dataString[0]), parseInt(_dataString[1]), parseInt(_dataString[2]), parseInt(_dataString[3]));
+		}
+	}
+
+	static getVector(_dataString, type = "position"){
+		_dataString = _dataString.split(",");
+		if(type == "position"){
+			return new BABYLON.Vector3(parseInt(_dataString[0]), parseInt(_dataString[1]), parseInt(_dataString[2]));
+		}else{
+			return new BABYLON.Vector3(this.degToRad(parseInt(_dataString[0])), this.degToRad(parseInt(_dataString[1])), this.degToRad(parseInt(_dataString[2])));
+		}
+		
+	}
 
 
 	static assetsLoad(){
@@ -110,8 +141,7 @@ class utils{
 			 loader.load();
 		
         }.bind(this));
-       
-         
+      
         loader.onFinish = this.assetLoadingFinished.bind(this);
 
 	}

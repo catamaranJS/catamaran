@@ -35,8 +35,9 @@ class c_mesh {
 		    default:
 		        this.obj= BABYLON.Mesh.CreateBox(this.name, _opts._size, _opts._scene);
 		 }
-		window.testMesh = this.obj;
-		this.obj.layerMask = _opts._layerMask;
+		this.obj.layerMask = parseInt(_opts._layerMask);
+		this.obj.position = _opts._position;
+		this.obj.rotation = _opts._rotation;
 		this.options = {
 			name:this.name ,
 			init: this.constructor,

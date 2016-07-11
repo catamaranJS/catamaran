@@ -1,9 +1,10 @@
 var CES = require('ces');
 var utils = require('./utils/utils');
-var e_scene = require('./entites/e_scene');
-var e_cameravr = require('./entites/e_cameravr');
-var e_box = require('./entites/e_box');
-var e_light = require('./entites/e_light');
+var e_scene = require('./entities/e_scene');
+var e_cameravr = require('./entities/e_cameravr');
+var e_box = require('./entities/e_box');
+var e_light = require('./entities/e_light');
+var Request = require('../xhr/Request');
 /**
  * ...
  * @author Brendon Smith
@@ -13,6 +14,7 @@ var e_light = require('./entites/e_light');
 class lsd{
 	constructor(){
 		this._defaults = utils.defaultArgs();
+		this._data = null;
 		this._crurrentScene;
 		this._e_scene = new e_scene();
 		this._e_cameravr = null;
@@ -25,14 +27,19 @@ class lsd{
 	}
 
 	init(){
-			this.canvas = document.querySelector('canvas');
-			this.canvas.addEventListener('canvas_init', function (e) {
-				this.jsonAssets = [
-		            {name : "grass", src : "/assets/img/grass.jpg", type: 'image' }
-		        ];
+		this.canvas = document.querySelector('canvas');
+		this.defaults = new Request("/assets/scene/scene.json", this.dataLoaded.bind(this));
+	}
+
+	dataLoaded(){
+		console.log(this.defaults.data);
+		this._data  = this.defaults.data;
+		this.canvas.addEventListener('canvas_init', function (e) {
+				this.jsonAssets = this._data.assets;
 		        this._crurrentScene = this._defaults._scene = this._e_scene.scene.scene;
 				utils.assetsLoad.apply(this);
-			}.bind(this), false);
+		}.bind(this), false);
+		
 	}
 
 	initListners(){
@@ -44,16 +51,27 @@ class lsd{
 	}
 
 	assetLoadingFinished(){
-				this._defaults._name =  this._defaults._type = 'box';
-				//this._defaults._texture = this._assets["grass"];
-				this._defaults._diffuseColor = utils.color();
-				this._defaults._position = new BABYLON.Vector3(0, 0, 0);
-				var box = new e_box(this._defaults);
-				this.world.addEntity(box.entity);
-				this._defaults._name =  this._defaults._type = 'Hemispheric';
-				this._defaults._position = new BABYLON.Vector3(0, 10, 0);
-				var light = new e_light(this._defaults);
-				this.world.addEntity(light.entity);
+				for(let i = 0; i < this._data.entities.length; i++){
+					this._data.entities[i].defaults._scene = this._crurrentScene;
+					if(typeof this._data.entities[i].defaults._material != undefined){
+						this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
+					}
+					if(typeof this._data.entities[i].defaults._position != undefined){
+						this._data.entities[i].defaults._position = utils.getVector(this._data.entities[i].defaults._position);
+					}
+					if(typeof this._data.entities[i].defaults._rotation != undefined){
+						this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
+					}
+					try{
+						var ent = eval("new " + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
+						this.world.addEntity(ent.entity);
+					}catch(e){
+						console.log(e + ' - error loading entity');
+					}
+					
+				}
+
+
 				this._defaults._name = 'camera';
 				this._defaults._canvas = this.canvas;
 				this._defaults._position = new BABYLON.Vector3(0, 0, 0);
@@ -63,6 +81,9 @@ class lsd{
 				this.initListners();
 		        
 	}
+
+
+
 
 	initSceneAnimation(){
 			this.tick = 0.01;
