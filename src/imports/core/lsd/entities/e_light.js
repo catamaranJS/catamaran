@@ -14,14 +14,25 @@ class e_light{
 		this.init();
 	}
 
-	defaults(){
+	static defaults(){
 		return{
 			_type:'Hemispheric',
+			e_type:'e_light',
 			name:'Hemispheric',
-			_position:new BABYLON.Vector3(0, 10, 0),
-			_rotation:new BABYLON.Vector3(0, 0, 0),
-			_scene:{},
-			_hasSystem:false
+			_position:'0,0,0',
+			_rotation:'0,0,0',
+			_material:{
+				    _alpah:1.0,
+					_texture:null,
+					_uScale: 1.0,
+					_vScale: 1.0,
+					_backFaceCulling: true,
+					_vOffset: 0.0,
+					_uOffset: 0.0,
+					_hasAlpha:false,
+					_diffuseColor: '127, 0, 140',
+				},
+			_scene:{}
 		}
 	}
 

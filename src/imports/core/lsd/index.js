@@ -1,10 +1,9 @@
 var CES = require('ces');
 var utils = require('./utils/utils');
-var e_scene = require('./entities/e_scene');
-var e_cameravr = require('./entities/e_cameravr');
-var e_box = require('./entities/e_box');
-var e_light = require('./entities/e_light');
+var entities = require('./entities');
 var Request = require('../xhr/Request');
+
+
 /**
  * ...
  * @author Brendon Smith
@@ -16,7 +15,7 @@ class lsd{
 		this._defaults = utils.defaultArgs();
 		this._data = null;
 		this._crurrentScene;
-		this._e_scene = new e_scene();
+		this._e_scene = new entities.e_scene();
 		this._e_cameravr = null;
 		this.world = new CES.World();
 		this.world.addEntity(this._e_scene.entity);
@@ -53,6 +52,11 @@ class lsd{
 	assetLoadingFinished(){
 				for(let i = 0; i < this._data.entities.length; i++){
 					this._data.entities[i].defaults._scene = this._crurrentScene;
+					try{
+						this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type+".defaults()"), this._data.entities[i].defaults);
+					}catch(e){
+						console.log(e + ' - error loading entity no defaults set');
+					}
 					if(typeof this._data.entities[i].defaults._material != undefined){
 						this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
 					}
@@ -63,41 +67,34 @@ class lsd{
 						this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
 					}
 					try{
-						var ent = eval("new " + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
+						var ent = eval("new entities." + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
 						this.world.addEntity(ent.entity);
 					}catch(e){
 						console.log(e + ' - error loading entity');
 					}
-					
 				}
-
-
 				this._defaults._name = 'camera';
 				this._defaults._canvas = this.canvas;
 				this._defaults._position = new BABYLON.Vector3(0, 0, 0);
-				this._e_cameravr = new e_cameravr(this._defaults);
+				this._e_cameravr = new entities.e_cameravr(this._defaults);
 				this.world.addEntity(this._e_cameravr.entity);
 				this.initSceneAnimation();
 				this.initListners();
-		        
 	}
 
-
-
-
-	initSceneAnimation(){
-			this.tick = 0.01;
-			this._crurrentScene.getEngine().runRenderLoop(function () {
-			this.tick += .01;
-			window.tick = this.tick;
-			if(this.tick % this.pickInterval  <= 0.9 && this.tick % this.pickInterval  >= 0.89){
-				this._e_cameravr.cursor.rayPick();
-			}
-			if(this._crurrentScene.activeCamera){
-			    this._crurrentScene.render();
-			}
-			this.world.update(this.tick);
-			}.bind(this));
+		initSceneAnimation(){
+				this.tick = 0.01;
+				this._crurrentScene.getEngine().runRenderLoop(function () {
+				this.tick += .01;
+				window.tick = this.tick;
+				if(this.tick % this.pickInterval  <= 0.9 && this.tick % this.pickInterval  >= 0.89){
+					this._e_cameravr.cursor.rayPick();
+				}
+				if(this._crurrentScene.activeCamera){
+					this.world.update(this.tick);
+				    this._crurrentScene.render();
+				}
+		}.bind(this));
 	}
 }
 module.exports = lsd;

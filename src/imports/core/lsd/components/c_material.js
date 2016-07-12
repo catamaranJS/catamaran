@@ -43,6 +43,7 @@ class c_material {
 
 	StandardMaterial(){
 		this.obj = new BABYLON.StandardMaterial("texturePlane", this._opts._scene);
+		this.obj.alpha = parseFloat(this._opts._material._alpha);
 		if(this._opts._material._texture != null){
 			this.obj.diffuseTexture = this._opts._material._texture;
 			this.obj.diffuseTexture.uScale = this._opts._material._uScale;//Repeat 5 times on the Vertical Axes
@@ -55,7 +56,6 @@ class c_material {
 		
 		
     	if(this._opts._material._diffuseColor != null){
-    		console.log(this._opts._material._diffuseColor);
     		this.obj.diffuseColor =this._opts._material._diffuseColor;
     	}
 	}

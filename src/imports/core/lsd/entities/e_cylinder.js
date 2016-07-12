@@ -9,7 +9,7 @@ var utils = require('../utils/utils');
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-class e_box{
+class e_cylinder{
 	constructor(_defaults = null){
 		this.entity = new CES.Entity();
 		this.mesh;
@@ -20,16 +20,16 @@ class e_box{
 
 	static defaults(){
 		return{
-			e_type:'e_box',
-			_size:10,
-			_type:'Box',
-			name:'box',
-			_layerMask: "0x0FFFFFFF",
+			e_type:'e_cylinder',
+			_segments:10.0,
+			_diameter:10.0,
 			_isPickable: true,
 			_scaling:1,
+			_type:'Cylinder',
+			_name:'Cylinder',
+			_layerMask: "0x0FFFFFFF",
 			_position:'0,0,0',
 			_rotation:'0,0,0',
-			_material:'default',
 			_scene:{}
 		}
 	}
@@ -42,4 +42,4 @@ class e_box{
 		this.mesh.obj.material = this.material.obj;
 	}
 }
-module.exports = e_box;
+module.exports = e_cylinder;

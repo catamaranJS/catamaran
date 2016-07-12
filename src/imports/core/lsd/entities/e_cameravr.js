@@ -19,16 +19,27 @@ class e_cameravr{
 		this.init();
 	}
 
-	defaults(){
+	static defaults(){
 		return{
 			_type:'vrCamera',
+			e_type:'e_cameravr',
 			_cursor:null,
-			name:'vrCamera',
-			_position:new BABYLON.Vector3(0, 0, 0),
-			_rotation:new BABYLON.Vector3(0, 0, 0),
-			_diffuseColor: utils.color(),
+			_name:'vrCamera',
+			_oneAxisRotation:true,
+			_position:'0,0,0',
+			_rotation:'0,0,0',
+			_material:{
+				    _alpah:1.0,
+					_texture:null,
+					_uScale: 1.0,
+					_vScale: 1.0,
+					_backFaceCulling: true,
+					_vOffset: 0.0,
+					_uOffset: 0.0,
+					_hasAlpha:false,
+					_diffuseColor: '0,0,0',
+				},
 			_scene:{},
-			_hasSystem:false
 		}
 	}
 
