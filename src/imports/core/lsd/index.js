@@ -17,6 +17,7 @@ var Request = require('../xhr/Request');
  		this._crurrentScene;
  		this._e_scene = new entities.e_scene();
  		this._e_cameravr = null;
+ 		this.camera = null;
  		this.world = new CES.World();
  		this.world.addEntity(this._e_scene.entity);
  		this.pickInterval = 1;
@@ -90,7 +91,9 @@ var Request = require('../xhr/Request');
  		this._defaults._name = 'camera';
  		this._defaults._canvas = this.canvas;
  		this._defaults._position = new BABYLON.Vector3(0, 0, 0);
+ 		this._defaults._fpsUI = true;
  		this._e_cameravr = new entities.e_cameravr(this._defaults);
+ 		this.camera = this._e_cameravr.camVR;
  		this.world.addEntity(this._e_cameravr.entity);
  		this.initSceneAnimation();
  		this.initListners();
@@ -98,6 +101,8 @@ var Request = require('../xhr/Request');
 
  	initSceneAnimation(){
  		this.tick = 0.01;
+ 		// todo remove this only for debugging purposes
+ 		window.scene = this._crurrentScene;
  		this._crurrentScene.getEngine().runRenderLoop(function () {
  			this.tick += .01;
  			window.tick = this.tick;
@@ -105,6 +110,9 @@ var Request = require('../xhr/Request');
  				this._e_cameravr.cursor.rayPick();
  			}
  			if(this._crurrentScene.activeCamera){
+ 				if(this.camera.fpsUI){
+ 					this.camera.fpsUIWindow.text(parseInt(this._crurrentScene.getEngine().fps));
+ 				}
  				this.world.update(this.tick);
  				this._crurrentScene.render();
  			}

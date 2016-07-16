@@ -221,6 +221,40 @@ var DOM = function () {
 
             return this;
         }
+
+        /**
+         * Appends items to the DOM
+         * @each
+         * @param {appendElements} the elments you want to append
+         */
+
+    }, {
+        key: 'append',
+        value: function append(appendElements) {
+            return this.each(function () {
+                this.appendChild(appendElements);
+            });
+        }
+
+        /**
+        * text replaces text in a specific dom element
+        * @each
+        * @param {text} the text you want it to show
+        */
+
+    }, {
+        key: 'text',
+        value: function text(_text) {
+            return this.each(function () {
+                this.innerHTML = _text;
+            });
+        }
+
+        /**
+         * Hides elements in the DOM
+         * @each
+         */
+
     }, {
         key: 'hide',
         value: function hide() {
@@ -228,6 +262,12 @@ var DOM = function () {
                 this.style.display = 'none';
             });
         }
+
+        /**
+         * Shows elements in the DOM
+         * @each
+         */
+
     }, {
         key: 'show',
         value: function show() {
@@ -235,8 +275,21 @@ var DOM = function () {
                 this.style.display = 'block';
             });
         }
+
+        /**
+         * isVisible checks to see if elment in the DOM is visible
+         * @param {element}  the element in particular you are checking
+         */
+
     }, {
         key: 'onVisible',
+
+
+        /**
+         * onVisible when item becaomes visible lets do something to it
+         * @param {callback}  callback action to execute when item becomes visible
+         */
+
         value: function onVisible(callback) {
             return this.each(function () {
                 if (CATAMARAN.core.DOM.isVisible(this)) {
@@ -251,6 +304,13 @@ var DOM = function () {
                 }
             });
         }
+
+        /**
+         * addClass adds a class to DOM elements
+         * @each
+         * @param {className} the class you want to add
+         */
+
     }, {
         key: 'addClass',
         value: function addClass(className) {
@@ -258,6 +318,13 @@ var DOM = function () {
                 this.classList.add(className);
             });
         }
+
+        /**
+         * removeClass removes a class to DOM elements
+         * @each
+         * @param {className} the class you want to remove
+         */
+
     }, {
         key: 'removeClass',
         value: function removeClass(className) {
@@ -265,11 +332,28 @@ var DOM = function () {
                 this.classList.remove(className);
             });
         }
+
+        /**
+        * hasClass checks DOM elements to see if a class is present 
+        * @each
+        * @param {className} the class you want to look for
+        * @return {bool} returns true or false
+        */
+
     }, {
         key: 'hasClass',
         value: function hasClass(className) {
             return this[0].classList.contains(className);
         }
+
+        /**
+         * toggle checks DOM elements add adds or removes a class
+         * @each
+         * @param {className} the class you want to toggle
+         * todo remove self
+         * 
+         */
+
     }, {
         key: 'toggle',
         value: function toggle(className) {
@@ -282,6 +366,14 @@ var DOM = function () {
                 }
             });
         }
+
+        /**
+        * on checks DOM elements adds an event to it with a callback
+        * @each
+        * @param {event} the event type you want to apply
+        * @param {callback} the callback you want to apply on the given event
+        */
+
     }, {
         key: 'on',
         value: function on(event, callback) {
@@ -289,6 +381,14 @@ var DOM = function () {
                 this.addEventListener(event, callback, false);
             });
         }
+
+        /**
+         * off checks DOM elements removes an event to it with a callback
+         * @each
+         * @param {event} the event type you want to removes
+         * @param {callback} the callback you want to remove on the given event
+         */
+
     }, {
         key: 'off',
         value: function off(event, callback) {
@@ -296,6 +396,14 @@ var DOM = function () {
                 this.removeEventListener(event, callback, false);
             });
         }
+
+        /**
+         * width sets the width of a dom element if no width is given it returns the int width of the item instead of setting it
+         * @param {width} the amount you want to apply
+         * @return {int} returns the width of the item
+         * @return {elment} in the event width has been set it will return the item and apply the width provided
+         */
+
     }, {
         key: 'width',
         value: function width() {
@@ -309,6 +417,14 @@ var DOM = function () {
                 this.style.width = _w;
             });
         }
+
+        /**
+         * height sets the height of a dom element if no height is given it returns the int height of the item instead of setting it
+         * @param {height} the amount you want to apply
+         * @return {int} returns the height of the item
+         * @return {elment} in the event height has been set it will return the item and apply the height provided
+         */
+
     }, {
         key: 'height',
         value: function height() {
@@ -322,6 +438,13 @@ var DOM = function () {
                 this.style.height = _h;
             });
         }
+
+        /**
+         * css sets a series of css styles in a similar manner to jQuery
+         * @each
+         * @param {obj} the prorperties and property values you want to set example: {height:300px}, {height:300px, width:400px}    
+         */
+
     }, {
         key: 'css',
         value: function css(obj) {
@@ -532,6 +655,8 @@ var c_cameravr = function () {
     this.canvas = _opts._canvas;
     this.oneAxis = true;
     this.mode = 'normal';
+    this.fpsUIWindow = null;
+    this.fpsUI = _opts._fpsUI;
     this.hud = null;
     this.glitchEnabled = false;
     var canvasList = document.querySelectorAll('canvas');
@@ -601,6 +726,15 @@ var c_cameravr = function () {
       this.scene.activeCameras.push(this.objOrtho);
       this.scene.activeCamera = this.obj;
       this.pickResult = null;
+
+      if (this.fpsUI) {
+        this.bodyEL = new CATAMARAN.core.DOM('body');
+        this.fpsUIWindow = document.createElement("fpswindow");
+        this.fpsUIWindow.open = true;
+        this.fpsUIWindow.classList.add('fpsUIWindow');
+        this.bodyEL.append(this.fpsUIWindow);
+        this.fpsUIWindow = new CATAMARAN.core.DOM('.fpsUIWindow');
+      }
       if (CATAMARAN.debug) {
         this.debug();
       }
@@ -1272,6 +1406,7 @@ var e_cameravr = function () {
 			this.cursor = new c_cursor(this._defaults);
 			this._defaults._cursor = this.cursor.obj;
 			this.camVR = new c_cameravr(this._defaults);
+			this.fpsUIWindow = this.camVR.fpsUIWindow;
 			this.material = new c_material(this._defaults);
 			this.cursor.material = this.material;
 			this.entity.addComponent(this.material);
@@ -1285,6 +1420,7 @@ var e_cameravr = function () {
 				_type: 'vrCamera',
 				e_type: 'e_cameravr',
 				_cursor: null,
+				_fpsUI: false,
 				_name: 'vrCamera',
 				_oneAxisRotation: true,
 				_position: '0,0,0',
@@ -1583,6 +1719,7 @@ var lsd = function () {
     this._crurrentScene;
     this._e_scene = new entities.e_scene();
     this._e_cameravr = null;
+    this.camera = null;
     this.world = new CES.World();
     this.world.addEntity(this._e_scene.entity);
     this.pickInterval = 1;
@@ -1663,7 +1800,9 @@ var lsd = function () {
       this._defaults._name = 'camera';
       this._defaults._canvas = this.canvas;
       this._defaults._position = new BABYLON.Vector3(0, 0, 0);
+      this._defaults._fpsUI = true;
       this._e_cameravr = new entities.e_cameravr(this._defaults);
+      this.camera = this._e_cameravr.camVR;
       this.world.addEntity(this._e_cameravr.entity);
       this.initSceneAnimation();
       this.initListners();
@@ -1672,6 +1811,8 @@ var lsd = function () {
     key: 'initSceneAnimation',
     value: function initSceneAnimation() {
       this.tick = 0.01;
+      // todo remove this only for debugging purposes
+      window.scene = this._crurrentScene;
       this._crurrentScene.getEngine().runRenderLoop(function () {
         this.tick += .01;
         window.tick = this.tick;
@@ -1679,6 +1820,9 @@ var lsd = function () {
           this._e_cameravr.cursor.rayPick();
         }
         if (this._crurrentScene.activeCamera) {
+          if (this.camera.fpsUI) {
+            this.camera.fpsUIWindow.text(parseInt(this._crurrentScene.getEngine().fps));
+          }
           this.world.update(this.tick);
           this._crurrentScene.render();
         }

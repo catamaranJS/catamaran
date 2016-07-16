@@ -24,6 +24,7 @@ class e_cameravr{
 			_type:'vrCamera',
 			e_type:'e_cameravr',
 			_cursor:null,
+			_fpsUI:false,
 			_name:'vrCamera',
 			_oneAxisRotation:true,
 			_position:'0,0,0',
@@ -47,6 +48,7 @@ class e_cameravr{
 		this.cursor = new c_cursor(this._defaults);
 		this._defaults._cursor = this.cursor.obj;
 		this.camVR = new c_cameravr(this._defaults);
+		this.fpsUIWindow = this.camVR.fpsUIWindow;
 		this.material = new c_material(this._defaults);
 		this.cursor.material = this.material;
 		this.entity.addComponent(this.material);
