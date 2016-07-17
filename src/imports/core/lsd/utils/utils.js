@@ -60,7 +60,7 @@ class utils{
 	      "_vOffset": 0,
 	      "_uOffset": 0,
 	      "_hasAlpha": false,
-	      "_diffuseColor": "125, 0, 127"
+	      "_diffuseColor": null
 	    }
 	}
 
@@ -127,7 +127,7 @@ class utils{
 		
 		for(let i = 0; i < _materials.length; i++){
 			if(_materials[i].name == _name){
-				if(typeof _materials[i]._diffuseColor != undefined){
+				if(typeof _materials[i]._diffuseColor != undefined && _materials[i]._diffuseColor != null){
 					_materials[i]._diffuseColor = this.getColor(_materials[i]._diffuseColor);
 				}
 				return _materials[i];

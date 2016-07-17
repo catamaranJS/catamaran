@@ -23,23 +23,16 @@ class e_cameravr{
 		return{
 			_type:'vrCamera',
 			e_type:'e_cameravr',
+			_layerMask: 0x0FFFFFFF,
+			_activeDialogLayer: 0x10000000,
 			_cursor:null,
 			_fpsUI:false,
 			_name:'vrCamera',
 			_oneAxisRotation:true,
 			_position:'0,0,0',
 			_rotation:'0,0,0',
-			_material:{
-				    _alpah:1.0,
-					_texture:null,
-					_uScale: 1.0,
-					_vScale: 1.0,
-					_backFaceCulling: true,
-					_vOffset: 0.0,
-					_uOffset: 0.0,
-					_hasAlpha:false,
-					_diffuseColor: '0,0,0',
-				},
+			_material:'default',
+			_canvas:null,
 			_scene:{},
 		}
 	}
@@ -48,6 +41,7 @@ class e_cameravr{
 		this.cursor = new c_cursor(this._defaults);
 		this._defaults._cursor = this.cursor.obj;
 		this.camVR = new c_cameravr(this._defaults);
+		this.camVR.cursorEnt = this.cursor;
 		this.fpsUIWindow = this.camVR.fpsUIWindow;
 		this.material = new c_material(this._defaults);
 		this.cursor.material = this.material;

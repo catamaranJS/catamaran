@@ -12,6 +12,7 @@ defaults._name = 'camera';
  class c_cameravr {
    constructor(_opts = defaults){
     this.modal = document.createElement('div');
+    this.cursorEnt = null;
     this.modal.classList.add('a-orientation-modal');
     this.modal.style.display = 'none';
     this.cursor = _opts._cursor;

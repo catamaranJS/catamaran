@@ -1,6 +1,7 @@
 var CES = require('ces');
 var utils = require('./utils/utils');
 var entities = require('./entities');
+var systems = require('./systems');
 var Request = require('../xhr/Request');
 
 
@@ -20,7 +21,6 @@ var Request = require('../xhr/Request');
  		this.camera = null;
  		this.world = new CES.World();
  		this.world.addEntity(this._e_scene.entity);
- 		this.pickInterval = 1;
  		this.canvas;
  		this._assets = [];
  		Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
@@ -50,14 +50,30 @@ var Request = require('../xhr/Request');
  		}.bind(this));
  	}
 
- 	loopEntites(_functionCall){
- 		for(let i = 0; i < this._data.entities.length; i++){
- 			_functionCall(i);
- 		}
+ 	loopJsonArr(_functionCall, _type = 'entities'){
+ 		switch(_type) {
+		    case 'entities':
+		        for(let i = 0; i < this._data.entities.length; i++){
+		 			_functionCall(i);
+		 		}
+		        break;
+		    case 'systems':
+		         for(let i = 0; i < this._data.systems.length; i++){
+		 			_functionCall(i);
+		 		}
+		        break;	        		        
+		    default:
+		     	for(let i = 0; i < this._data.entities.length; i++){
+		 			_functionCall(i);
+		 		}
+		
+		}
+ 		
  	}
 
  	setDefaultsAndMaterials(i){
  		this._data.entities[i].defaults._scene = this._crurrentScene;
+ 		this._data.entities[i].defaults._canvas = this.canvas;
  		try{
  			this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type+".defaults()"), this._data.entities[i].defaults);
  		}catch(e){
@@ -83,18 +99,21 @@ var Request = require('../xhr/Request');
  		}
  	}
 
- 	assetLoadingFinished(){
- 		
- 		this.loopEntites(this.setDefaultsAndMaterials.bind(this));
- 		this.loopEntites(this.setVectorsAndOtherDefaults.bind(this));
+ 	setSystems(i){
+ 		try{
+ 			this._data.systems[i].defaults._canvas = this.canvas;
+ 			this._data.systems[i].defaults._scene = this._crurrentScene;
+ 			this.world.addSystem( eval("new systems." + this._data.systems[i].defaults.s_type + "(this._data.systems[i].defaults)"));
+ 		}catch(e){
+ 			console.log(e + ' - error loading system');
+ 		}
+ 	}
 
- 		this._defaults._name = 'camera';
- 		this._defaults._canvas = this.canvas;
- 		this._defaults._position = new BABYLON.Vector3(0, 0, 0);
- 		this._defaults._fpsUI = true;
- 		this._e_cameravr = new entities.e_cameravr(this._defaults);
- 		this.camera = this._e_cameravr.camVR;
- 		this.world.addEntity(this._e_cameravr.entity);
+
+ 	assetLoadingFinished(){
+ 		this.loopJsonArr(this.setDefaultsAndMaterials.bind(this));
+ 		this.loopJsonArr(this.setVectorsAndOtherDefaults.bind(this));
+ 		this.loopJsonArr(this.setSystems.bind(this), 'systems');
  		this.initSceneAnimation();
  		this.initListners();
  	}
@@ -103,16 +122,11 @@ var Request = require('../xhr/Request');
  		this.tick = 0.01;
  		// todo remove this only for debugging purposes
  		window.scene = this._crurrentScene;
+ 		this.world._crurrentScene = this._crurrentScene;
  		this._crurrentScene.getEngine().runRenderLoop(function () {
  			this.tick += .01;
  			window.tick = this.tick;
- 			if(this.tick % this.pickInterval  <= 0.9 && this.tick % this.pickInterval  >= 0.89){
- 				this._e_cameravr.cursor.rayPick();
- 			}
  			if(this._crurrentScene.activeCamera){
- 				if(this.camera.fpsUI){
- 					this.camera.fpsUIWindow.text(parseInt(this._crurrentScene.getEngine().fps));
- 				}
  				this.world.update(this.tick);
  				this._crurrentScene.render();
  			}

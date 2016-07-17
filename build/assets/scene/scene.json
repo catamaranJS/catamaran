@@ -106,9 +106,33 @@
           
         }
       }
+    },
+
+    {
+      "defaults": {
+        "e_type": "e_cameravr",
+        "_position": "0,0,0",
+        "_rotation": "0,0,0",
+        "_cursor":null,
+        "_fpsUI":true,
+        "_name":"vrCamera",
+        "_oneAxisRotation":true,
+        "_position":"0,0,0",
+        "_rotation":"0,0,0",
+        "_scene": {
+        }
+      }
     }
   ],
   "systems": [
-    
+    {
+      "defaults":{
+        "s_type": "s_cameravr",
+        "_canvas": null,
+        "_scene": null,
+        "_pickInterval": 1,
+        "_world":null
+      }
+    }
   ]
 }
