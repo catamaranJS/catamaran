@@ -5,6 +5,7 @@ var e_cylinder = require('./e_cylinder.js');
 var e_light = require('./e_light.js');
 var e_scene = require('./e_scene.js');
 var e_camera = require('./e_camera.js');
+var e_multiuser = require('./e_multiuser.js');
 
 
 
@@ -15,6 +16,7 @@ module.exports = {
 	e_cylinder: e_cylinder,
 	e_light: e_light,
 	e_scene:e_scene,
+	e_multiuser:e_multiuser,
 	e_camera: e_camera
 
 };

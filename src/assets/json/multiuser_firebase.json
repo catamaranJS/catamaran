@@ -1,0 +1,36 @@
+{
+  "alers": [],
+  "users" : {
+    "-KKJW7eQG9G_SkkM7hSn" : {
+      "name" : "Brendon",
+      "position" : {
+        "x" : -12.149603143473861,
+        "y" : 10.01,
+        "z" : 13.314111561811025
+      },
+      "rotation" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 0
+      },
+      "routeID" : 0,
+      "sprite" : "assets/sprites/users.png",
+      "spriteID" : 60
+    },
+    "-KKJXTz4BDjniEtDSZL0" : {
+      "name" : "Dan",
+      "position" : {
+        "x" : -108.90307985351367,
+        "y" : 10.01,
+        "z" : -9.489590622572248
+      },
+      "rotation" : {
+        "x" : 0,
+        "y" : 0,
+        "z" : 0
+      },
+      "sprite" : "assets/sprites/users.png",
+      "spriteID" : 80
+    }
+  }
+}

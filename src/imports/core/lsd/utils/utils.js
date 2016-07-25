@@ -64,6 +64,50 @@ class utils{
 	    }
 	}
 
+
+	/**
+	 * generates a random item from an array and returns it
+	 * @param string _ScriptSrc: the script source you want to load 
+	 * @param function _Callback: the callback you want to exectute after load
+	 * @returns random item from given array
+	 */
+
+	static loadScript(_ScriptSrc, _Callback) {
+		var _Head =  document.querySelector('head');
+		var _Script = document.createElement('script');
+		_Script.type = 'text/javascript';
+		_Script.src = _ScriptSrc;
+			_Script.onload = _Callback;
+				_Script.onreadystatechange = function() {
+					if (this.readyState == 'complete') {
+					_Callback();
+					}
+				}
+		_Head.appendChild(_Script);
+	}
+
+
+	/**
+	 * generates a random item from an array and returns it
+	 * @param array The array you want a random item from
+	 * @returns random item from given array
+	 */
+
+	static randomArr(arr){
+        return arr[Math.floor(Math.random()*arr.length)];
+   	}
+
+   	/**
+	 * generates a random position from min and a max vector location
+	 * @param min the minimum number you want to assing to the vector
+	 * @param max the maximum number you want to assing to the vector
+	 * @returns a random number that is in between the min and max values
+	 */
+
+    static randomPos(min, max){
+        return Math.random() * (max - min) + min;
+    }
+
 	/**
 	 * generates guid
 	 */

@@ -122,7 +122,22 @@
         "_scene": {
         }
       }
+    },
+
+
+    {
+      "defaults": {
+        "e_type": "e_multiuser",
+        "_position": "0,0,0",
+        "_rotation": "0,0,0",
+        "_position":"0,0,0",
+        "_rotation":"0,0,0",
+        "_scene": {
+        }
+      }
     }
+
+
   ],
   "systems": [
     {
@@ -131,6 +146,14 @@
         "_canvas": null,
         "_scene": null,
         "_pickInterval": 1,
+        "_world":null
+      }
+    },
+    {
+      "defaults":{
+        "s_type": "s_multiuser",
+        "_canvas": null,
+        "_scene": null,
         "_world":null
       }
     }
