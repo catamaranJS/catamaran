@@ -9,6 +9,7 @@ defaults._name = 'multiuser';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
+
  class c_multiuser extends CES.Component{
   constructor(_opts = defaults){
     super();
@@ -45,7 +46,7 @@ defaults._name = 'multiuser';
 
   initSys(){
 
-    this.setUser(null, this.scene.activeCamera.position);
+    this.setUser(null, new BABYLON.Vector3(0, 0, 0));
 
     /*
     if( ! this.app._platform.is('android') ){
@@ -65,7 +66,7 @@ defaults._name = 'multiuser';
     }else{
       this.playerSprite.playAnimation(Math.abs( 20 - this.user.spriteID),  parseInt(this.user.spriteID), true, 100);
     }
-    this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
+    //this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
     this.playerSprite.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
     // this.scene.activeCamera.rotation = new BABYLON.Vector3(this.Data.user.rotation.x, this.Data.user.rotation.y, this.Data.user.rotation.z);
     this.sprites.push({sprite:this.playerSprite, key:this.currentUserKey});
