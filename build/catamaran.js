@@ -1223,6 +1223,8 @@ module.exports = c_mesh;
 },{"../lib/babylon":24,"../utils/utils":29,"ces":52}],12:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1257,6 +1259,7 @@ var c_multiuser = function (_CES$Component) {
     _this.firebaseRef = _opts._fbURL;
     _this.scene = _opts._scene;
     _this.sysInit = false;
+    _this.userInit = false;
     utils.loadScript("https://cdn.firebase.com/js/client/2.3.0/firebase.js", _this.setMultiUserData.bind(_this));
 
     return _this;
@@ -1270,7 +1273,8 @@ var c_multiuser = function (_CES$Component) {
       this.user = { name: null, position: { x: 0, y: 0, z: 0 }, rotation: { x: 0, y: 0, z: 0 }, sprite: null };
       this.currentUsers = [];
       this.fakeUser = ['Tom', 'Richard', 'Jane', 'John', 'Dan', 'Josh', 'Brendon', 'Emma', 'Peter'];
-      this.sprites = ['assets/sprites/users.png'];
+      this.spriteImg = 'assets/sprites/users.png';
+      this.sprites = [];
       this.Alerts = new Firebase(this.firebaseRef + 'alerts');
       this.currentAlerts = [];
       this.currentUserKey = null;
@@ -1296,7 +1300,7 @@ var c_multiuser = function (_CES$Component) {
       }
       */
 
-      this.spManager = new BABYLON.SpriteManager("userManager", this.user.sprite, 1000, 128, this.scene);
+      this.spManager = new BABYLON.SpriteManager("userManager", this.spriteImg, 1000, 128, this.scene);
       this.spManager.layerMask = 3;
       this.playerSprite = new BABYLON.Sprite("player", this.spManager);
       this.playerSprite.isPickable = true;
@@ -1323,11 +1327,14 @@ var c_multiuser = function (_CES$Component) {
         }.bind(this));
 
         this.users.on("child_added", function (userData) {
-          this.user[userData.key()] = userData.val();
-          if (userData.key() == 'spriteID') {
-            this.currentUsers.push(this.user);
-          }
+          //todo fix initial user
+          /* this.user[userData.key()] = userData.val();
+           if(userData.key() == 'spriteID'){
+             this.currentUsers.push(this.user);
+           }*/
           //
+          this.currentUsers.push({ data: userData.val(), key: userData.key() });
+          // setTimeout(this.addUsers.bind(this), 500)
         }.bind(this));
 
         this.users.on("child_changed", function (userData) {
@@ -1349,8 +1356,44 @@ var c_multiuser = function (_CES$Component) {
             }
           }.bind(this));
         }.bind(this));
+
+        this.sysInit = true;
+        setTimeout(function () {
+          this.addUsers();
+        }.bind(this), 500);
       }.bind(this));
-      this.sysInit = true;
+    }
+  }, {
+    key: 'addUsers',
+    value: function addUsers() {
+      for (var i = 0; i < this.currentUsers.length; i++) {
+        if (this.currentUsers[i].key != this.currentUserKey) {
+          this.generateUserSprites(this.currentUsers[i], i);
+        }
+      }
+      this.userInit = true;
+    }
+  }, {
+    key: 'generateUserSprites',
+    value: function generateUserSprites(_data, _id) {
+      var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 128, this.scene);
+      spriteManagerRider.layerMask = 3;
+      spriteManagerRider.texture = this.spManager.texture.clone();
+      var player = new BABYLON.Sprite(_data.key, spriteManagerRider);
+      player.isPickable = true;
+      if (_typeof(_data.data.position) != undefined) {
+        player.position = _data.data.position;
+      } else {
+        player.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
+      }
+      //player.rotation = _data.data.rotation;
+      player.size = 14.0;
+      if (_data.data.zombieMode) {
+        player.playAnimation(80, 100, true, 100);
+      } else {
+        player.playAnimation(Math.abs(20 - parseInt(_data.data.spriteID)), parseInt(_data.data.spriteID), true, 100);
+      }
+      this.sprites.push({ sprite: player, key: _data.key });
     }
   }, {
     key: 'deleteUser',
@@ -1404,7 +1447,7 @@ var c_multiuser = function (_CES$Component) {
 
       if (window.localStorage.getItem("vr_user") == null) {
         _pos.x = utils.randomPos(-85, 2);
-        _pos.y = 11;
+        _pos.y = 0;
         _pos.z = utils.randomPos(5, 15);
         var _username = null;
         if (this.user.name == null) {
@@ -1417,7 +1460,7 @@ var c_multiuser = function (_CES$Component) {
         } catch (e) {
           alert('please allow local storage please disable private mode');
         }
-        this.user = { name: _username, position: _pos, rotation: _pos, sprite: utils.randomArr(this.sprites), spriteID: utils.randomArr(this.spriteAnimations) };
+        this.user = { name: _username, position: _pos, rotation: _pos, sprite: this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
         this.users = this.users.push(this.user);
         this.currentUserKey = this.users.key();
         try {
@@ -2253,6 +2296,7 @@ var s_multiuser = function (_CES$System) {
 
         _this._opts = _opts;
         _this._entity = null;
+        _this._zombieModeEnabled = false;
         return _this;
     }
 
@@ -2262,15 +2306,20 @@ var s_multiuser = function (_CES$System) {
             var entities = this.world.getEntities('multiuser');
             entities.forEach(function (entity) {
                 this._entity = entity._components.$multiuser;
-
-                if (this.world._crurrentScene.activeCamera && this._entity.sysInit) {
+                if (this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit) {
                     this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
+
                     for (var i = 0; i < this._entity.currentUsers.length; i++) {
                         if (this._entity.currentUsers[i].key != this._entity.currentUserKey) {
                             if (!this.spriteDoesNotExist(this._entity.currentUsers[i].key, this._entity.sprites)) {
-                                this.generateUserSprites(this._entity.currentUsers[i], i);
+                                this._entity.generateUserSprites(this._entity.currentUsers[i], i);
                             } else {
-                                this.updateUserSprites(this._entity.currentUsers[i], i);
+                                if (this._entity.zombieMode) {
+                                    this._zombieModeEnabled = true;
+                                } else {
+                                    this._zombieModeEnabled = false;
+                                }
+                                this.updateUserSprites(this._entity.currentUsers[i]);
                             }
                         }
                     }
@@ -2297,30 +2346,14 @@ var s_multiuser = function (_CES$System) {
                     if (this._entity.zombieMode) {
                         this._entity.sprites[i].sprite.playAnimation(80, 100, true, 100);
                     } else {
-                        this._entity.sprites[i].sprite.playAnimation(Math.abs(20 - parseInt(_data.spriteID)), parseInt(_data.spriteID), true, 100);
+                        if (this._zombieModeEnabled) {
+                            this._entity.sprites[i].sprite.playAnimation(Math.abs(20 - parseInt(_data.data.spriteID)), parseInt(_data.data.spriteID), true, 100);
+                        }
                     }
-                    this._entity.sprites[i].sprite.position = _data.position;
+                    this._entity.sprites[i].sprite.position = _data.data.position;
                     break;
                 }
             }
-        }
-    }, {
-        key: 'generateUserSprites',
-        value: function generateUserSprites(_data, _id) {
-            var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.sprite, 1, 128, this.scene);
-            spriteManagerRider.layerMask = 3;
-            spriteManagerRider.texture = this._entity.spManager.texture.clone();
-            var player = new BABYLON.Sprite(_data.key, spriteManagerRider);
-            player.isPickable = true;
-            player.position = _data.position;
-            //player.rotation = _data.data.rotation;
-            player.size = 14.0;
-            if (_data.zombieMode) {
-                player.playAnimation(80, 100, true, 100);
-            } else {
-                player.playAnimation(Math.abs(20 - parseInt(_data.data.spriteID)), parseInt(_data.data.spriteID), true, 100);
-            }
-            this._entity.sprites.push({ sprite: player, key: _data.key });
         }
     }]);
 

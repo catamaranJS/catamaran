@@ -16,6 +16,7 @@ defaults._name = 'multiuser';
     this.firebaseRef = _opts._fbURL;
     this.scene =  _opts._scene;
     this.sysInit = false;
+    this.userInit = false;
     utils.loadScript("https://cdn.firebase.com/js/client/2.3.0/firebase.js", this.setMultiUserData.bind(this));
     
   }
@@ -26,7 +27,8 @@ defaults._name = 'multiuser';
     this.user = {name:null, position:{x:0, y:0, z:0}, rotation:{x:0, y:0, z:0}, sprite:null};
     this.currentUsers = [];
     this.fakeUser = ['Tom','Richard','Jane','John','Dan','Josh','Brendon','Emma','Peter'];
-    this.sprites = ['assets/sprites/users.png'];
+    this.spriteImg = 'assets/sprites/users.png';
+    this.sprites = [];
     this.Alerts = new Firebase(this.firebaseRef + 'alerts');
     this.currentAlerts = [];
     this.currentUserKey = null;
@@ -51,10 +53,12 @@ defaults._name = 'multiuser';
     }
     */
 
-    this.spManager  = new BABYLON.SpriteManager("userManager", this.user.sprite, 1000, 128, this.scene);
+    this.spManager  = new BABYLON.SpriteManager("userManager", this.spriteImg, 1000, 128, this.scene);
     this.spManager.layerMask = 3;
     this.playerSprite = new BABYLON.Sprite("player", this.spManager );
     this.playerSprite.isPickable = true;
+
+   
 
     if(this.zombieMode){
       this.playerSprite.playAnimation( 80,  100, true, 100);
@@ -78,11 +82,15 @@ defaults._name = 'multiuser';
     }.bind(this));
 
     this.users.on("child_added", function(userData) {
-      this.user[userData.key()] = userData.val();
+      //todo fix initial user
+     /* this.user[userData.key()] = userData.val();
       if(userData.key() == 'spriteID'){
         this.currentUsers.push(this.user);
-      }
+      }*/
     // 
+     this.currentUsers.push({data:userData.val(), key: userData.key()});
+    // setTimeout(this.addUsers.bind(this), 500)
+     
    }.bind(this));
 
     this.users.on("child_changed", function(userData) {
@@ -105,9 +113,42 @@ defaults._name = 'multiuser';
       }.bind(this));
     }.bind(this));
 
-
+    this.sysInit = true; 
+    setTimeout(function(){
+      this.addUsers();
+    }.bind(this), 500);
   }.bind(this));
-  this.sysInit = true; 
+}
+
+addUsers(){
+    for(let i = 0; i < this.currentUsers.length; i++){
+        if(this.currentUsers[i].key != this.currentUserKey){
+            this.generateUserSprites(this.currentUsers[i], i);
+        }
+    }
+    this.userInit = true;
+}
+
+
+generateUserSprites(_data, _id){
+    var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 128, this.scene);
+    spriteManagerRider.layerMask = 3;
+    spriteManagerRider.texture = this.spManager.texture.clone();
+    let player = new BABYLON.Sprite(_data.key, spriteManagerRider );
+    player.isPickable = true;
+    if(typeof  _data.data.position != undefined){
+      player.position = _data.data.position;
+    }else{
+      player.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
+    }
+    //player.rotation = _data.data.rotation;
+    player.size = 14.0;
+    if(_data.data.zombieMode){
+        player.playAnimation( 80,  100, true, 100);
+    }else{
+        player.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
+    }
+    this.sprites.push({sprite:player, key:_data.key});
 }
 
 deleteUser(_dkey){
@@ -155,7 +196,7 @@ deleteUser(_dkey){
 setUser(_user = {name: 'userName', position: {x:0, y:0, z:0}}, _pos = {} ){
   if(window.localStorage.getItem("vr_user") == null){
     _pos.x = utils.randomPos(-85, 2);
-    _pos.y = 11;
+    _pos.y = 0;
     _pos.z = utils.randomPos(5, 15);
     var _username = null;
     if(this.user.name == null){
@@ -168,7 +209,7 @@ setUser(_user = {name: 'userName', position: {x:0, y:0, z:0}}, _pos = {} ){
     }catch(e){
       alert('please allow local storage please disable private mode');
     }
-    this.user = {name:_username, position: _pos, rotation: _pos, sprite:utils.randomArr(this.sprites), spriteID: utils.randomArr(this.spriteAnimations) };
+    this.user = {name:_username, position: _pos, rotation: _pos, sprite:this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
     this.users = this.users.push( this.user);  
     this.currentUserKey = this.users.key();
     try{
@@ -189,7 +230,6 @@ updateUser(position, rotation){
         if(this.user.name != null){
           this.users.set({name: this.user.name, position: position, rotation: rotation, sprite: this.user.sprite, spriteID: this.user.spriteID });
         }
-        
       }
   }
 }
