@@ -20,6 +20,7 @@ var BABYLON = require('../lib/babylon');
       var entities = this.world.getEntities('multiuser');
       entities.forEach(function (entity) {
         this._entity  = entity._components.$multiuser;
+        this.world._multiuserInit = this._entity.sysInit;
         if(this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit){
             this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
             

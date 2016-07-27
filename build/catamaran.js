@@ -1292,7 +1292,7 @@ var c_multiuser = function (_CES$Component) {
     key: 'initSys',
     value: function initSys() {
 
-      this.setUser(null, this.scene.activeCamera.position);
+      this.setUser(null, new BABYLON.Vector3(0, 0, 0));
 
       /*
       if( ! this.app._platform.is('android') ){
@@ -1310,7 +1310,7 @@ var c_multiuser = function (_CES$Component) {
       } else {
         this.playerSprite.playAnimation(Math.abs(20 - this.user.spriteID), parseInt(this.user.spriteID), true, 100);
       }
-      this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
+      //this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
       this.playerSprite.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
       // this.scene.activeCamera.rotation = new BABYLON.Vector3(this.Data.user.rotation.x, this.Data.user.rotation.y, this.Data.user.rotation.z);
       this.sprites.push({ sprite: this.playerSprite, key: this.currentUserKey });
@@ -1326,17 +1326,6 @@ var c_multiuser = function (_CES$Component) {
           }.bind(this));
         }.bind(this));
 
-        this.users.on("child_added", function (userData) {
-          //todo fix initial user
-          /* this.user[userData.key()] = userData.val();
-           if(userData.key() == 'spriteID'){
-             this.currentUsers.push(this.user);
-           }*/
-          //
-          this.currentUsers.push({ data: userData.val(), key: userData.key() });
-          // setTimeout(this.addUsers.bind(this), 500)
-        }.bind(this));
-
         this.users.on("child_changed", function (userData) {
           for (var i = 0; i < this.currentUsers.length; i++) {
             if (userData.key() == this.currentUsers[i].key) {
@@ -1346,15 +1335,7 @@ var c_multiuser = function (_CES$Component) {
         }.bind(this));
 
         this.users.once("value", function (userData) {
-          userData.forEach(function (data) {
-            if (window.localStorage.getItem("vr_user_key") != null && data.key() == window.localStorage.getItem("vr_user_key")) {
-              this.user = data.val();
-              this.currentUserKey = data.key();
-              this.userToUpdate += data.key();
-              this.userToUpdate = new Firebase(this.userToUpdate);
-              this.isCurrentlyUsing = true;
-            }
-          }.bind(this));
+          this.checkUsers(userData);
         }.bind(this));
 
         this.sysInit = true;
@@ -1372,6 +1353,28 @@ var c_multiuser = function (_CES$Component) {
         }
       }
       this.userInit = true;
+    }
+  }, {
+    key: 'checkUsers',
+    value: function checkUsers(userData) {
+      var userHaveLoaded = false;
+      userData.forEach(function (data) {
+        if (window.localStorage.getItem("vr_user_key") != null && data.key() == window.localStorage.getItem("vr_user_key")) {
+          this.user = data.val();
+          this.currentUserKey = data.key();
+          this.userToUpdate += data.key();
+          this.userToUpdate = new Firebase(this.userToUpdate);
+          this.isCurrentlyUsing = true;
+        }
+        if (data.val().name != undefined && data.val().position != undefined && data.val().rotation != undefined && data.val().sprite != undefined && data.val().spriteID != undefined) {
+          if (!userHaveLoaded) {
+            userHaveLoaded = true;
+            userData.forEach(function (data) {
+              this.currentUsers.push({ data: data.val(), key: data.key() });
+            }.bind(this));
+          }
+        }
+      }.bind(this));
     }
   }, {
     key: 'generateUserSprites',
@@ -1460,7 +1463,12 @@ var c_multiuser = function (_CES$Component) {
         } catch (e) {
           alert('please allow local storage please disable private mode');
         }
-        this.user = { name: _username, position: _pos, rotation: _pos, sprite: this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
+        this.user = { name: _username, position: _pos, rotation: new BABYLON.Vector3(0, 0, 0), sprite: this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
+
+        this.users.once("value", function (userData) {
+          this.checkUsers(userData);
+        }.bind(this));
+
         this.users = this.users.push(this.user);
         this.currentUserKey = this.users.key();
         try {
@@ -2168,11 +2176,12 @@ var lsd = function () {
       // todo remove this only for debugging purposes
       window.scene = this._crurrentScene;
       this.world._crurrentScene = this._crurrentScene;
+      this.world._multiuserInit = false;
       this._crurrentScene.getEngine().runRenderLoop(function () {
         this.tick += .01;
         window.tick = this.tick;
-        if (this._crurrentScene.activeCamera) {
-          this.world.update(this.tick);
+        this.world.update(this.tick);
+        if (this._crurrentScene.activeCamera && this.world._multiuserInit) {
           this._crurrentScene.render();
         }
       }.bind(this));
@@ -2306,6 +2315,7 @@ var s_multiuser = function (_CES$System) {
             var entities = this.world.getEntities('multiuser');
             entities.forEach(function (entity) {
                 this._entity = entity._components.$multiuser;
+                this.world._multiuserInit = this._entity.sysInit;
                 if (this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit) {
                     this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
 

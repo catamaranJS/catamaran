@@ -82,18 +82,6 @@ defaults._name = 'multiuser';
       }.bind(this));
     }.bind(this));
 
-    this.users.on("child_added", function(userData) {
-      //todo fix initial user
-     /* this.user[userData.key()] = userData.val();
-      if(userData.key() == 'spriteID'){
-        this.currentUsers.push(this.user);
-      }*/
-    // 
-     this.currentUsers.push({data:userData.val(), key: userData.key()});
-    // setTimeout(this.addUsers.bind(this), 500)
-     
-   }.bind(this));
-
     this.users.on("child_changed", function(userData) {
       for(let i = 0; i < this.currentUsers.length; i++){
         if(userData.key() == this.currentUsers[i].key){
@@ -103,15 +91,7 @@ defaults._name = 'multiuser';
    }.bind(this));
 
     this.users.once("value", function(userData) {
-      userData.forEach(function(data) {
-        if(window.localStorage.getItem("vr_user_key") != null && data.key() == window.localStorage.getItem("vr_user_key") ){
-          this.user = data.val();
-          this.currentUserKey = data.key();
-          this.userToUpdate +=  data.key();
-          this.userToUpdate = new Firebase(this.userToUpdate);
-          this.isCurrentlyUsing = true;
-        } 
-      }.bind(this));
+        this.checkUsers(userData);
     }.bind(this));
 
     this.sysInit = true; 
@@ -130,6 +110,26 @@ addUsers(){
     this.userInit = true;
 }
 
+checkUsers(userData){
+  var userHaveLoaded = false;
+      userData.forEach(function(data) {
+        if(window.localStorage.getItem("vr_user_key") != null && data.key() == window.localStorage.getItem("vr_user_key") ){
+          this.user = data.val();
+          this.currentUserKey = data.key();
+          this.userToUpdate +=  data.key();
+          this.userToUpdate = new Firebase(this.userToUpdate);
+          this.isCurrentlyUsing = true;
+        }
+        if(data.val().name != undefined && data.val().position != undefined && data.val().rotation != undefined && data.val().sprite != undefined && data.val().spriteID != undefined){
+          if(!userHaveLoaded){
+              userHaveLoaded = true;
+              userData.forEach(function(data) {
+               this.currentUsers.push({data:data.val(), key: data.key()});
+              }.bind(this));
+          }  
+        }
+      }.bind(this));
+}
 
 generateUserSprites(_data, _id){
     var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 128, this.scene);
@@ -210,7 +210,13 @@ setUser(_user = {name: 'userName', position: {x:0, y:0, z:0}}, _pos = {} ){
     }catch(e){
       alert('please allow local storage please disable private mode');
     }
-    this.user = {name:_username, position: _pos, rotation: _pos, sprite:this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
+    this.user = {name:_username, position: _pos, rotation: new BABYLON.Vector3(0, 0, 0), sprite:this.spriteImg, spriteID: utils.randomArr(this.spriteAnimations) };
+
+    this.users.once("value", function(userData) {
+        this.checkUsers(userData);
+    }.bind(this));
+
+
     this.users = this.users.push( this.user);  
     this.currentUserKey = this.users.key();
     try{

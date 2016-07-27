@@ -123,11 +123,12 @@ var Request = require('../xhr/Request');
  		// todo remove this only for debugging purposes
  		window.scene = this._crurrentScene;
  		this.world._crurrentScene = this._crurrentScene;
+ 		this.world._multiuserInit = false;
  		this._crurrentScene.getEngine().runRenderLoop(function () {
  			this.tick += .01;
  			window.tick = this.tick;
- 			if(this._crurrentScene.activeCamera){
- 				this.world.update(this.tick);
+ 			this.world.update(this.tick);
+ 			if(this._crurrentScene.activeCamera && this.world._multiuserInit){
  				this._crurrentScene.render();
  			}
  		}.bind(this));
