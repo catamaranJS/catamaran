@@ -3,7 +3,7 @@ var utils = require('./utils/utils');
 var entities = require('./entities');
 var systems = require('./systems');
 var Request = require('../xhr/Request');
-
+var BABYLON = require('../lib/babylon');
 
 /**
  * ...
@@ -134,5 +134,16 @@ var Request = require('../xhr/Request');
  			}
  		}.bind(this));
  	}
+
+ 	//below this is code that should eventually be eliminiated only for hackathon purposes
+
+ 	initSound(){
+ 		console.log(window._sharedData);
+ 		if(window._sharedData.Sound != null){
+ 			this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL);
+ 		}
+ 	}
+
+
  }
  module.exports = lsd;
