@@ -24,6 +24,7 @@ class e_cameravr{
 			_type:'vrCamera',
 			e_type:'e_cameravr',
 			_layerMask: 0x0FFFFFFF,
+			_hasModal:false,
 			_activeDialogLayer: 0x10000000,
 			_cursor:null,
 			_fpsUI:false,

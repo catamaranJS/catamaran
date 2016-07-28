@@ -37,7 +37,7 @@ var Catamaran = function () {
     */
 
     function Catamaran() {
-        var opts = arguments.length <= 0 || arguments[0] === undefined ? { usesBabylon: false, usesPhaser: false, components: { carousel: false, nav: true }, vendor: { waypoints: false, routie: false, tap: true } } : arguments[0];
+        var opts = arguments.length <= 0 || arguments[0] === undefined ? { _lsd: { enabled: true, _appendEL: document.body }, usesPhaser: false, components: { carousel: false, nav: true }, vendor: { waypoints: false, routie: false, tap: true } } : arguments[0];
 
         _classCallCheck(this, Catamaran);
 
@@ -47,8 +47,8 @@ var Catamaran = function () {
         this.debug = true;
         this.core.Events = Events;
         this.core.DOM = DOM;
-        if (opts.usesBabylon) {
-            this.core.lsd = new lsd();
+        if (opts._lsd.enabled) {
+            this.core.lsd = new lsd(opts._lsd._appendEL);
         }
 
         this.ui.Animation = new Animation();
@@ -637,14 +637,18 @@ var c_cameravr = function () {
 
     _classCallCheck(this, c_cameravr);
 
-    this.modal = document.createElement('div');
+    this.rotationModal = _opts._hasModal;
+    if (this.rotationModal) {
+      this.modal = document.createElement('div');
+      this.modal.classList.add('a-orientation-modal');
+      this.modal.style.display = 'none';
+      document.body.appendChild(this.modal);
+    }
+
     this.cursorEnt = null;
-    this.modal.classList.add('a-orientation-modal');
-    this.modal.style.display = 'none';
     this.cursor = _opts._cursor;
     this.cursorVR1 = _opts._cursorVR1;
     this.cursorVR2 = _opts._cursorVR2;
-    document.body.appendChild(this.modal);
     this.canvasList = null;
     this.name = _opts._name;
     this.opts = _opts;
@@ -667,7 +671,9 @@ var c_cameravr = function () {
       this.initVR();
     } else {
       this.toggleCanvas();
-      this.modal.style.display = 'block';
+      if (this.rotationModal) {
+        this.modal.style.display = 'block';
+      }
     }
     this.setListners();
     this.options = {
@@ -779,10 +785,15 @@ var c_cameravr = function () {
           this.initVR();
         }
         this.landscapeMode = true;
-        this.modal.style.display = 'none';
+        if (this.rotationModal) {
+          this.modal.style.display = 'none';
+        }
       } else {
+
         this.toggleCanvas();
-        this.modal.style.display = 'block';
+        if (this.rotationModal) {
+          this.modal.style.display = 'block';
+        }
         this.landscapeMode = false;
       }
       this.setCanvasTouch();
@@ -851,11 +862,14 @@ var c_canvas = function () {
 	function c_canvas() {
 		var _name = arguments.length <= 0 || arguments[0] === undefined ? 'canvas' : arguments[0];
 
+		var _opts = arguments[1];
+
 		_classCallCheck(this, c_canvas);
 
 		this.name = _name;
 		this.canvas = document.createElement('canvas');
-		document.body.appendChild(this.canvas);
+		this._appendEL = _opts._appendEL;
+		this._appendEL.appendChild(this.canvas);
 		this.canvas.style.width = document.documentElement.clientWidth + 'px';
 		this.canvas.style.height = document.documentElement.clientHeight + 'px';
 		this.canvas.style.display = 'block';
@@ -1703,6 +1717,7 @@ var e_cameravr = function () {
 				_type: 'vrCamera',
 				e_type: 'e_cameravr',
 				_layerMask: 0x0FFFFFFF,
+				_hasModal: false,
 				_activeDialogLayer: 0x10000000,
 				_cursor: null,
 				_fpsUI: false,
@@ -1996,10 +2011,12 @@ var c_scene = require('../components/c_scene');
  */
 
 var e_scene = function e_scene() {
+	var _opts = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
 	_classCallCheck(this, e_scene);
 
 	this.entity = new CES.Entity();
-	this.entity.addComponent(new c_canvas('canvas'));
+	this.entity.addComponent(new c_canvas('canvas', _opts));
 	this.entity.addComponent(new c_scene('scene'));
 	this.canvas = this.entity._components.$canvas;
 	this.scene = this.entity._components.$scene;
@@ -2055,12 +2072,15 @@ var Request = require('../xhr/Request');
 
 var lsd = function () {
   function lsd() {
+    var _appendEl = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
+
     _classCallCheck(this, lsd);
 
     this._defaults = utils.defaultArgs();
+    this._defaults._appendEL = _appendEl;
     this._data = null;
     this._crurrentScene;
-    this._e_scene = new entities.e_scene();
+    this._e_scene = new entities.e_scene(this._defaults);
     this._e_cameravr = null;
     this.camera = null;
     this.world = new CES.World();
@@ -2402,6 +2422,8 @@ var utils = function () {
 			var _defaults = {
 				_name: null,
 				_cursor: null,
+				_hadModal: false,
+				_appendEL: null,
 				_cursorVR1: null,
 				_cursorVR2: null,
 				_layerMask: 0x0FFFFFFF,

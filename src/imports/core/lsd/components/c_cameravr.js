@@ -11,14 +11,18 @@ defaults._name = 'camera';
  */
  class c_cameravr {
    constructor(_opts = defaults){
-    this.modal = document.createElement('div');
+    this.rotationModal = _opts._hasModal;
+    if(this.rotationModal){
+      this.modal = document.createElement('div');
+      this.modal.classList.add('a-orientation-modal');
+      this.modal.style.display = 'none';
+      document.body.appendChild(this.modal);
+    }
+    
     this.cursorEnt = null;
-    this.modal.classList.add('a-orientation-modal');
-    this.modal.style.display = 'none';
     this.cursor = _opts._cursor;
     this.cursorVR1 = _opts._cursorVR1;
     this.cursorVR2 = _opts._cursorVR2;
-    document.body.appendChild(this.modal);
     this.canvasList = null;
     this.name = _opts._name;
     this.opts = _opts;
@@ -41,7 +45,10 @@ defaults._name = 'camera';
      this.initVR();
    }else{
      this.toggleCanvas();
-     this.modal.style.display = 'block';
+     if(this.rotationModal){
+      this.modal.style.display = 'block';
+     }
+     
    }
    this.setListners();
    this.options = {
@@ -148,11 +155,17 @@ toggle() {
                 this.initVR();
               }
               this.landscapeMode = true;
-              this.modal.style.display = 'none';
+              if(this.rotationModal){
+                this.modal.style.display = 'none';
+              }
             } else {
-             this.toggleCanvas();
-             this.modal.style.display = 'block';
-             this.landscapeMode = false;
+             
+               this.toggleCanvas();
+               if(this.rotationModal){
+                  this.modal.style.display = 'block';
+                }
+               this.landscapeMode = false;
+             
            }
            this.setCanvasTouch();
            this.scene.getEngine().resize();

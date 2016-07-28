@@ -30,7 +30,7 @@ class Catamaran {
    * @constructor
    * @param {object} default object sent to setup various options.
    */
-    constructor(opts = {usesBabylon:false, usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
+    constructor(opts = {_lsd:{enabled:true, _appendEL:document.body}, usesPhaser:false, components:{carousel:false, nav:true}, vendor:{waypoints:false, routie:false, tap:true}}){
 
 
        this.core = {interval:{}};
@@ -39,8 +39,8 @@ class Catamaran {
        this.debug = true;
        this.core.Events = Events;
        this.core.DOM = DOM;
-       if(opts.usesBabylon){
-          this.core.lsd = new lsd();
+       if(opts._lsd.enabled){
+          this.core.lsd = new lsd(opts._lsd._appendEL);
        }
        
        this.ui.Animation = new Animation();

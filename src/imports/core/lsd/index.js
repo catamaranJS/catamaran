@@ -12,11 +12,12 @@ var Request = require('../xhr/Request');
  * LightWeight 3D System Design engine
  */
  class lsd{
- 	constructor(){
+ 	constructor(_appendEl = document.body){
  		this._defaults = utils.defaultArgs();
+ 		this._defaults._appendEL = _appendEl;
  		this._data = null;
  		this._crurrentScene;
- 		this._e_scene = new entities.e_scene();
+ 		this._e_scene = new entities.e_scene(this._defaults);
  		this._e_cameravr = null;
  		this.camera = null;
  		this.world = new CES.World();

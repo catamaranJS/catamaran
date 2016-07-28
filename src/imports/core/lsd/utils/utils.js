@@ -14,6 +14,8 @@ class utils{
 		  { 
 				_name:null, 
 				_cursor: null,
+				_hadModal:false,
+				_appendEL:null,
 				_cursorVR1: null,
 				_cursorVR2: null,
 				_layerMask: 0x0FFFFFFF,

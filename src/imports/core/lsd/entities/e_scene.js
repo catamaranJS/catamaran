@@ -9,9 +9,9 @@ var c_scene = require('../components/c_scene');
  * LightWeight 3D System Design engine
  */
 class e_scene{
-	constructor(){
+	constructor(_opts = null){
 		this.entity = new CES.Entity();
-		this.entity.addComponent(new c_canvas('canvas'));
+		this.entity.addComponent(new c_canvas('canvas', _opts));
 		this.entity.addComponent(new c_scene('scene'));
 		this.canvas = this.entity._components.$canvas;
 		this.scene = this.entity._components.$scene;

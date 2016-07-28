@@ -7,10 +7,11 @@ var BABYLON = require('../lib/babylon');
  * LightWeight 3D System Design engine
  */
 class c_canvas {
-	constructor(_name = 'canvas'){
+	constructor(_name = 'canvas', _opts){
 		this.name = _name;
 		this.canvas = document.createElement('canvas');
-		document.body.appendChild(this.canvas);
+		this._appendEL = _opts._appendEL;
+		this._appendEL.appendChild(this.canvas);
         this.canvas.style.width = document.documentElement.clientWidth + 'px';
         this.canvas.style.height = document.documentElement.clientHeight + 'px';
         this.canvas.style.display = 'block';
