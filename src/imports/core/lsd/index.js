@@ -3,7 +3,7 @@ var utils = require('./utils/utils');
 var entities = require('./entities');
 var systems = require('./systems');
 var Request = require('../xhr/Request');
-var BABYLON = require('../lib/babylon');
+var BABYLON = require('./lib/babylon');
 
 /**
  * ...
@@ -125,6 +125,7 @@ var BABYLON = require('../lib/babylon');
  		window.scene = this._crurrentScene;
  		this.world._crurrentScene = this._crurrentScene;
  		this.world._multiuserInit = false;
+ 		this.initSound();
  		this._crurrentScene.getEngine().runRenderLoop(function () {
  			this.tick += .01;
  			window.tick = this.tick;
@@ -138,9 +139,9 @@ var BABYLON = require('../lib/babylon');
  	//below this is code that should eventually be eliminiated only for hackathon purposes
 
  	initSound(){
- 		console.log(window._sharedData);
- 		if(window._sharedData.Sound != null){
- 			this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL);
+ 		
+ 		if(window._sharedData != undefined && window._sharedData.Sound != null){
+ 				this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL, this._crurrentScene, null, { loop: true, autoplay: true });
  		}
  	}
 

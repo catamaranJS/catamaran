@@ -2062,6 +2062,7 @@ var utils = require('./utils/utils');
 var entities = require('./entities');
 var systems = require('./systems');
 var Request = require('../xhr/Request');
+var BABYLON = require('./lib/babylon');
 
 /**
  * ...
@@ -2197,6 +2198,7 @@ var lsd = function () {
       window.scene = this._crurrentScene;
       this.world._crurrentScene = this._crurrentScene;
       this.world._multiuserInit = false;
+      this.initSound();
       this._crurrentScene.getEngine().runRenderLoop(function () {
         this.tick += .01;
         window.tick = this.tick;
@@ -2206,6 +2208,17 @@ var lsd = function () {
         }
       }.bind(this));
     }
+
+    //below this is code that should eventually be eliminiated only for hackathon purposes
+
+  }, {
+    key: 'initSound',
+    value: function initSound() {
+
+      if (window._sharedData != undefined && window._sharedData.Sound != null) {
+        this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL, this._crurrentScene, null, { loop: true, autoplay: true });
+      }
+    }
   }]);
 
   return lsd;
@@ -2213,7 +2226,7 @@ var lsd = function () {
 
 module.exports = lsd;
 
-},{"../xhr/Request":30,"./entities":22,"./systems":26,"./utils/utils":29,"ces":52}],24:[function(require,module,exports){
+},{"../xhr/Request":30,"./entities":22,"./lib/babylon":24,"./systems":26,"./utils/utils":29,"ces":52}],24:[function(require,module,exports){
 (function (global){
 'use strict';
 
