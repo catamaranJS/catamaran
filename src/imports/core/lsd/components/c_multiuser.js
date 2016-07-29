@@ -42,6 +42,8 @@ defaults._name = 'multiuser';
     this.playerSprite = null;
     this.spriteID = 20;
     this.initSys();
+
+    window.spManager = this.sprites;
   }
 
   initSys(){

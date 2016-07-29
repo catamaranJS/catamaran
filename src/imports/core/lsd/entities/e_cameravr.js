@@ -35,6 +35,7 @@ class e_cameravr{
 			_material:'default',
 			_canvas:null,
 			_scene:{},
+			_altScene:null,
 		}
 	}
 
@@ -47,7 +48,7 @@ class e_cameravr{
 		this.material = new c_material(this._defaults);
 		this.cursor.material = this.material;
 		this.entity.addComponent(this.material);
-		this.entity.addComponent(this.cursor);
+		//this.entity.addComponent(this.cursor);
 		this.entity.addComponent(this.camVR);
 	}
 

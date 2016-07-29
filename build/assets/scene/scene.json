@@ -1,10 +1,57 @@
 {
   "assets": [
     {
-      "name": "grass",
-      "src": "/assets/img/grass.jpg",
+      "name": "Star_trek_discovery_hero_878330_640x360",
+      "src": "/assets/img/Star_trek_discovery_hero_878330_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "CBS_STAR_TREK_REBOOT_sizzle_may_2016_final_834437_640x360",
+      "src":  "/assets/img/CBS_STAR_TREK_REBOOT_sizzle_may_2016_final_834437_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "CC2016_StarTrek_Panel_Full_720p_878467_640x360",
+      "src": "/assets/img/CC2016_StarTrek_Panel_Full_720p_878467_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "CC2016_StarTrek_Panel_clip_Promise_878430_640x360",
+      "src": "/assets/img/CC2016_StarTrek_Panel_clip_Promise_878430_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360",
+      "src": "/assets/img/CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "UTD_BTS_Stunts_HD_358144_640x360",
+      "src": "/assets/img/UTD_BTS_Stunts_HD_358144_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "UTD_BTS_Location_HD_353806_640x360",
+      "src": "/assets/img/UTD_BTS_Location_HD_353806_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "UTD_BTS_Paintings_v2_HD_351584_640x360",
+      "src": "/assets/img/UTD_BTS_Paintings_v2_HD_351584_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "UTD_BTS_VFX_v3_HD_640x360",
+      "src": "/assets/img/UTD_BTS_VFX_v3_HD_640x360.jpg",
+      "type": "image"
+    },
+    {
+      "name": "UTD_BTS_Stephen_King_v3_HD_640x360",
+      "src": "/assets/img/UTD_BTS_Stephen_King_v3_HD_640x360.jpg",
       "type": "image"
     }
+
+
   ],
   "materials": [
     {
@@ -44,63 +91,14 @@
       "_diffuseColor": "0,200,4"
     }
   ],
+
   "entities": [
-    {
-      "defaults": {
-        "e_type": "e_box",
-        "_layerMask": "0x0FFFFFFF",
-        "_size": 10,
-        "_type": "Box",
-        "_name": "box",
-        "_isPickable": true,
-        "_scaling": "0,0,0",
-        "_position": "0,0,15",
-        "_rotation": "0,0,0",
-        "_material": "pink",
-        "_scene": {
-          
-        }
-      }
-    },
-    {
-      "defaults": {
-        "e_type": "e_box",
-        "_layerMask": "0x0FFFFFFF",
-        "_size": 10,
-        "_type": "Box",
-        "_name": "boxblue",
-        "_isPickable": false,
-        "_scaling": "0,0,0",
-        "_position": "0,0,0",
-        "_rotation": "0,0,0",
-        "_material": "blue",
-        "_scene": {
-          
-        }
-      }
-    },
-    {
-      "defaults": {
-        "e_type": "e_cylinder",
-        "_layerMask": "0x0FFFFFFF",
-        "_type": "Cylinder",
-        "_name": "Cylinder",
-        "_isPickable": true,
-        "_scaling": "0,0,0",
-        "_position": "10,0,-15",
-        "_rotation": "0,180,0",
-        "_material": "green",
-        "_scene": {
-          
-        }
-      }
-    },
     {
       "defaults": {
         "e_type": "e_light",
         "_type": "Hemispheric",
         "_name": "Hemispheric",
-        "_position": "0,900,0",
+        "_position": "0,200,0",
         "_rotation": "0,0,0",
         "_scene": {
           
@@ -124,7 +122,6 @@
       }
     },
 
-
     {
       "defaults": {
         "e_type": "e_multiuser",
@@ -143,6 +140,7 @@
     {
       "defaults":{
         "s_type": "s_cameravr",
+         "_name": "cameravr",
         "_canvas": null,
         "_scene": null,
         "_pickInterval": 1,
@@ -157,5 +155,102 @@
         "_world":null
       }
     }
+  ],
+
+  "vidImports":[
+    {
+      "loc":"/assets/vid/Star_trek_discovery_hero_878330_640x360.mp4",
+      "key":"Star_trek_discovery_hero_878330_640x360"
+    },
+    {
+      "loc":"/assets/vid/CBS_STAR_TREK_REBOOT_sizzle_may_2016_final_834437_640x360.mp4",
+      "key":"CBS_STAR_TREK_REBOOT_sizzle_may_2016_final_834437_640x360"
+    },
+    {
+      "loc":"/assets/vid/CC2016_StarTrek_Panel_Full_720p_878467_640x360.mp4",
+      "key":"CC2016_StarTrek_Panel_Full_720p_878467_640x360"
+    },
+    {
+      "loc":"/assets/vid/CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360.mp4",
+      "key":"CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360"
+    },
+    {
+      "loc":"/assets/vid/CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360.mp4",
+      "key":"CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360"
+    },
+    {
+      "loc":"/assets/vid/UTD_BTS_Stunts_HD_358144_640x360.mp4",
+      "key":"UTD_BTS_Stunts_HD_358144_640x360"
+    },
+    {
+      "loc":"/assets/vid/UTD_BTS_Location_HD_353806_640x360.mp4",
+      "key":"UTD_BTS_Location_HD_353806_640x360"
+    },
+    {
+      "loc":"/assets/vid/UTD_BTS_Paintings_v2_HD_351584_640x360.mp4",
+      "key":"UTD_BTS_Paintings_v2_HD_351584_640x360"
+    },
+    {
+      "loc":"/assets/vid/UTD_BTS_VFX_v3_HD_640x360.mp4",
+      "key":"UTD_BTS_VFX_v3_HD_640x360"
+    },
+    {
+      "loc":"/assets/vid/UTD_BTS_Stephen_King_v3_HD_640x360.mp4",
+      "key":"UTD_BTS_Stephen_King_v3_HD_640x360"
+    }
+  ],
+
+  "videos": [
+    {
+        "title":"First Look - Test Flight of Star Trek's U.S.S. Discovery",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/XN8hDtlabJo1pFmfEw836K0_WLz8J67C/content.once",
+        "thumb": "Star_trek_discovery_hero_878330_640x360"
+    },
+    {
+        "title":"Star Trek Television Logo and First Look Teaser Revealed",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/UnACteDDxshm4ZuS_XsNTxvpMjzZtEaJ/content.once",
+        "thumb": "CBS_STAR_TREK_REBOOT_sizzle_may_2016_final_834437_640x360"
+    },
+    {
+        "title":"Watch The Entire Comic-Con 2016 Star Trek 50th Anniversary Panel",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/Wwk7YsXX_LReU5x1cLBsL9sF94OKxE4Z/content.once",
+        "thumb": "CC2016_StarTrek_Panel_Full_720p_878467_640x360"
+    },
+    {
+        "title":"What The Name Discovery Means To The New Star Trek Series",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/D86F6F44-BF95-A556-F93E-1B81A0A8DEF5/content.once",
+        "thumb": "CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360"
+    },
+    {
+        "title":"Star Trek Fans At Comic-Con Join Hands And Pledge To Honor The Legacy ...",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/D72565C9-9A90-5AD7-99DA-1B0B767874D3/content.once",
+        "thumb": "CC2016_ST_Bryan_Fuller_072316_v2_878470_640x360"
+    },
+    {
+        "title":"Stunts",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/q9lx1xeVFaQcPu1e5NGn2uaXiuMhKAvw/content.once",
+        "thumb": "UTD_BTS_Stunts_HD_358144_640x360"
+    },
+    {
+        "title":"Creating Chester's Mill",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/Xzt8rDJhk0zUgxrsm28rOWyQ5r44wBDW/content.once",
+        "thumb": "UTD_BTS_Location_HD_353806_640x360"
+    },
+    {
+        "title":"Paintings by Jack Bender",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/HzD0N9mofjRYvFldOArVhIr84E1Todsw/content.once",
+        "thumb": "UTD_BTS_Paintings_v2_HD_351584_640x360"
+    },
+    {
+        "title":"Special Effects",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/H8WZDfIdN1QUhuPg1MXeHUmO8fQsHhSq/content.once",
+        "thumb": "282434115755/UTD_BTS_VFX_v3_HD_640x360"
+    },
+    {
+        "title":"Stephen King",
+        "url": "http://once.unicornmedia.com/now/od/auto/c9cd5ffb-e591-4566-8141-d79c05703b80/a43b4194-1ef3-43bc-82ac-b132951060e0/1lsPKApSd0EbKKUUZzAkQPcBU6NISu_Z/content.once",
+        "thumb": "UTD_BTS_Stephen_King_v3_HD_640x360"
+    }
+
   ]
 }

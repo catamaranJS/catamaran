@@ -16,31 +16,36 @@ var BABYLON = require('../lib/babylon');
         this._zombieModeEnabled = false;
     }
 
+    
     update(dt){
-      var entities = this.world.getEntities('multiuser');
-      entities.forEach(function (entity) {
-        this._entity  = entity._components.$multiuser;
-        this.world._multiuserInit = this._entity.sysInit;
-        if(this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit){
-            this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
-            
-            for(let i = 0; i < this._entity.currentUsers.length; i++){
-                if(this._entity.currentUsers[i].key != this._entity.currentUserKey){
-                    if(! this.spriteDoesNotExist(this._entity.currentUsers[i].key, this._entity.sprites)){
-                        this._entity.generateUserSprites(this._entity.currentUsers[i], i);
-                    }else{
-                        if(this._entity.zombieMode){
-                            this._zombieModeEnabled = true;
-                        }else{
-                            this._zombieModeEnabled = false;
+      if(this.world.currentSceneInt == 0 && this.world.renderSprites){
+          var entities = this.world.getEntities('multiuser');
+              entities.forEach(function (entity) {
+                this._entity  = entity._components.$multiuser;
+                this.world._multiuserInit = this._entity.sysInit;
+                if(this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit){
+                    this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
+                    
+                    for(let i = 0; i < this._entity.currentUsers.length; i++){
+                        if(this._entity.currentUsers[i].key != this._entity.currentUserKey){
+                            if(! this.spriteDoesNotExist(this._entity.currentUsers[i].key, this._entity.sprites)){
+                                this._entity.generateUserSprites(this._entity.currentUsers[i], i);
+                            }else{
+                                if(this._entity.zombieMode){
+                                    this._zombieModeEnabled = true;
+                                }else{
+                                    this._zombieModeEnabled = false;
+                                }
+                                this.updateUserSprites(this._entity.currentUsers[i]);
+                            }
                         }
-                        this.updateUserSprites(this._entity.currentUsers[i]);
                     }
                 }
-            }
-        }
-    }.bind(this));
+            }.bind(this));
+      }  
+      
   }
+  
 
     spriteDoesNotExist(value, array) {
         var found = false;

@@ -177,7 +177,10 @@ toggle() {
          }
 
          rayPick(){
-           this.pickResult = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+            var _x = document.documentElement.clientWidth / 2;
+            var _y = document.documentElement.clientHeight / 2;
+
+           this.pickResult = this.scene.pick(_x, _y);
   	 	     //console.log(this.pickResult);
         }
 

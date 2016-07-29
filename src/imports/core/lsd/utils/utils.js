@@ -42,7 +42,8 @@ class utils{
 					_hasAlpha:false,
 					_diffuseColor: null,
 				},
-				_scene:{}
+				_scene:{},
+				_altScene:null
 			}
 		return _defaults;
 	}
