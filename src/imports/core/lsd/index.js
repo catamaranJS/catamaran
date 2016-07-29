@@ -60,6 +60,8 @@ var SphereUI = require('./ui/sphereui');
  		this.canvas.addEventListener('canvas_init', function (e) {
  			this.jsonAssets = this._data.assets;
  			this._crurrentScene = this._defaults._scene = this._e_scene.scene.scene;
+      this._crurrentScene.isVidScene = false;
+      
       this._crurrentScene.pickActions = this.pickResult.bind(this);
       //this._crurrentScene.pickWithRayAction = this.pickWithRayAction.bind(this);
       this._crurrentScene.pickTouchResultRay = this.pickTouchResultRay.bind(this);
@@ -221,32 +223,75 @@ var SphereUI = require('./ui/sphereui');
 
  	toggleMeshes(_state){
  		for(let i = 0; i < this._crurrentScene.meshes.length; i++){
- 			this._crurrentScene.meshes[i].isVisible = _state;
+      if(this._crurrentScene.meshes[i]._vidScene == undefined){
+        this._crurrentScene.meshes[i].isVisible = _state;
+      }else{
+        this._crurrentScene.meshes[i].isVisible = !_state;
+      }
+ 			
  		}
  	}
 
  	sceneVideo(videoID){
+    this._crurrentScene.isVidScene = true;
  		this.toggleMeshes(false);
  		_lsdengine._crurrentScene.spritesEnabled = false;
  		this._crurrentScene.activeCameras[0].position =  new BABYLON.Vector3(-0.8809513548279568, 0, -0.569289644689718);
     this._crurrentScene.activeCameras[0].rotation =  new BABYLON.Vector3( 0, 1.5091394112913126, 0);
- 		var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this._crurrentScene);
+ 		/*
+    var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this._crurrentScene);
  		var materialsphere = new BABYLON.StandardMaterial("texture2", this._crurrentScene);
  		materialsphere.diffuseColor = new BABYLON.Color3(0.49019607843137253, 0, 0.4980392156862745); //Red
     materialsphere.alpha = 0.3;
     materialsphere.backFaceCulling = false;
+    
     sphere.scaling = new BABYLON.Vector3(20,20,20);
     sphere.material = materialsphere;
+    sphere._vidScene = true;
+    */
     var videoTexture = new VideoTextureExtended("video", [babylonData.data.vidImports[0].loc], this._crurrentScene, false, false, 3);
     this._vidPlane = new CurveUI(this._crurrentScene, null, 'vid', function(){}, videoTexture);
     this._vidPlane.mesh.position = new BABYLON.Vector3(10, -1.8, 0);
     this._vidPlane.mesh.rotation = new BABYLON.Vector3(-1.5666,0,1.5);
     this._vidPlane.mesh.scaling = new BABYLON.Vector3(2,2,2);
     this._vidPlane.hitCount = 1;
-    window._vidPlane = this._vidPlane
+    this._vidPlane.mesh._vidScene = true;
+
+
+    this._vidPlaneToogleBtn = new CurveUI(this._crurrentScene, '/assets/img/btn_play_selected.png', '_vidPlaneToogleBtn', function(){});
+    this._vidPlaneToogleBtn.mesh.position = new BABYLON.Vector3(10, -3.5, 2);
+    this._vidPlaneToogleBtn.mesh.rotation = new BABYLON.Vector3(-1.5666,0,1.2);
+    this._vidPlaneToogleBtn.mesh.scaling = new BABYLON.Vector3(1,0.5,0.7);
+    this._vidPlaneToogleBtn.hitCount = 1;
+    this._vidPlaneToogleBtn.mesh._vidScene = true;
+
+      this._vidPlaneToogleBtn.actionManager = new BABYLON.ActionManager(this._crurrentScene);
+      this._vidPlaneToogleBtn.actionManager .registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
+         this.toggleVideoPlay();
+      }.bind(this)));
+
+
+
+    this._vidPlaneExitBtn = new CurveUI(this._crurrentScene, '/assets/img/btn_back_selected.png', 'exit', function(){});
+    this._vidPlaneExitBtn.mesh.position = new BABYLON.Vector3(10, -3.5, -2);
+    this._vidPlaneExitBtn.mesh.rotation = new BABYLON.Vector3(-1.5666,0,1.85);
+    this._vidPlaneExitBtn.mesh.scaling = new BABYLON.Vector3(1,0.5,0.7);
+    this._vidPlaneExitBtn.hitCount = 1;
+    this._vidPlaneExitBtn.mesh._vidScene = true;
+
+    this._vidPlaneExitBtn.actionManager = new BABYLON.ActionManager(this._crurrentScene);
+      this._vidPlaneExitBtn.actionManager .registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
+        this.exitsceneVideo();
+      }.bind(this)));
+
+
+
+
+
     }
 
  	exitsceneVideo(){
+    this._crurrentScene.isVidScene = false;
  		this.toggleMeshes(true);
  		_lsdengine._crurrentScene.spritesEnabled = true;
  	}
@@ -284,6 +329,7 @@ var SphereUI = require('./ui/sphereui');
  		this._activeScenes.push(this._crurrentScene);
  		this._activeScenes.push(this._crurrentSceneVid);
  		this.world._crurrentScene = this._crurrentScene;
+
  		this.world._multiuserInit = false;
  		this.initSound();
  		//this.initVidScene();
@@ -308,11 +354,12 @@ var SphereUI = require('./ui/sphereui');
     var radius = 60; 
     for(let i = 1; i < 36; i++){
        var plan = BABYLON.Mesh.CreatePlane("showPlane" + i , 5.0, this._crurrentScene);
+       plan.hitCount = 1;
        var materialPan = new BABYLON.StandardMaterial("textureMatPan" + i, this._crurrentScene);
        materialPan.diffuseTexture = new BABYLON.Texture("/assets/img/shImg"+i+".png", this._crurrentScene);
        materialPan.diffuseTexture.hasAlpha = true;//Has an alpha
-       materialPan.specularPower = 64;
        materialPan.backFaceCulling = false;
+       materialPan.specularPower = 64;
        materialPan.diffuseColor = new BABYLON.Color3(1.00, 1.00, 1.00);
        materialPan.emissiveColor = new BABYLON.Color3(0.99, 0.94, 0.94);
 
@@ -322,6 +369,7 @@ var SphereUI = require('./ui/sphereui');
        angle += step;
        plan.position.z = z;
        plan.position.x = x;
+       
        vecTarget.scaleToRef( plan.position, 20 );
        plan.lookAt(vecTarget); 
        this.showPlan.push(plan);
@@ -348,25 +396,62 @@ var SphereUI = require('./ui/sphereui');
 
 
   pickTouchResultRay(_item){
-    if(this._vidPlane != null && _item != null){
-        if(_item.id == this._vidPlane.mesh.id){
+    if(_item != null){
+        if( (this._vidPlane != null  && _item.id == this._vidPlane.mesh.id)){
             this._vidPlane.hitCount += 1;
             if(this._vidPlane.hitCount % 4 == 0){
               this.toggleVideoPlay();
-            }
-            
+            }   
         }
+        
+        //console.log(_item.id == "exit");
+        /*
+        if(_item.id.indexOf("exit") != -1){
+            this.exitsceneVideo();
+        }
+        */
+        
+
+        /*
+        if(_item.id.includes("showPlane")){
+          this.sceneVideo();
+        }
+
+        
+        */
+
     }
   }
 
 
 
   pickResult(_pick){
-    if(this._vidPlane != null && _pick != null){
+    if( _pick != null){
+      if(this._vidPlane != null){
         if(_pick.id == this._vidPlane.mesh.id){
             this.toggleVideoPlay();
         }
     }
+
+    if(_pick.id.includes("showPlane")){
+      _pick.hitCount += 1;
+      if(_pick.hitCount % 4 == 0){
+              this.sceneVideo();
+      } 
+    }
+
+    if(_pick.id == "exit"){
+        _pick.hitCount += 1;
+        if(_pick.hitCount % 4 == 0){
+             this.exitsceneVideo();
+      } 
+    }
+
+
+
+    }
+    
+
       
   }
 

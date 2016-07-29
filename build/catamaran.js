@@ -948,25 +948,32 @@ var c_cursor = function () {
 	}
 
 	_createClass(c_cursor, [{
-		key: 'rayPick',
-		value: function rayPick() {
+		key: 'clickPick',
+		value: function clickPick(e) {
+
 			var _x = document.documentElement.clientWidth / 2;
 			var _y = document.documentElement.clientHeight / 2;
 			this.pickResult = this.scene.pick(_x, _y);
 			this.scene.pickActions(this.pickResult.pickedMesh);
-			if (!CATAMARAN.isMobile()) {
-				var rayPick = BABYLON.Ray(this.scene.activeCameras[0].position, BABYLON.Vector3(0, 0, -1), 9000);
-				this.scene.pickWithRay(rayPick, this.scene.pickTouchResultRay);
-			}
+			//console.log(this.pickResult.pickedMesh);		
+		}
+	}, {
+		key: 'rayPick',
+		value: function rayPick() {
+			/*if(!CATAMARAN.isMobile() && this.scene.isVidScene){
+      	this.scene.pickWithRay(BABYLON.Ray(this.scene.activeCameras[0].position,  BABYLON.Vector3(0, 0, -1), 9000 ), this.scene.pickTouchResultRay);
+   }
+   */
+
 		}
 	}, {
 		key: 'touchPick',
 		value: function touchPick() {
-			var _x = document.documentElement.clientWidth / 2;
-			var _y = document.documentElement.clientHeight / 2;
-			this.pickResult = this.scene.pick(_x, _y);
-			this.scene.pickActions(this.pickResult.pickedMesh);
 			if (CATAMARAN.isMobile()) {
+				var _x = document.documentElement.clientWidth / 2;
+				var _y = document.documentElement.clientHeight / 2;
+				this.pickResult = this.scene.pick(_x, _y);
+				this.scene.pickActions(this.pickResult.pickedMesh);
 				var rayPick = BABYLON.Ray(this.scene.activeCameras[0].position, BABYLON.Vector3(0, 0, -1), 9000);
 				this.scene.pickWithRay(rayPick, this.scene.pickTouchResultRay);
 			}
@@ -974,11 +981,14 @@ var c_cursor = function () {
 	}, {
 		key: 'setListners',
 		value: function setListners() {
-			window.addEventListener('mousedown', this.rayPick.bind(this));
-			window.addEventListener('mouseup', this.rayPick.bind(this));
-			window.addEventListener('click', this.rayPick.bind(this));
-			window.addEventListener('touchstart', this.touchPick.bind(this));
-			window.addEventListener('touchend', this.touchPick.bind(this));
+			//window.addEventListener('mousedown', this.rayPick.bind(this));
+			//window.addEventListener('mouseup', this.rayPick.bind(this));
+
+			window.addEventListener('click', this.clickPick.bind(this));
+			if (CATAMARAN.isMobile()) {
+				window.addEventListener('touchstart', this.touchPick.bind(this));
+				window.addEventListener('touchend', this.touchPick.bind(this));
+			}
 		}
 	}]);
 
@@ -1339,17 +1349,18 @@ var c_multiuser = function (_CES$Component) {
       }
       */
 
-      this.spManager = new BABYLON.SpriteManager("userManager", this.spriteImg, 1000, 128, this.scene);
+      this.spManager = new BABYLON.SpriteManager("userManager", this.spriteImg, 1, 256, this.scene);
       this.spManager.layerMask = 3;
       this.playerSprite = new BABYLON.Sprite("player", this.spManager);
       this.playerSprite.isPickable = true;
+      this.playerSprite.cellIndex = parseInt(utils.randomPos(1, 10));
 
       if (this.zombieMode) {
-        this.playerSprite.playAnimation(80, 100, true, 100);
-      } else {
-        this.playerSprite.playAnimation(Math.abs(20 - this.user.spriteID), parseInt(this.user.spriteID), true, 100);
-      }
-      //this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
+        //this.playerSprite.playAnimation( 80,  100, true, 100);
+      } else {}
+        //this.playerSprite.playAnimation(Math.abs( 20 - this.user.spriteID),  parseInt(this.user.spriteID), true, 100);
+
+        //this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
       this.playerSprite.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
       // this.scene.activeCamera.rotation = new BABYLON.Vector3(this.Data.user.rotation.x, this.Data.user.rotation.y, this.Data.user.rotation.z);
       this.sprites.push({ sprite: this.playerSprite, key: this.currentUserKey });
@@ -1418,11 +1429,12 @@ var c_multiuser = function (_CES$Component) {
   }, {
     key: 'generateUserSprites',
     value: function generateUserSprites(_data, _id) {
-      var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 128, this.scene);
+      var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 256, this.scene);
       spriteManagerRider.layerMask = 3;
       spriteManagerRider.texture = this.spManager.texture.clone();
       var player = new BABYLON.Sprite(_data.key, spriteManagerRider);
       player.isPickable = true;
+      player.cellIndex = parseInt(utils.randomPos(1, 10));
       if (_typeof(_data.data.position) != undefined) {
         player.position = _data.data.position;
       } else {
@@ -1431,10 +1443,10 @@ var c_multiuser = function (_CES$Component) {
       //player.rotation = _data.data.rotation;
       player.size = 14.0;
       if (_data.data.zombieMode) {
-        player.playAnimation(80, 100, true, 100);
+        // player.playAnimation( 80,  100, true, 100);
       } else {
-        player.playAnimation(Math.abs(20 - parseInt(_data.data.spriteID)), parseInt(_data.data.spriteID), true, 100);
-      }
+          //player.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
+        }
       this.sprites.push({ sprite: player, key: _data.key });
     }
   }, {
@@ -2103,386 +2115,455 @@ var SphereUI = require('./ui/sphereui');
  */
 
 var lsd = function () {
-   function lsd() {
-      var _appendEl = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
+  function lsd() {
+    var _appendEl = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
 
-      _classCallCheck(this, lsd);
+    _classCallCheck(this, lsd);
 
-      this._defaults = utils.defaultArgs();
-      this._defaults._appendEL = _appendEl;
-      this._data = null;
-      this._crurrentScene;
-      this._e_scene = new entities.e_scene(this._defaults);
-      this._e_sceneVid = new entities.e_scene(this._defaults);
-      this._e_cameravr = null;
-      this.camera = null;
-      this.world = new CES.World();
-      this.world.addEntity(this._e_scene.entity);
-      this.world.addEntity(this._e_sceneVid.entity);
-      this.canvas;
-      this.teleporterScene = true;
-      this.altSceneCamInit = false;
-      this.currentScene = 0;
-      this._vidPlane = null;
-      this.renderSprites = true;
-      this._activeScenes = [];
-      this._assets = [];
-      Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
-   }
+    this._defaults = utils.defaultArgs();
+    this._defaults._appendEL = _appendEl;
+    this._data = null;
+    this._crurrentScene;
+    this._e_scene = new entities.e_scene(this._defaults);
+    this._e_sceneVid = new entities.e_scene(this._defaults);
+    this._e_cameravr = null;
+    this.camera = null;
+    this.world = new CES.World();
+    this.world.addEntity(this._e_scene.entity);
+    this.world.addEntity(this._e_sceneVid.entity);
+    this.canvas;
+    this.teleporterScene = true;
+    this.altSceneCamInit = false;
+    this.currentScene = 0;
+    this._vidPlane = null;
+    this.renderSprites = true;
+    this._activeScenes = [];
+    this._assets = [];
+    Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
+  }
 
-   _createClass(lsd, [{
-      key: 'fixCanvas',
-      value: function fixCanvas() {
-         var canvasList = document.querySelectorAll('canvas');
-         for (var i = 0; i < canvasList.length; i++) {
-            canvasList[i].setAttribute("touch-action", 'none');
-            canvasList[i].style.width = '';
-            canvasList[i].style.height = '';
-            canvasList[i].height = document.documentElement.clientHeight;
-            canvasList[i].width = document.documentElement.clientWidth;
-         }
+  _createClass(lsd, [{
+    key: 'fixCanvas',
+    value: function fixCanvas() {
+      var canvasList = document.querySelectorAll('canvas');
+      for (var i = 0; i < canvasList.length; i++) {
+        canvasList[i].setAttribute("touch-action", 'none');
+        canvasList[i].style.width = '';
+        canvasList[i].style.height = '';
+        canvasList[i].height = document.documentElement.clientHeight;
+        canvasList[i].width = document.documentElement.clientWidth;
       }
-   }, {
-      key: 'init',
-      value: function init() {
-         this.canvas = document.querySelector('canvas');
-         this.defaults = new Request("/assets/scene/scene.json", this.dataLoaded.bind(this));
-         window.babylonData = this.defaults;
-      }
-   }, {
-      key: 'dataLoaded',
-      value: function dataLoaded() {
-         this._data = this.defaults.data;
-         this.canvas.addEventListener('canvas_init', function (e) {
-            this.jsonAssets = this._data.assets;
-            this._crurrentScene = this._defaults._scene = this._e_scene.scene.scene;
-            this._crurrentScene.pickActions = this.pickResult.bind(this);
-            //this._crurrentScene.pickWithRayAction = this.pickWithRayAction.bind(this);
-            this._crurrentScene.pickTouchResultRay = this.pickTouchResultRay.bind(this);
-            this._crurrentSceneVid = this._e_sceneVid.scene.scene;
-            utils.assetsLoad.apply(this);
-         }.bind(this), false);
-      }
-   }, {
-      key: 'initListners',
-      value: function initListners() {
-         window.addEventListener("resize", function () {
-            this.fixCanvas();
-            this._crurrentScene.getEngine().resize();
-            //this._crurrentSceneVid.getEngine().resize();
-         }.bind(this));
-      }
-   }, {
-      key: 'loopJsonArr',
-      value: function loopJsonArr(_functionCall) {
-         var _type = arguments.length <= 1 || arguments[1] === undefined ? 'entities' : arguments[1];
+    }
+  }, {
+    key: 'init',
+    value: function init() {
+      this.canvas = document.querySelector('canvas');
+      this.defaults = new Request("/assets/scene/scene.json", this.dataLoaded.bind(this));
+      window.babylonData = this.defaults;
+    }
+  }, {
+    key: 'dataLoaded',
+    value: function dataLoaded() {
+      this._data = this.defaults.data;
+      this.canvas.addEventListener('canvas_init', function (e) {
+        this.jsonAssets = this._data.assets;
+        this._crurrentScene = this._defaults._scene = this._e_scene.scene.scene;
+        this._crurrentScene.isVidScene = false;
 
-         switch (_type) {
-            case 'entities':
-               for (var i = 0; i < this._data.entities.length; i++) {
-                  _functionCall(i);
-               }
-               break;
-            case 'systems':
-               for (var _i = 0; _i < this._data.systems.length; _i++) {
-                  _functionCall(_i);
-               }
-               break;
-            default:
-               for (var _i2 = 0; _i2 < this._data.entities.length; _i2++) {
-                  _functionCall(_i2);
-               }
+        this._crurrentScene.pickActions = this.pickResult.bind(this);
+        //this._crurrentScene.pickWithRayAction = this.pickWithRayAction.bind(this);
+        this._crurrentScene.pickTouchResultRay = this.pickTouchResultRay.bind(this);
+        this._crurrentSceneVid = this._e_sceneVid.scene.scene;
+        utils.assetsLoad.apply(this);
+      }.bind(this), false);
+    }
+  }, {
+    key: 'initListners',
+    value: function initListners() {
+      window.addEventListener("resize", function () {
+        this.fixCanvas();
+        this._crurrentScene.getEngine().resize();
+        //this._crurrentSceneVid.getEngine().resize();
+      }.bind(this));
+    }
+  }, {
+    key: 'loopJsonArr',
+    value: function loopJsonArr(_functionCall) {
+      var _type = arguments.length <= 1 || arguments[1] === undefined ? 'entities' : arguments[1];
 
-         }
-      }
-   }, {
-      key: 'setDefaultsAndMaterials',
-      value: function setDefaultsAndMaterials(i) {
-         this._data.entities[i].defaults._scene = this._crurrentScene;
-         this._data.entities[i].defaults._canvas = this.canvas;
-         try {
+      switch (_type) {
+        case 'entities':
+          for (var i = 0; i < this._data.entities.length; i++) {
+            _functionCall(i);
+          }
+          break;
+        case 'systems':
+          for (var _i = 0; _i < this._data.systems.length; _i++) {
+            _functionCall(_i);
+          }
+          break;
+        default:
+          for (var _i2 = 0; _i2 < this._data.entities.length; _i2++) {
+            _functionCall(_i2);
+          }
 
-            this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type + ".defaults()"), this._data.entities[i].defaults);
-         } catch (e) {
-            console.log(e + ' - error loading entity no defaults set');
-         }
       }
-   }, {
-      key: 'setVectorsAndOtherDefaults',
-      value: function setVectorsAndOtherDefaults(i) {
-         if (_typeof(this._data.entities[i].defaults._material) != undefined) {
-            this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
-         }
-         if (_typeof(this._data.entities[i].defaults._position) != undefined) {
-            this._data.entities[i].defaults._position = utils.getVector(this._data.entities[i].defaults._position);
-         }
-         if (_typeof(this._data.entities[i].defaults._rotation) != undefined) {
-            this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
-         }
-         try {
-            var ent = eval("new entities." + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
-            this.world.addEntity(ent.entity);
-         } catch (e) {
-            console.log(e + ' - error loading entity');
-         }
-      }
-   }, {
-      key: 'setSystems',
-      value: function setSystems(i) {
-         try {
-            this._data.systems[i].defaults._canvas = this.canvas;
-            this._data.systems[i].defaults._scene = this._crurrentScene;
-            this.world.addSystem(eval("new systems." + this._data.systems[i].defaults.s_type + "(this._data.systems[i].defaults)"));
-         } catch (e) {
-            console.log(e + ' - error loading system');
-         }
-      }
-   }, {
-      key: 'assetLoadingFinished',
-      value: function assetLoadingFinished() {
-         this.loopJsonArr(this.setDefaultsAndMaterials.bind(this));
-         this.loopJsonArr(this.setVectorsAndOtherDefaults.bind(this));
-         this.loopJsonArr(this.setSystems.bind(this), 'systems');
-         this.initSceneAnimation();
-         this.initListners();
-      }
-   }, {
-      key: 'initVidScene',
-      value: function initVidScene() {
-         if (!this.altSceneCamInit) {
-            var _defaults;
+    }
+  }, {
+    key: 'setDefaultsAndMaterials',
+    value: function setDefaultsAndMaterials(i) {
+      this._data.entities[i].defaults._scene = this._crurrentScene;
+      this._data.entities[i].defaults._canvas = this.canvas;
+      try {
 
-            this.altSceneCamInit = true;
-            var defaults = (_defaults = {
-               "e_type": "e_cameravr",
-               _layerMask: 0x0FFFFFFF,
-               _hasModal: false,
-               _activeDialogLayer: 0x10000000,
-               "_position": BABYLON.Vector3.Zero(),
-               "_rotation": BABYLON.Vector3.Zero(),
-               "_cursor": null,
-               "_fpsUI": false,
-               "_name": "altCamera",
-               "_oneAxisRotation": true
-            }, _defineProperty(_defaults, '_position', BABYLON.Vector3.Zero()), _defineProperty(_defaults, '_rotation', BABYLON.Vector3.Zero()), _defineProperty(_defaults, "_material", {
-               "name": "pink",
-               "_texture": null,
-               "_alpha": 1,
-               "_uScale": 1,
-               "_vScale": 1,
-               "_backFaceCulling": true,
-               "_vOffset": 0,
-               "_uOffset": 0,
-               "_hasAlpha": false,
-               "_diffuseColor": new BABYLON.Color3(125, 0, 127)
-            }), _defineProperty(_defaults, "_scene", this._crurrentSceneVid), _defaults);
-
-            var ecamVR = new entities.e_cameravr(defaults);
-            this.world.addEntity(ecamVR.entity);
-         }
-
-         var boxDefaults = {
-            "e_type": "e_box",
-            _layerMask: 0x0FFFFFFF,
-            _activeDialogLayer: 0x10000000,
-            "_size": 10,
-            "_type": "Box",
-            "_name": "box999",
-            "_isPickable": true,
-            "_scaling": BABYLON.Vector3.Zero(),
-            "_position": BABYLON.Vector3.Zero(),
-            "_rotation": BABYLON.Vector3.Zero(),
-            "_material": {
-               "name": "pink",
-               "_texture": null,
-               "_alpha": 1,
-               "_uScale": 1,
-               "_vScale": 1,
-               "_backFaceCulling": false,
-               "_vOffset": 0,
-               "_uOffset": 0,
-               "_hasAlpha": false,
-               "_diffuseColor": new BABYLON.Color3(125, 0, 127)
-            },
-            "_scene": this._crurrentSceneVid
-         };
-
-         var ebox = new entities.e_box(boxDefaults);
-
-         this._activeScenes[1].renderLoop = function () {
-            if (this._crurrentSceneVid.activeCamera && this.world._multiuserInit) {
-               this._crurrentSceneVid.render();
-            }
-         }.bind(this);
+        this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type + ".defaults()"), this._data.entities[i].defaults);
+      } catch (e) {
+        console.log(e + ' - error loading entity no defaults set');
       }
-   }, {
-      key: 'toggleMeshes',
-      value: function toggleMeshes(_state) {
-         for (var i = 0; i < this._crurrentScene.meshes.length; i++) {
-            this._crurrentScene.meshes[i].isVisible = _state;
-         }
+    }
+  }, {
+    key: 'setVectorsAndOtherDefaults',
+    value: function setVectorsAndOtherDefaults(i) {
+      if (_typeof(this._data.entities[i].defaults._material) != undefined) {
+        this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
       }
-   }, {
-      key: 'sceneVideo',
-      value: function sceneVideo(videoID) {
-         this.toggleMeshes(false);
-         _lsdengine._crurrentScene.spritesEnabled = false;
-         this._crurrentScene.activeCameras[0].position = new BABYLON.Vector3(-0.8809513548279568, 0, -0.569289644689718);
-         this._crurrentScene.activeCameras[0].rotation = new BABYLON.Vector3(0, 1.5091394112913126, 0);
-         var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this._crurrentScene);
-         var materialsphere = new BABYLON.StandardMaterial("texture2", this._crurrentScene);
-         materialsphere.diffuseColor = new BABYLON.Color3(0.49019607843137253, 0, 0.4980392156862745); //Red
-         materialsphere.alpha = 0.3;
-         materialsphere.backFaceCulling = false;
-         sphere.scaling = new BABYLON.Vector3(20, 20, 20);
-         sphere.material = materialsphere;
-         var videoTexture = new VideoTextureExtended("video", [babylonData.data.vidImports[0].loc], this._crurrentScene, false, false, 3);
-         this._vidPlane = new CurveUI(this._crurrentScene, null, 'vid', function () {}, videoTexture);
-         this._vidPlane.mesh.position = new BABYLON.Vector3(10, -1.8, 0);
-         this._vidPlane.mesh.rotation = new BABYLON.Vector3(-1.5666, 0, 1.5);
-         this._vidPlane.mesh.scaling = new BABYLON.Vector3(2, 2, 2);
-         this._vidPlane.hitCount = 1;
-         window._vidPlane = this._vidPlane;
+      if (_typeof(this._data.entities[i].defaults._position) != undefined) {
+        this._data.entities[i].defaults._position = utils.getVector(this._data.entities[i].defaults._position);
       }
-   }, {
-      key: 'exitsceneVideo',
-      value: function exitsceneVideo() {
-         this.toggleMeshes(true);
-         _lsdengine._crurrentScene.spritesEnabled = true;
+      if (_typeof(this._data.entities[i].defaults._rotation) != undefined) {
+        this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
       }
-   }, {
-      key: 'sceneTick',
-      value: function sceneTick() {
-         this.tick += .01;
-         window.tick = this.tick;
-         this.world.update(this.tick);
+      try {
+        var ent = eval("new entities." + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
+        this.world.addEntity(ent.entity);
+      } catch (e) {
+        console.log(e + ' - error loading entity');
       }
-   }, {
-      key: 'toggleScene',
-      value: function toggleScene() {
-         var _sceneInt = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+    }
+  }, {
+    key: 'setSystems',
+    value: function setSystems(i) {
+      try {
+        this._data.systems[i].defaults._canvas = this.canvas;
+        this._data.systems[i].defaults._scene = this._crurrentScene;
+        this.world.addSystem(eval("new systems." + this._data.systems[i].defaults.s_type + "(this._data.systems[i].defaults)"));
+      } catch (e) {
+        console.log(e + ' - error loading system');
+      }
+    }
+  }, {
+    key: 'assetLoadingFinished',
+    value: function assetLoadingFinished() {
+      this.loopJsonArr(this.setDefaultsAndMaterials.bind(this));
+      this.loopJsonArr(this.setVectorsAndOtherDefaults.bind(this));
+      this.loopJsonArr(this.setSystems.bind(this), 'systems');
+      this.initSceneAnimation();
+      this.initListners();
+    }
+  }, {
+    key: 'initVidScene',
+    value: function initVidScene() {
+      if (!this.altSceneCamInit) {
+        var _defaults;
 
-         this._engine.stopRenderLoop();
-         this.currentScene = _sceneInt;
-         setTimeout(function () {
-            this.sceneRunRenderLoop();
-         }.bind(this), 2000);
-      }
-   }, {
-      key: 'sceneRunRenderLoop',
-      value: function sceneRunRenderLoop() {
-         ;
-         this._engine.runRenderLoop(function () {
-            this.sceneTick();
-            this._activeScenes[this.currentScene].renderLoop();
-         }.bind(this));
-      }
-   }, {
-      key: 'initSceneAnimation',
-      value: function initSceneAnimation() {
-         this.tick = 0.01;
-         // todo remove this only for debugging purposes
-         window.scene = this._crurrentScene;
-         window.sceneVid = this._crurrentSceneVid;
-         window._lsdengine = this;
+        this.altSceneCamInit = true;
+        var defaults = (_defaults = {
+          "e_type": "e_cameravr",
+          _layerMask: 0x0FFFFFFF,
+          _hasModal: false,
+          _activeDialogLayer: 0x10000000,
+          "_position": BABYLON.Vector3.Zero(),
+          "_rotation": BABYLON.Vector3.Zero(),
+          "_cursor": null,
+          "_fpsUI": false,
+          "_name": "altCamera",
+          "_oneAxisRotation": true
+        }, _defineProperty(_defaults, '_position', BABYLON.Vector3.Zero()), _defineProperty(_defaults, '_rotation', BABYLON.Vector3.Zero()), _defineProperty(_defaults, "_material", {
+          "name": "pink",
+          "_texture": null,
+          "_alpha": 1,
+          "_uScale": 1,
+          "_vScale": 1,
+          "_backFaceCulling": true,
+          "_vOffset": 0,
+          "_uOffset": 0,
+          "_hasAlpha": false,
+          "_diffuseColor": new BABYLON.Color3(125, 0, 127)
+        }), _defineProperty(_defaults, "_scene", this._crurrentSceneVid), _defaults);
 
-         this._activeScenes.push(this._crurrentScene);
-         this._activeScenes.push(this._crurrentSceneVid);
-         this.world._crurrentScene = this._crurrentScene;
-         this.world._multiuserInit = false;
-         this.initSound();
-         //this.initVidScene();
-         this.world._crurrentSceneVid = this._crurrentSceneVid;
-         this.world.teleporterScene = this.teleporterScene;
-         this.world.currentSceneInt = this.currentScene;
-         this.world.renderSprites = this.renderSprites;
-
-         var thirySixShowRing = BABYLON.Mesh.CreateTorus("circle1", 30, 2, 36, this._crurrentScene, false);
-         thirySixShowRing.position = BABYLON.Vector3.Zero();
-         var materialsphereB = new BABYLON.StandardMaterial("texture2", this._crurrentScene);
-         materialsphereB.diffuseColor = new BABYLON.Color3(0.30196078431372547, 0.8666666666666667, 0.8941176470588236); //blue
-         materialsphereB.alpha = 0.2;
-         materialsphereB.backFaceCulling = false;
-         thirySixShowRing.scaling = new BABYLON.Vector3(8, 8, 8);
-         thirySixShowRing.rotation = new BABYLON.Vector3(0, 1.5708, 0);
-         thirySixShowRing.material = materialsphereB;
-         this.showPlan = [];
-         var vecTarget = BABYLON.Vector3.Zero();
-
-         var numElements = 36,
-             angle = 0,
-             step = 2 * Math.PI / numElements;
-         var radius = 60;
-         for (var i = 1; i < 36; i++) {
-            var plan = BABYLON.Mesh.CreatePlane("showPlane" + i, 5.0, this._crurrentScene);
-            var materialPan = new BABYLON.StandardMaterial("textureMatPan" + i, this._crurrentScene);
-            materialPan.diffuseTexture = new BABYLON.Texture("/assets/img/shImg" + i + ".png", this._crurrentScene);
-            materialPan.diffuseTexture.hasAlpha = true; //Has an alpha
-            materialPan.specularPower = 64;
-            materialPan.backFaceCulling = false;
-            materialPan.diffuseColor = new BABYLON.Color3(1.00, 1.00, 1.00);
-            materialPan.emissiveColor = new BABYLON.Color3(0.99, 0.94, 0.94);
-
-            plan.material = materialPan;
-            var x = 20 / 2 + radius * Math.cos(angle);
-            var z = 20 / 2 + radius * Math.sin(angle);
-            angle += step;
-            plan.position.z = z;
-            plan.position.x = x;
-            vecTarget.scaleToRef(plan.position, 20);
-            plan.lookAt(vecTarget);
-            this.showPlan.push(plan);
-         }
-
-         this._activeScenes[0].renderLoop = function () {
-            if (this._crurrentScene.activeCamera && this.world._multiuserInit) {
-               this._crurrentScene.render();
-            }
-         }.bind(this);
-         this._engine = this._crurrentScene.getEngine();
-         this.sceneRunRenderLoop();
+        var ecamVR = new entities.e_cameravr(defaults);
+        this.world.addEntity(ecamVR.entity);
       }
-   }, {
-      key: 'toggleVideoPlay',
-      value: function toggleVideoPlay() {
-         if (this._vidPlane.mesh.material.diffuseTexture.video.isPlaying) {
-            this._vidPlane.mesh.material.diffuseTexture.video.pause();
-         } else {
-            this._vidPlane.mesh.material.diffuseTexture.video.play();
-         }
-      }
-   }, {
-      key: 'pickTouchResultRay',
-      value: function pickTouchResultRay(_item) {
-         if (this._vidPlane != null && _item != null) {
-            if (_item.id == this._vidPlane.mesh.id) {
-               this._vidPlane.hitCount += 1;
-               if (this._vidPlane.hitCount % 4 == 0) {
-                  this.toggleVideoPlay();
-               }
-            }
-         }
-      }
-   }, {
-      key: 'pickResult',
-      value: function pickResult(_pick) {
-         if (this._vidPlane != null && _pick != null) {
-            if (_pick.id == this._vidPlane.mesh.id) {
-               this.toggleVideoPlay();
-            }
-         }
-      }
-   }, {
-      key: 'initSound',
-      value: function initSound() {
 
-         if (window._sharedData != undefined && window._sharedData.Sound != null) {
-            this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL, this._crurrentScene, null, { loop: true, autoplay: true });
-         }
-      }
-   }]);
+      var boxDefaults = {
+        "e_type": "e_box",
+        _layerMask: 0x0FFFFFFF,
+        _activeDialogLayer: 0x10000000,
+        "_size": 10,
+        "_type": "Box",
+        "_name": "box999",
+        "_isPickable": true,
+        "_scaling": BABYLON.Vector3.Zero(),
+        "_position": BABYLON.Vector3.Zero(),
+        "_rotation": BABYLON.Vector3.Zero(),
+        "_material": {
+          "name": "pink",
+          "_texture": null,
+          "_alpha": 1,
+          "_uScale": 1,
+          "_vScale": 1,
+          "_backFaceCulling": false,
+          "_vOffset": 0,
+          "_uOffset": 0,
+          "_hasAlpha": false,
+          "_diffuseColor": new BABYLON.Color3(125, 0, 127)
+        },
+        "_scene": this._crurrentSceneVid
+      };
 
-   return lsd;
+      var ebox = new entities.e_box(boxDefaults);
+
+      this._activeScenes[1].renderLoop = function () {
+        if (this._crurrentSceneVid.activeCamera && this.world._multiuserInit) {
+          this._crurrentSceneVid.render();
+        }
+      }.bind(this);
+    }
+  }, {
+    key: 'toggleMeshes',
+    value: function toggleMeshes(_state) {
+      for (var i = 0; i < this._crurrentScene.meshes.length; i++) {
+        if (this._crurrentScene.meshes[i]._vidScene == undefined) {
+          this._crurrentScene.meshes[i].isVisible = _state;
+        } else {
+          this._crurrentScene.meshes[i].isVisible = !_state;
+        }
+      }
+    }
+  }, {
+    key: 'sceneVideo',
+    value: function sceneVideo(videoID) {
+      this._crurrentScene.isVidScene = true;
+      this.toggleMeshes(false);
+      _lsdengine._crurrentScene.spritesEnabled = false;
+      this._crurrentScene.activeCameras[0].position = new BABYLON.Vector3(-0.8809513548279568, 0, -0.569289644689718);
+      this._crurrentScene.activeCameras[0].rotation = new BABYLON.Vector3(0, 1.5091394112913126, 0);
+      /*
+       var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this._crurrentScene);
+      var materialsphere = new BABYLON.StandardMaterial("texture2", this._crurrentScene);
+      materialsphere.diffuseColor = new BABYLON.Color3(0.49019607843137253, 0, 0.4980392156862745); //Red
+       materialsphere.alpha = 0.3;
+       materialsphere.backFaceCulling = false;
+       
+       sphere.scaling = new BABYLON.Vector3(20,20,20);
+       sphere.material = materialsphere;
+       sphere._vidScene = true;
+       */
+      var videoTexture = new VideoTextureExtended("video", [babylonData.data.vidImports[0].loc], this._crurrentScene, false, false, 3);
+      this._vidPlane = new CurveUI(this._crurrentScene, null, 'vid', function () {}, videoTexture);
+      this._vidPlane.mesh.position = new BABYLON.Vector3(10, -1.8, 0);
+      this._vidPlane.mesh.rotation = new BABYLON.Vector3(-1.5666, 0, 1.5);
+      this._vidPlane.mesh.scaling = new BABYLON.Vector3(2, 2, 2);
+      this._vidPlane.hitCount = 1;
+      this._vidPlane.mesh._vidScene = true;
+
+      this._vidPlaneToogleBtn = new CurveUI(this._crurrentScene, '/assets/img/btn_play_selected.png', '_vidPlaneToogleBtn', function () {});
+      this._vidPlaneToogleBtn.mesh.position = new BABYLON.Vector3(10, -3.5, 2);
+      this._vidPlaneToogleBtn.mesh.rotation = new BABYLON.Vector3(-1.5666, 0, 1.2);
+      this._vidPlaneToogleBtn.mesh.scaling = new BABYLON.Vector3(1, 0.5, 0.7);
+      this._vidPlaneToogleBtn.hitCount = 1;
+      this._vidPlaneToogleBtn.mesh._vidScene = true;
+
+      this._vidPlaneToogleBtn.actionManager = new BABYLON.ActionManager(this._crurrentScene);
+      this._vidPlaneToogleBtn.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
+        this.toggleVideoPlay();
+      }.bind(this)));
+
+      this._vidPlaneExitBtn = new CurveUI(this._crurrentScene, '/assets/img/btn_back_selected.png', 'exit', function () {});
+      this._vidPlaneExitBtn.mesh.position = new BABYLON.Vector3(10, -3.5, -2);
+      this._vidPlaneExitBtn.mesh.rotation = new BABYLON.Vector3(-1.5666, 0, 1.85);
+      this._vidPlaneExitBtn.mesh.scaling = new BABYLON.Vector3(1, 0.5, 0.7);
+      this._vidPlaneExitBtn.hitCount = 1;
+      this._vidPlaneExitBtn.mesh._vidScene = true;
+
+      this._vidPlaneExitBtn.actionManager = new BABYLON.ActionManager(this._crurrentScene);
+      this._vidPlaneExitBtn.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
+        this.exitsceneVideo();
+      }.bind(this)));
+    }
+  }, {
+    key: 'exitsceneVideo',
+    value: function exitsceneVideo() {
+      this._crurrentScene.isVidScene = false;
+      this.toggleMeshes(true);
+      _lsdengine._crurrentScene.spritesEnabled = true;
+    }
+  }, {
+    key: 'sceneTick',
+    value: function sceneTick() {
+      this.tick += .01;
+      window.tick = this.tick;
+      this.world.update(this.tick);
+    }
+  }, {
+    key: 'toggleScene',
+    value: function toggleScene() {
+      var _sceneInt = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+
+      this._engine.stopRenderLoop();
+      this.currentScene = _sceneInt;
+      setTimeout(function () {
+        this.sceneRunRenderLoop();
+      }.bind(this), 2000);
+    }
+  }, {
+    key: 'sceneRunRenderLoop',
+    value: function sceneRunRenderLoop() {
+      ;
+      this._engine.runRenderLoop(function () {
+        this.sceneTick();
+        this._activeScenes[this.currentScene].renderLoop();
+      }.bind(this));
+    }
+  }, {
+    key: 'initSceneAnimation',
+    value: function initSceneAnimation() {
+      this.tick = 0.01;
+      // todo remove this only for debugging purposes
+      window.scene = this._crurrentScene;
+      window.sceneVid = this._crurrentSceneVid;
+      window._lsdengine = this;
+
+      this._activeScenes.push(this._crurrentScene);
+      this._activeScenes.push(this._crurrentSceneVid);
+      this.world._crurrentScene = this._crurrentScene;
+
+      this.world._multiuserInit = false;
+      this.initSound();
+      //this.initVidScene();
+      this.world._crurrentSceneVid = this._crurrentSceneVid;
+      this.world.teleporterScene = this.teleporterScene;
+      this.world.currentSceneInt = this.currentScene;
+      this.world.renderSprites = this.renderSprites;
+
+      var thirySixShowRing = BABYLON.Mesh.CreateTorus("circle1", 30, 2, 36, this._crurrentScene, false);
+      thirySixShowRing.position = BABYLON.Vector3.Zero();
+      var materialsphereB = new BABYLON.StandardMaterial("texture2", this._crurrentScene);
+      materialsphereB.diffuseColor = new BABYLON.Color3(0.30196078431372547, 0.8666666666666667, 0.8941176470588236); //blue
+      materialsphereB.alpha = 0.2;
+      materialsphereB.backFaceCulling = false;
+      thirySixShowRing.scaling = new BABYLON.Vector3(8, 8, 8);
+      thirySixShowRing.rotation = new BABYLON.Vector3(0, 1.5708, 0);
+      thirySixShowRing.material = materialsphereB;
+      this.showPlan = [];
+      var vecTarget = BABYLON.Vector3.Zero();
+
+      var numElements = 36,
+          angle = 0,
+          step = 2 * Math.PI / numElements;
+      var radius = 60;
+      for (var i = 1; i < 36; i++) {
+        var plan = BABYLON.Mesh.CreatePlane("showPlane" + i, 5.0, this._crurrentScene);
+        plan.hitCount = 1;
+        var materialPan = new BABYLON.StandardMaterial("textureMatPan" + i, this._crurrentScene);
+        materialPan.diffuseTexture = new BABYLON.Texture("/assets/img/shImg" + i + ".png", this._crurrentScene);
+        materialPan.diffuseTexture.hasAlpha = true; //Has an alpha
+        materialPan.backFaceCulling = false;
+        materialPan.specularPower = 64;
+        materialPan.diffuseColor = new BABYLON.Color3(1.00, 1.00, 1.00);
+        materialPan.emissiveColor = new BABYLON.Color3(0.99, 0.94, 0.94);
+
+        plan.material = materialPan;
+        var x = 20 / 2 + radius * Math.cos(angle);
+        var z = 20 / 2 + radius * Math.sin(angle);
+        angle += step;
+        plan.position.z = z;
+        plan.position.x = x;
+
+        vecTarget.scaleToRef(plan.position, 20);
+        plan.lookAt(vecTarget);
+        this.showPlan.push(plan);
+      }
+
+      this._activeScenes[0].renderLoop = function () {
+        if (this._crurrentScene.activeCamera && this.world._multiuserInit) {
+          this._crurrentScene.render();
+        }
+      }.bind(this);
+      this._engine = this._crurrentScene.getEngine();
+      this.sceneRunRenderLoop();
+    }
+  }, {
+    key: 'toggleVideoPlay',
+    value: function toggleVideoPlay() {
+      if (this._vidPlane.mesh.material.diffuseTexture.video.isPlaying) {
+        this._vidPlane.mesh.material.diffuseTexture.video.pause();
+      } else {
+        this._vidPlane.mesh.material.diffuseTexture.video.play();
+      }
+    }
+  }, {
+    key: 'pickTouchResultRay',
+    value: function pickTouchResultRay(_item) {
+      if (_item != null) {
+        if (this._vidPlane != null && _item.id == this._vidPlane.mesh.id) {
+          this._vidPlane.hitCount += 1;
+          if (this._vidPlane.hitCount % 4 == 0) {
+            this.toggleVideoPlay();
+          }
+        }
+
+        //console.log(_item.id == "exit");
+        /*
+        if(_item.id.indexOf("exit") != -1){
+            this.exitsceneVideo();
+        }
+        */
+
+        /*
+        if(_item.id.includes("showPlane")){
+          this.sceneVideo();
+        }
+         
+        */
+      }
+    }
+  }, {
+    key: 'pickResult',
+    value: function pickResult(_pick) {
+      if (_pick != null) {
+        if (this._vidPlane != null) {
+          if (_pick.id == this._vidPlane.mesh.id) {
+            this.toggleVideoPlay();
+          }
+        }
+
+        if (_pick.id.includes("showPlane")) {
+          _pick.hitCount += 1;
+          if (_pick.hitCount % 4 == 0) {
+            this.sceneVideo();
+          }
+        }
+
+        if (_pick.id == "exit") {
+          _pick.hitCount += 1;
+          if (_pick.hitCount % 4 == 0) {
+            this.exitsceneVideo();
+          }
+        }
+      }
+    }
+  }, {
+    key: 'initSound',
+    value: function initSound() {
+
+      if (window._sharedData != undefined && window._sharedData.Sound != null) {
+        this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL, this._crurrentScene, null, { loop: true, autoplay: true });
+      }
+    }
+  }]);
+
+  return lsd;
 }();
 
 module.exports = lsd;
@@ -2666,10 +2747,10 @@ var s_multiuser = function (_CES$System) {
             for (var i = 0; i < this._entity.sprites.length; i++) {
                 if (this._entity.sprites[i].key != undefined && _data.key == this._entity.sprites[i].key) {
                     if (this._entity.zombieMode) {
-                        this._entity.sprites[i].sprite.playAnimation(80, 100, true, 100);
+                        // this._entity.sprites[i].sprite.playAnimation( 80,  100, true, 100);
                     } else {
                         if (this._zombieModeEnabled) {
-                            this._entity.sprites[i].sprite.playAnimation(Math.abs(20 - parseInt(_data.data.spriteID)), parseInt(_data.data.spriteID), true, 100);
+                            //this._entity.sprites[i].sprite.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
                         }
                     }
                     this._entity.sprites[i].sprite.position = _data.data.position;
@@ -2763,13 +2844,16 @@ var CurveUI = function () {
 		key: 'init',
 		value: function init() {
 			var mat = new BABYLON.StandardMaterial(this._name + "mat", this.scene);
+			mat.specularPower = 64;
+			mat.diffuseColor = new BABYLON.Color3(1.00, 1.00, 1.00);
+			mat.emissiveColor = new BABYLON.Color3(0.99, 0.94, 0.94);
 			var sd = BABYLON.Mesh.DOUBLESIDE;
 			if (this._mat == null) {
 				mat.diffuseTexture = new BABYLON.Texture(this._image, this.scene);
 				mat.diffuseTexture.hasAlpha = true;
 				mat.useLogarithmicDepth = true;
 				mat.disableDepthWrite = false;
-				mat.alpha = 0.7;
+				mat.alpha = 1;
 				mat.hasAlpha = true;
 				mat.backFaceCulling = false;
 			} else {
@@ -2804,10 +2888,12 @@ var CurveUI = function () {
 			_curveUI.scaling.z = 0.5;
 			_curveUI.material = mat;
 			window._mat = this._mat;
-			_curveUI.actionManager = new BABYLON.ActionManager(this.scene);
-			_curveUI.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
-				this._mat.video.play();
-			}));
+			if (this._name == "vid") {
+				_curveUI.actionManager = new BABYLON.ActionManager(this.scene);
+				_curveUI.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
+					this._mat.video.play();
+				}));
+			}
 
 			//_curveUI.checkCollisions = true;
 			this.setMeshVals(_curveUI);
@@ -2841,6 +2927,9 @@ var CurveUI = function () {
 			this.hitSphere.parent = this.mesh;
 			this.hitSphere.position.z = 1.0;
 			this.hitSphere.position.y = 1;
+			this.hitSphere.scaling.y = 4;
+			this.hitSphere.scaling.x = 4;
+			this.hitSphere.scaling.z = 4;
 			this.hitSphere.isVisible = false;
 		}
 	}]);

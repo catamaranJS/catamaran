@@ -63,10 +63,10 @@ var BABYLON = require('../lib/babylon');
         for(var i = 0; i < this._entity.sprites.length; i++) {
             if (this._entity.sprites[i].key != undefined && _data.key == this._entity.sprites[i].key) {
                 if(this._entity.zombieMode){
-                    this._entity.sprites[i].sprite.playAnimation( 80,  100, true, 100);
+                   // this._entity.sprites[i].sprite.playAnimation( 80,  100, true, 100);
                 }else{
                     if(this._zombieModeEnabled){
-                        this._entity.sprites[i].sprite.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
+                        //this._entity.sprites[i].sprite.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
                     }
                 }
                 this._entity.sprites[i].sprite.position =  _data.data.position;

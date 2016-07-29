@@ -33,13 +33,16 @@ class CurveUI {
 
     init(){
     	var mat = new BABYLON.StandardMaterial(this._name+ "mat", this.scene );
+    	mat.specularPower = 64;
+        mat.diffuseColor = new BABYLON.Color3(1.00, 1.00, 1.00);
+        mat.emissiveColor = new BABYLON.Color3(0.99, 0.94, 0.94);
     	var sd = BABYLON.Mesh.DOUBLESIDE;
     	if(this._mat  == null ){
     		mat.diffuseTexture = new BABYLON.Texture(this._image, this.scene);
 	    	mat.diffuseTexture.hasAlpha = true;
 	    	mat.useLogarithmicDepth = true;
 	    	mat.disableDepthWrite = false;
-		  	mat.alpha = 0.7;
+		  	mat.alpha = 1;
 		  	mat.hasAlpha = true;
 		  	mat.backFaceCulling = false;
 		  }else{
@@ -74,10 +77,13 @@ class CurveUI {
 		_curveUI.scaling.z = 0.5;
 		_curveUI.material = mat;
 		window._mat = this._mat;
+		if(this._name == "vid"){
 		_curveUI.actionManager = new BABYLON.ActionManager(this.scene);
 	    _curveUI.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function () {
 			this._mat.video.play();
 		}));
+		}
+		
 
 		//_curveUI.checkCollisions = true;
 		this.setMeshVals(_curveUI);
@@ -107,6 +113,9 @@ class CurveUI {
 	 	this.hitSphere.parent = this.mesh;
 	 	this.hitSphere.position.z = 1.0;
 	 	this.hitSphere.position.y = 1;
+	 	this.hitSphere.scaling.y = 4;
+	 	this.hitSphere.scaling.x = 4;
+	 	this.hitSphere.scaling.z = 4;
 	 	this.hitSphere.isVisible = false;
 	 }
 

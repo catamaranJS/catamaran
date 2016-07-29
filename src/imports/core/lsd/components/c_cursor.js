@@ -30,24 +30,30 @@ class c_cursor {
 	}
 
 
+	clickPick(e){
+		
 	
-	rayPick(){
 		var _x = document.documentElement.clientWidth / 2;
 		var _y = document.documentElement.clientHeight / 2;
     	this.pickResult = this.scene.pick(_x, _y);
     	this.scene.pickActions(this.pickResult.pickedMesh);
-    	if(!CATAMARAN.isMobile()){
-    		var rayPick = BABYLON.Ray(this.scene.activeCameras[0].position,  BABYLON.Vector3(0, 0, -1), 9000 );
-        	this.scene.pickWithRay(rayPick, this.scene.pickTouchResultRay);
+    	//console.log(this.pickResult.pickedMesh);		
+	}
+	
+	rayPick(){
+    	/*if(!CATAMARAN.isMobile() && this.scene.isVidScene){
+        	this.scene.pickWithRay(BABYLON.Ray(this.scene.activeCameras[0].position,  BABYLON.Vector3(0, 0, -1), 9000 ), this.scene.pickTouchResultRay);
     	}
+    	*/
+    	
     }
 
     touchPick(){
-    	var _x = document.documentElement.clientWidth / 2;
-		var _y = document.documentElement.clientHeight / 2;
-    	this.pickResult = this.scene.pick(_x, _y);
-    	this.scene.pickActions(this.pickResult.pickedMesh);
     	if(CATAMARAN.isMobile()){
+	    	var _x = document.documentElement.clientWidth / 2;
+			var _y = document.documentElement.clientHeight / 2;
+	    	this.pickResult = this.scene.pick(_x, _y);
+	    	this.scene.pickActions(this.pickResult.pickedMesh);
     		var rayPick = BABYLON.Ray(this.scene.activeCameras[0].position,  BABYLON.Vector3(0, 0, -1), 9000 );
         	this.scene.pickWithRay(rayPick, this.scene.pickTouchResultRay);
     	}
@@ -56,11 +62,14 @@ class c_cursor {
 
 
 	setListners(){
-			window.addEventListener('mousedown', this.rayPick.bind(this));
-    		window.addEventListener('mouseup', this.rayPick.bind(this));
-    		window.addEventListener('click', this.rayPick.bind(this));
-    		window.addEventListener('touchstart', this.touchPick.bind(this));
-    		window.addEventListener('touchend', this.touchPick.bind(this));
+			//window.addEventListener('mousedown', this.rayPick.bind(this));
+    		//window.addEventListener('mouseup', this.rayPick.bind(this));
+    		
+    		window.addEventListener('click', this.clickPick.bind(this));
+    		if(CATAMARAN.isMobile()){
+    			window.addEventListener('touchstart', this.touchPick.bind(this));
+    			window.addEventListener('touchend', this.touchPick.bind(this));
+    		}
     }
 
 

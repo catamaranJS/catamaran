@@ -56,17 +56,18 @@ defaults._name = 'multiuser';
     }
     */
 
-    this.spManager  = new BABYLON.SpriteManager("userManager", this.spriteImg, 1000, 128, this.scene);
+    this.spManager  = new BABYLON.SpriteManager("userManager", this.spriteImg, 1, 256, this.scene);
     this.spManager.layerMask = 3;
     this.playerSprite = new BABYLON.Sprite("player", this.spManager );
     this.playerSprite.isPickable = true;
+    this.playerSprite.cellIndex = parseInt(utils.randomPos(1, 10));
 
    
 
     if(this.zombieMode){
-      this.playerSprite.playAnimation( 80,  100, true, 100);
+      //this.playerSprite.playAnimation( 80,  100, true, 100);
     }else{
-      this.playerSprite.playAnimation(Math.abs( 20 - this.user.spriteID),  parseInt(this.user.spriteID), true, 100);
+      //this.playerSprite.playAnimation(Math.abs( 20 - this.user.spriteID),  parseInt(this.user.spriteID), true, 100);
     }
     //this.scene.activeCamera.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
     this.playerSprite.position = new BABYLON.Vector3(this.user.position.x, this.user.position.y, this.user.position.z);
@@ -134,11 +135,12 @@ checkUsers(userData){
 }
 
 generateUserSprites(_data, _id){
-    var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 128, this.scene);
+    var spriteManagerRider = new BABYLON.SpriteManager(_data.key, _data.data.sprite, 1, 256, this.scene);
     spriteManagerRider.layerMask = 3;
     spriteManagerRider.texture = this.spManager.texture.clone();
     let player = new BABYLON.Sprite(_data.key, spriteManagerRider );
     player.isPickable = true;
+    player.cellIndex = parseInt(utils.randomPos(1, 10));
     if(typeof  _data.data.position != undefined){
       player.position = _data.data.position;
     }else{
@@ -147,9 +149,9 @@ generateUserSprites(_data, _id){
     //player.rotation = _data.data.rotation;
     player.size = 14.0;
     if(_data.data.zombieMode){
-        player.playAnimation( 80,  100, true, 100);
+       // player.playAnimation( 80,  100, true, 100);
     }else{
-        player.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
+        //player.playAnimation(Math.abs( 20 - parseInt(_data.data.spriteID)),  parseInt(_data.data.spriteID), true, 100);
     }
     this.sprites.push({sprite:player, key:_data.key});
 }
