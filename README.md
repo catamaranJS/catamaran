@@ -1,7 +1,7 @@
 catamaranJS
 =============
 <pre style="background:#000; color:#FA0F9E">
--Built today for tommorow
+-Built today for tomorrow
 
             `--.-+.        `--..--o.               
            `.---+..``     `------o.               
@@ -26,12 +26,11 @@ catamaranJS
 
 </div>
 **TODO:**
-* goal stay less than 80kb and pack 100mb of awesomeness
 * responsive image optimization tools with picture and srcset
 * build json format to handle 3d / 2d scene managment
 * build menu, slider components
 * build jsDoc integration 
-* ASH / Babylon / Phaser integration with examples
+* CES / Babylon / Phaser integration with examples
 * Non webGL portfolio example 
 * unit tests built into gulp
 * bdd tests built into gulp

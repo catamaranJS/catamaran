@@ -17,13 +17,13 @@ class s_cameravr extends CES.System{
     update(dt){
           var entities = this.world.getEntities('vrCamera');
             entities.forEach(function (entity) {
-                    if(this.world._crurrentScene.activeCamera){
+                    if(this.world._currentScene.activeCamera){
                         var cam = entity._components.$vrCamera;
                     if(dt % this._opts._pickInterval  <= 0.9 && dt % this._opts._pickInterval  >= 0.89){
                         cam.cursorEnt.rayPick();
                     }
                     if(cam.fpsUI){
-                        cam.fpsUIWindow.text(parseInt(this.world._crurrentScene.getEngine().fps));
+                        cam.fpsUIWindow.text(parseInt(this.world._currentScene.getEngine().fps));
                     }
                 }
             }.bind(this));

@@ -224,7 +224,7 @@ class utils{
       */
 
 	static assetsLoad(){
-		var loader = new BABYLON.AssetsManager(this._crurrentScene);
+		var loader = new BABYLON.AssetsManager(this._scenes[this._activeScene]);
         this.jsonAssets.forEach(function(obj) {
 
 	        function imgAsset(){

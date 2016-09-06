@@ -2062,6 +2062,7 @@ var utils = require('./utils/utils');
 var entities = require('./entities');
 var systems = require('./systems');
 var Request = require('../xhr/Request');
+var BABYLON = require('./lib/babylon');
 
 /**
  * ...
@@ -2071,149 +2072,204 @@ var Request = require('../xhr/Request');
  */
 
 var lsd = function () {
-  function lsd() {
-    var _appendEl = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
+   function lsd() {
+      var _appendEl = arguments.length <= 0 || arguments[0] === undefined ? document.body : arguments[0];
 
-    _classCallCheck(this, lsd);
+      _classCallCheck(this, lsd);
 
-    this._defaults = utils.defaultArgs();
-    this._defaults._appendEL = _appendEl;
-    this._data = null;
-    this._crurrentScene;
-    this._e_scene = new entities.e_scene(this._defaults);
-    this._e_cameravr = null;
-    this.camera = null;
-    this.world = new CES.World();
-    this.world.addEntity(this._e_scene.entity);
-    this.canvas;
-    this._assets = [];
-    Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
-  }
+      this._defaults = utils.defaultArgs();
+      this._defaultsScene_two = utils.defaultArgs();
+      this._defaultsScene_two._appendEL = this._defaults._appendEL = _appendEl;
+      this._data = null;
+      this._currentScene;
+      this._e_scene = new entities.e_scene(this._defaults);
+      this._e_scene_two = new entities.e_scene(this._defaultsScene_two);
+      this._e_cameravr = null;
+      this._scenes = [];
+      this._activeScene = 0;
+      this.camera = null;
+      this.world = new CES.World();
+      this.world.addEntity(this._e_scene.entity);
+      this.world.addEntity(this._e_scene_two.entity);
+      this.canvas;
+      this._assets = [];
+      Promise.all([document.querySelector('canvas')]).then(this.init.apply(this));
+   }
 
-  _createClass(lsd, [{
-    key: 'init',
-    value: function init() {
-      this.canvas = document.querySelector('canvas');
-      this.defaults = new Request("/assets/scene/scene.json", this.dataLoaded.bind(this));
-    }
-  }, {
-    key: 'dataLoaded',
-    value: function dataLoaded() {
-      console.log(this.defaults.data);
-      this._data = this.defaults.data;
-      this.canvas.addEventListener('canvas_init', function (e) {
-        this.jsonAssets = this._data.assets;
-        this._crurrentScene = this._defaults._scene = this._e_scene.scene.scene;
-        utils.assetsLoad.apply(this);
-      }.bind(this), false);
-    }
-  }, {
-    key: 'initListners',
-    value: function initListners() {
-      window.addEventListener("resize", function () {
-        this.canvas.heigth = window.innerHeight;
-        this.canvas.width = window.innerWidth;
-        this._crurrentScene.getEngine().resize();
-      }.bind(this));
-    }
-  }, {
-    key: 'loopJsonArr',
-    value: function loopJsonArr(_functionCall) {
-      var _type = arguments.length <= 1 || arguments[1] === undefined ? 'entities' : arguments[1];
+   _createClass(lsd, [{
+      key: 'init',
+      value: function init() {
+         this.canvas = document.querySelector('canvas');
+         this.defaults = new Request("/assets/scene/scene.json", this.dataLoaded.bind(this));
+      }
+   }, {
+      key: 'dataLoaded',
+      value: function dataLoaded() {
+         console.log(this.defaults.data);
+         this._data = this.defaults.data;
+         this.canvas.addEventListener('canvas_init', function (e) {
+            this.jsonAssets = this._data.assets;
+            this._currentScene = this._defaults._scene = this._e_scene.scene.scene;
+            this._scenes.push(this._currentScene);
+            this._currentAltScene = this._e_scene_two.scene.scene;
+            this._scenes.push(this._currentAltScene);
 
-      switch (_type) {
-        case 'entities':
-          for (var i = 0; i < this._data.entities.length; i++) {
-            _functionCall(i);
-          }
-          break;
-        case 'systems':
-          for (var _i = 0; _i < this._data.systems.length; _i++) {
-            _functionCall(_i);
-          }
-          break;
-        default:
-          for (var _i2 = 0; _i2 < this._data.entities.length; _i2++) {
-            _functionCall(_i2);
-          }
+            window._scenes = this._scenes;
+            window.lsd = this;
+            window._activeScene = this._activeScene;
+            this._activeScene = window._activeScene;
+            window._currentScene = this._currentScene;
+            window._currentAltScene = this._currentAltScene;
+            utils.assetsLoad.apply(this);
+         }.bind(this), false);
+      }
+   }, {
+      key: 'initListners',
+      value: function initListners() {
+         window.addEventListener("resize", function () {
+            this.canvas.heigth = window.innerHeight;
+            this.canvas.width = window.innerWidth;
+            this._currentScene.getEngine().resize();
+         }.bind(this));
+      }
+   }, {
+      key: 'loopJsonArr',
+      value: function loopJsonArr(_functionCall) {
+         var _type = arguments.length <= 1 || arguments[1] === undefined ? 'entities' : arguments[1];
 
-      }
-    }
-  }, {
-    key: 'setDefaultsAndMaterials',
-    value: function setDefaultsAndMaterials(i) {
-      this._data.entities[i].defaults._scene = this._crurrentScene;
-      this._data.entities[i].defaults._canvas = this.canvas;
-      try {
-        this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type + ".defaults()"), this._data.entities[i].defaults);
-      } catch (e) {
-        console.log(e + ' - error loading entity no defaults set');
-      }
-    }
-  }, {
-    key: 'setVectorsAndOtherDefaults',
-    value: function setVectorsAndOtherDefaults(i) {
-      if (_typeof(this._data.entities[i].defaults._material) != undefined) {
-        this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
-      }
-      if (_typeof(this._data.entities[i].defaults._position) != undefined) {
-        this._data.entities[i].defaults._position = utils.getVector(this._data.entities[i].defaults._position);
-      }
-      if (_typeof(this._data.entities[i].defaults._rotation) != undefined) {
-        this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
-      }
-      try {
-        var ent = eval("new entities." + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
-        this.world.addEntity(ent.entity);
-      } catch (e) {
-        console.log(e + ' - error loading entity');
-      }
-    }
-  }, {
-    key: 'setSystems',
-    value: function setSystems(i) {
-      try {
-        this._data.systems[i].defaults._canvas = this.canvas;
-        this._data.systems[i].defaults._scene = this._crurrentScene;
-        this.world.addSystem(eval("new systems." + this._data.systems[i].defaults.s_type + "(this._data.systems[i].defaults)"));
-      } catch (e) {
-        console.log(e + ' - error loading system');
-      }
-    }
-  }, {
-    key: 'assetLoadingFinished',
-    value: function assetLoadingFinished() {
-      this.loopJsonArr(this.setDefaultsAndMaterials.bind(this));
-      this.loopJsonArr(this.setVectorsAndOtherDefaults.bind(this));
-      this.loopJsonArr(this.setSystems.bind(this), 'systems');
-      this.initSceneAnimation();
-      this.initListners();
-    }
-  }, {
-    key: 'initSceneAnimation',
-    value: function initSceneAnimation() {
-      this.tick = 0.01;
-      // todo remove this only for debugging purposes
-      window.scene = this._crurrentScene;
-      this.world._crurrentScene = this._crurrentScene;
-      this.world._multiuserInit = false;
-      this._crurrentScene.getEngine().runRenderLoop(function () {
-        this.tick += .01;
-        window.tick = this.tick;
-        this.world.update(this.tick);
-        if (this._crurrentScene.activeCamera && this.world._multiuserInit) {
-          this._crurrentScene.render();
-        }
-      }.bind(this));
-    }
-  }]);
+         switch (_type) {
+            case 'entities':
+               for (var i = 0; i < this._data.entities.length; i++) {
+                  _functionCall(i);
+               }
+               break;
+            case 'systems':
+               for (var _i = 0; _i < this._data.systems.length; _i++) {
+                  _functionCall(_i);
+               }
+               break;
+            default:
+               for (var _i2 = 0; _i2 < this._data.entities.length; _i2++) {
+                  _functionCall(_i2);
+               }
 
-  return lsd;
+         }
+      }
+   }, {
+      key: 'setDefaultsAndMaterials',
+      value: function setDefaultsAndMaterials(i) {
+         this._data.entities[i].defaults._scene = this._currentScene;
+         this._data.entities[i].defaults._canvas = this.canvas;
+         try {
+            this._data.entities[i].defaults = utils.merge_objects(eval('entities.' + this._data.entities[i].defaults.e_type + ".defaults()"), this._data.entities[i].defaults);
+         } catch (e) {
+            console.log(e + ' - error loading entity no defaults set');
+         }
+      }
+   }, {
+      key: 'setVectorsAndOtherDefaults',
+      value: function setVectorsAndOtherDefaults(i) {
+         if (_typeof(this._data.entities[i].defaults._material) != undefined) {
+            this._data.entities[i].defaults._material = utils.getMaterials(this._data.materials, this._data.entities[i].defaults._material);
+         }
+         if (_typeof(this._data.entities[i].defaults._position) != undefined) {
+            this._data.entities[i].defaults._position = utils.getVector(this._data.entities[i].defaults._position);
+         }
+         if (_typeof(this._data.entities[i].defaults._rotation) != undefined) {
+            this._data.entities[i].defaults._rotation = utils.getVector(this._data.entities[i].defaults._rotation, 'rotation');
+         }
+         try {
+            var ent = eval("new entities." + this._data.entities[i].defaults.e_type + "(this._data.entities[i].defaults)");
+            this.world.addEntity(ent.entity);
+         } catch (e) {
+            console.log(e + ' - error loading entity');
+         }
+      }
+   }, {
+      key: 'setSystems',
+      value: function setSystems(i) {
+         try {
+            this._data.systems[i].defaults._canvas = this.canvas;
+            this._data.systems[i].defaults._scene = this._currentScene;
+            this.world.addSystem(eval("new systems." + this._data.systems[i].defaults.s_type + "(this._data.systems[i].defaults)"));
+         } catch (e) {
+            console.log(e + ' - error loading system');
+         }
+      }
+   }, {
+      key: 'assetLoadingFinished',
+      value: function assetLoadingFinished() {
+         this.loopJsonArr(this.setDefaultsAndMaterials.bind(this));
+         this.loopJsonArr(this.setVectorsAndOtherDefaults.bind(this));
+         this.loopJsonArr(this.setSystems.bind(this), 'systems');
+         this.initSceneAnimation();
+         this.initListners();
+      }
+   }, {
+      key: 'swapScene',
+      value: function swapScene() {
+         var camSwap = this._scenes[this._activeScene].activeCameras;
+         var prevScene = this._scenes[this._activeScene];
+         this._activeScene = this._activeScene == 0 ? 1 : 0;
+         this._scenes[this._activeScene].activeCameras = camSwap;
+         this._scenes[this._activeScene].lights = prevScene.lights;
+         for (var i = 0; i < this._scenes[this._activeScene].activeCameras.length; i++) {
+            this._scenes[this._activeScene].activeCameras[i]._scene = this._scenes[this._activeScene];
+         }
+      }
+   }, {
+      key: 'sceneDemo',
+      value: function sceneDemo() {
+         var sphere = BABYLON.Mesh.CreateSphere("sphereTest", 16, 2, this._scenes[this._activeScene]);
+         sphere.position.y = 1;
+         sphere.layerMask = 0x0FFFFFFF;
+      }
+   }, {
+      key: 'initSceneAnimation',
+      value: function initSceneAnimation() {
+         this.tick = 0.01;
+         // todo remove this only for debugging purposes
+         window.scene = this._scenes[this._activeScene];
+         this.world._currentScene = this._currentScene;
+         this.world._multiuserInit = false;
+         this._scenes[0].renderLoop = function () {
+            if (this._currentScene.activeCamera && this.world._multiuserInit) {
+               this._currentScene.render();
+            }
+         }.bind(this);
+
+         this._scenes[1].renderLoop = function () {
+            this._currentAltScene.render();
+         }.bind(this);
+
+         console.log(this._scenes[1].renderloop);
+
+         this._scenes[this._activeScene].getEngine().runRenderLoop(function () {
+            this.tick += .01;
+            window.tick = this.tick;
+            this.world.update(this.tick);
+            this._scenes[this._activeScene].renderLoop();
+         }.bind(this));
+      }
+
+      //below this is code that should eventually be eliminiated only for hackathon purposes
+
+   }, {
+      key: 'initSound',
+      value: function initSound() {
+         console.log(window._sharedData);
+         if (window._sharedData.Sound != null) {
+            this._BabylonSound = new BABYLON.Sound(window._sharedData.Sound.sID, window._sharedData.trackURL);
+         }
+      }
+   }]);
+
+   return lsd;
 }();
 
 module.exports = lsd;
 
-},{"../xhr/Request":30,"./entities":22,"./systems":26,"./utils/utils":29,"ces":52}],24:[function(require,module,exports){
+},{"../xhr/Request":30,"./entities":22,"./lib/babylon":24,"./systems":26,"./utils/utils":29,"ces":52}],24:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -2276,13 +2332,13 @@ var s_cameravr = function (_CES$System) {
         value: function update(dt) {
             var entities = this.world.getEntities('vrCamera');
             entities.forEach(function (entity) {
-                if (this.world._crurrentScene.activeCamera) {
+                if (this.world._currentScene.activeCamera) {
                     var cam = entity._components.$vrCamera;
                     if (dt % this._opts._pickInterval <= 0.9 && dt % this._opts._pickInterval >= 0.89) {
                         cam.cursorEnt.rayPick();
                     }
                     if (cam.fpsUI) {
-                        cam.fpsUIWindow.text(parseInt(this.world._crurrentScene.getEngine().fps));
+                        cam.fpsUIWindow.text(parseInt(this.world._currentScene.getEngine().fps));
                     }
                 }
             }.bind(this));
@@ -2336,8 +2392,8 @@ var s_multiuser = function (_CES$System) {
             entities.forEach(function (entity) {
                 this._entity = entity._components.$multiuser;
                 this.world._multiuserInit = this._entity.sysInit;
-                if (this.world._crurrentScene.activeCamera && this._entity.sysInit && this._entity.userInit) {
-                    this._entity.updateUser(this.world._crurrentScene.activeCameras[0].position, this.world._crurrentScene.activeCameras[0].rotation);
+                if (this.world._currentScene.activeCamera && this._entity.sysInit && this._entity.userInit) {
+                    this._entity.updateUser(this.world._currentScene.activeCameras[0].position, this.world._currentScene.activeCameras[0].rotation);
 
                     for (var i = 0; i < this._entity.currentUsers.length; i++) {
                         if (this._entity.currentUsers[i].key != this._entity.currentUserKey) {
@@ -2668,7 +2724,7 @@ var utils = function () {
 	}, {
 		key: 'assetsLoad',
 		value: function assetsLoad() {
-			var loader = new BABYLON.AssetsManager(this._crurrentScene);
+			var loader = new BABYLON.AssetsManager(this._scenes[this._activeScene]);
 			this.jsonAssets.forEach(function (obj) {
 
 				function imgAsset() {
