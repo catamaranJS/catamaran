@@ -1,0 +1,161 @@
+{
+  "assets": [
+    {
+      "name": "grass",
+      "src": "/assets/img/grass.jpg",
+      "type": "image"
+    }
+  ],
+  "materials": [
+    {
+      "name": "pink",
+      "_texture": null,
+      "_alpha": 1,
+      "_uScale": 1,
+      "_vScale": 1,
+      "_backFaceCulling": true,
+      "_vOffset": 0,
+      "_uOffset": 0,
+      "_hasAlpha": false,
+      "_diffuseColor": "125,0,127"
+    },
+    {
+      "name": "blue",
+      "_texture": null,
+      "_alpha": 1,
+      "_uScale": 1,
+      "_vScale": 1,
+      "_backFaceCulling": true,
+      "_vOffset": 0,
+      "_uOffset": 0,
+      "_hasAlpha": false,
+      "_diffuseColor": "0,125,127"
+    },
+    {
+      "name": "green",
+      "_texture": null,
+      "_alpha": 0.5,
+      "_uScale": 1,
+      "_vScale": 1,
+      "_backFaceCulling": true,
+      "_vOffset": 0,
+      "_uOffset": 0,
+      "_hasAlpha": false,
+      "_diffuseColor": "0,200,4"
+    }
+  ],
+  "entities": [
+    {
+      "defaults": {
+        "e_type": "e_box",
+        "_layerMask": "0x0FFFFFFF",
+        "_size": 10,
+        "_type": "Box",
+        "_name": "box",
+        "_isPickable": true,
+        "_scaling": "0,0,0",
+        "_position": "0,0,15",
+        "_rotation": "0,0,0",
+        "_material": "pink",
+        "_scene": {
+          
+        }
+      }
+    },
+    {
+      "defaults": {
+        "e_type": "e_box",
+        "_layerMask": "0x0FFFFFFF",
+        "_size": 10,
+        "_type": "Box",
+        "_name": "boxblue",
+        "_isPickable": false,
+        "_scaling": "0,0,0",
+        "_position": "0,0,0",
+        "_rotation": "0,0,0",
+        "_material": "blue",
+        "_scene": {
+          
+        }
+      }
+    },
+    {
+      "defaults": {
+        "e_type": "e_cylinder",
+        "_layerMask": "0x0FFFFFFF",
+        "_type": "Cylinder",
+        "_name": "Cylinder",
+        "_isPickable": true,
+        "_scaling": "0,0,0",
+        "_position": "10,0,-15",
+        "_rotation": "0,180,0",
+        "_material": "green",
+        "_scene": {
+          
+        }
+      }
+    },
+    {
+      "defaults": {
+        "e_type": "e_light",
+        "_type": "Hemispheric",
+        "_name": "Hemispheric",
+        "_position": "0,900,0",
+        "_rotation": "0,0,0",
+        "_scene": {
+          
+        }
+      }
+    },
+
+    {
+      "defaults": {
+        "e_type": "e_cameravr",
+        "_position": "0,0,0",
+        "_rotation": "0,0,0",
+        "_cursor":null,
+        "_fpsUI":true,
+        "_name":"vrCamera",
+        "_oneAxisRotation":true,
+        "_position":"0,0,0",
+        "_rotation":"0,0,0",
+        "_scene": {
+        }
+      }
+    },
+
+
+    {
+      "defaults": {
+        "e_type": "e_multiuser",
+        "_position": "0,0,0",
+        "_rotation": "0,0,0",
+        "_position":"0,0,0",
+        "_rotation":"0,0,0",
+        "_scene": {
+        }
+      }
+    }
+
+
+  ],
+  "systems": [
+    {
+      "defaults":{
+        "s_type": "s_cameravr",
+        "_canvas": null,
+        "_scene": null,
+        "_pickInterval": 1,
+        "_world":null
+      }
+    },
+    {
+      "defaults":{
+        "s_type": "s_multiuser",
+        "_canvas": null,
+        "_scene": null,
+        "_world":null
+      }
+    }
+  ]
+}

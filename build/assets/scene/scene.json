@@ -8,30 +8,6 @@
   ],
   "materials": [
     {
-      "name": "pink",
-      "_texture": null,
-      "_alpha": 1,
-      "_uScale": 1,
-      "_vScale": 1,
-      "_backFaceCulling": true,
-      "_vOffset": 0,
-      "_uOffset": 0,
-      "_hasAlpha": false,
-      "_diffuseColor": "125,0,127"
-    },
-    {
-      "name": "blue",
-      "_texture": null,
-      "_alpha": 1,
-      "_uScale": 1,
-      "_vScale": 1,
-      "_backFaceCulling": true,
-      "_vOffset": 0,
-      "_uOffset": 0,
-      "_hasAlpha": false,
-      "_diffuseColor": "0,125,127"
-    },
-    {
       "name": "green",
       "_texture": null,
       "_alpha": 0.5,
@@ -45,40 +21,7 @@
     }
   ],
   "entities": [
-    {
-      "defaults": {
-        "e_type": "e_box",
-        "_layerMask": "0x0FFFFFFF",
-        "_size": 10,
-        "_type": "Box",
-        "_name": "box",
-        "_isPickable": true,
-        "_scaling": "0,0,0",
-        "_position": "0,0,15",
-        "_rotation": "0,0,0",
-        "_material": "pink",
-        "_scene": {
-          
-        }
-      }
-    },
-    {
-      "defaults": {
-        "e_type": "e_box",
-        "_layerMask": "0x0FFFFFFF",
-        "_size": 10,
-        "_type": "Box",
-        "_name": "boxblue",
-        "_isPickable": false,
-        "_scaling": "0,0,0",
-        "_position": "0,0,0",
-        "_rotation": "0,0,0",
-        "_material": "blue",
-        "_scene": {
-          
-        }
-      }
-    },
+    
     {
       "defaults": {
         "e_type": "e_cylinder",
@@ -111,32 +54,34 @@
     {
       "defaults": {
         "e_type": "e_cameravr",
-        "_position": "0,0,0",
+        "_position": "0,3,0",
         "_rotation": "0,0,0",
         "_cursor":null,
         "_fpsUI":true,
         "_name":"vrCamera",
         "_oneAxisRotation":true,
-        "_position":"0,0,0",
-        "_rotation":"0,0,0",
         "_scene": {
         }
       }
     },
 
-
     {
       "defaults": {
-        "e_type": "e_multiuser",
-        "_position": "0,0,0",
+        "e_type": "e_portal",
+        "_isPickable": true,
+        "_position": "0,0,30",
         "_rotation": "0,0,0",
-        "_position":"0,0,0",
-        "_rotation":"0,0,0",
+        "_scaling": "2,2,2",
+        "_layerMask": "0x0FFFFFFF",
+        "_name":"portal",
+        "_portalImg":"/assets/img/amiga.jpg",
+        "_type": "Portal",
+        "_href":"http://google.com",
+        "_portalPosition":null,
         "_scene": {
         }
       }
     }
-
 
   ],
   "systems": [
@@ -146,14 +91,6 @@
         "_canvas": null,
         "_scene": null,
         "_pickInterval": 1,
-        "_world":null
-      }
-    },
-    {
-      "defaults":{
-        "s_type": "s_multiuser",
-        "_canvas": null,
-        "_scene": null,
         "_world":null
       }
     }

@@ -6,11 +6,11 @@ var e_light = require('./e_light.js');
 var e_scene = require('./e_scene.js');
 var e_camera = require('./e_camera.js');
 var e_multiuser = require('./e_multiuser.js');
-
-
+var e_portal = require('./e_portal.js');
 
 module.exports = {
 	e_box: e_box,
+	e_portal: e_portal,
 	e_cameravr: e_cameravr,
 	e_curvedplane:e_curvedplane,
 	e_cylinder: e_cylinder,
@@ -18,5 +18,4 @@ module.exports = {
 	e_scene:e_scene,
 	e_multiuser:e_multiuser,
 	e_camera: e_camera
-
 };

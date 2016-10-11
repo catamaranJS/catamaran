@@ -38,7 +38,6 @@ var BABYLON = require('./lib/babylon');
  	}
 
  	dataLoaded(){
- 		console.log(this.defaults.data);
  		this._data  = this.defaults.data;
  		this.canvas.addEventListener('canvas_init', function (e) {
  			this.jsonAssets = this._data.assets;
@@ -46,13 +45,6 @@ var BABYLON = require('./lib/babylon');
       this._scenes.push(this._currentScene);
       this._currentAltScene  = this._e_scene_two.scene.scene;
       this._scenes.push(this._currentAltScene);
-
-      window._scenes = this._scenes;
-      window.lsd = this;
-      window._activeScene = this._activeScene;
-      this._activeScene = window._activeScene ;
-      window._currentScene = this._currentScene;
-      window._currentAltScene = this._currentAltScene;
  			utils.assetsLoad.apply(this);
  		}.bind(this), false);
 
@@ -148,9 +140,9 @@ var BABYLON = require('./lib/babylon');
 
 
   sceneDemo(){
-  var sphere = BABYLON.Mesh.CreateSphere("sphereTest", 16, 2, this._scenes[this._activeScene]);
-  sphere.position.y = 1;
-  sphere.layerMask = 0x0FFFFFFF;
+    var sphere = BABYLON.Mesh.CreateSphere("sphereTest", 16, 2, this._scenes[this._activeScene]);
+    sphere.position.y = 1;
+    sphere.layerMask = 0x0FFFFFFF;
   }
 
  	initSceneAnimation(){
@@ -158,7 +150,12 @@ var BABYLON = require('./lib/babylon');
  		// todo remove this only for debugging purposes
  		window.scene = this._scenes[this._activeScene];
  		this.world._currentScene = this._currentScene;
- 		this.world._multiuserInit = false;
+    // todo meh disable multiuser 
+ 		this.world._multiuserInit = true;
+    this._defaults._scene.collisionsEnabled = true;
+    for(let i = 0; i < this._defaults._scene.cameras.length; i++){
+          this._defaults._scene.cameras[i].checkCollisions = true;
+    }
     this._scenes[0].renderLoop = function () {
       if(this._currentScene.activeCamera && this.world._multiuserInit){
         this._currentScene.render();
@@ -170,7 +167,6 @@ var BABYLON = require('./lib/babylon');
         this._currentAltScene.render();
     }.bind(this);
     
-    console.log(this._scenes[1].renderloop);
 
  		this._scenes[this._activeScene].getEngine().runRenderLoop(function () {
  			this.tick += .01;
