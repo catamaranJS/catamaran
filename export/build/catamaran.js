@@ -168,7 +168,7 @@ var Catamaran = exports.Catamaran = function () {
 
 window.symbolPolyFill();
 
-window.Catamaran = module.exports = Catamaran;
+window.Catamaran = Catamaran;
 
 },{"./imports/core/dom/DOM":2,"./imports/core/events/Events":3,"./imports/core/lsd/index.js":25,"./imports/ui/AniDom":33,"./imports/ui/Animation":34,"./imports/ui/Carousel":35,"./imports/ui/Nav":36,"./imports/ui/Phaser":37,"./polyfill":59,"implement":50,"tap.js":55}],2:[function(require,module,exports){
 'use strict';

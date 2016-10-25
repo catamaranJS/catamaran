@@ -138,4 +138,4 @@ export class Catamaran {
 //todo remove thsi polyfill hack
 window.symbolPolyFill();
 
-window.Catamaran = module.exports = Catamaran;
+window.Catamaran = Catamaran;

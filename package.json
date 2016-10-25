@@ -3,7 +3,7 @@
   "private": false,
   "description": "",
   "version": "0.0.611",
-  "main": "catamaran.js",
+  "main": "export/build/catamaran.js",
   "author": {
     "name": "Brendon Smith",
     "email": "brendonsmith@seacloud9.org",
