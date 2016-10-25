@@ -1,5 +1,5 @@
 import * as CES from 'ces';
-export { BABYLON } from '../lib/babylon';
+import * as BABYLON from '../lib/babylon';
 /**
  * ...
  * @author Brendon Smith

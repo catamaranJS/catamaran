@@ -1,5 +1,5 @@
 import * as CES from 'ces';
-export { BABYLON } from '../lib/babylon';
+import * as BABYLON from '../lib/babylon';
 import { utils } from '../utils/utils';
 import { c_curvedplane } from '../components/c_curvedplane';
 import { c_material } from '../components/c_material';

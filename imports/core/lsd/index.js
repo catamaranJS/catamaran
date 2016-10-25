@@ -3,7 +3,7 @@ import {utils} from './utils/utils';
 import * as entities from './entities';
 import * as systems from './systems';
 import { Request } from '../xhr/Request';
-export { BABYLON } from './lib/babylon';
+import * as BABYLON from './lib/babylon';
 
 /**
  * ...

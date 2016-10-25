@@ -1,4 +1,4 @@
-export { BABYLON } from '../lib/babylon';
+import * as BABYLON from '../lib/babylon';
 export class utils{
 /**
  * ...

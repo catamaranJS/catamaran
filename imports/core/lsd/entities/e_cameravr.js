@@ -1,5 +1,5 @@
 import * as CES from 'ces';
-export { BABYLON } from '../lib/babylon';
+import * as BABYLON from '../lib/babylon';
 import { c_cameravr } from '../components/c_cameravr';
 import { c_cursor } from '../components/c_cursor';
 import { c_material } from '../components/c_material';

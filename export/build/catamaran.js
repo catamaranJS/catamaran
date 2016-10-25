@@ -565,20 +565,15 @@ var Events = exports.Events = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_camera = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+exports.c_camera = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -653,22 +648,17 @@ var c_camera = exports.c_camera = function c_camera() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.c_cameravr = exports.BABYLON = undefined;
+exports.c_cameravr = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-  enumerable: true,
-  get: function get() {
-    return _babylon.BABYLON;
-  }
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -900,22 +890,17 @@ var c_cameravr = exports.c_cameravr = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_canvas = exports.BABYLON = undefined;
+exports.c_canvas = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -976,22 +961,17 @@ var c_canvas = exports.c_canvas = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_cursor = exports.BABYLON = undefined;
+exports.c_cursor = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1052,22 +1032,17 @@ var c_cursor = exports.c_cursor = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_curvedplane = exports.BABYLON = undefined;
+exports.c_curvedplane = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1144,20 +1119,15 @@ var c_curvedplane = exports.c_curvedplane = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_light = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+exports.c_light = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1210,22 +1180,17 @@ var c_light = exports.c_light = function c_light() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_material = exports.BABYLON = undefined;
+exports.c_material = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1308,20 +1273,15 @@ var c_material = exports.c_material = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_mesh = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+exports.c_mesh = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1389,24 +1349,19 @@ var c_mesh = exports.c_mesh = function c_mesh() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.c_multiuser = exports.BABYLON = undefined;
+exports.c_multiuser = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-  enumerable: true,
-  get: function get() {
-    return _babylon.BABYLON;
-  }
-});
-
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1688,20 +1643,15 @@ var c_multiuser = exports.c_multiuser = function (_CES$Component) {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_portal = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+exports.c_portal = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1780,22 +1730,17 @@ var c_portal = exports.c_portal = function c_portal() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.c_scene = exports.BABYLON = undefined;
+exports.c_scene = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -1852,22 +1797,17 @@ var c_scene = exports.c_scene = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_box = exports.BABYLON = undefined;
+exports.e_box = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -1935,20 +1875,15 @@ var e_box = exports.e_box = function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.e_camera = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-  enumerable: true,
-  get: function get() {
-    return _babylon.BABYLON;
-  }
-});
+exports.e_camera = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _c_camera = require('../components/c_camera');
 
@@ -1977,22 +1912,17 @@ var e_camera = exports.e_camera = function e_camera() {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_cameravr = exports.BABYLON = undefined;
+exports.e_cameravr = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _c_cameravr = require('../components/c_cameravr');
 
@@ -2071,22 +2001,17 @@ var e_cameravr = exports.e_cameravr = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_curvedplane = exports.BABYLON = undefined;
+exports.e_curvedplane = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -2154,22 +2079,17 @@ var e_curvedplane = exports.e_curvedplane = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_cylinder = exports.BABYLON = undefined;
+exports.e_cylinder = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -2237,22 +2157,17 @@ var e_cylinder = exports.e_cylinder = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_light = exports.BABYLON = undefined;
+exports.e_light = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _c_light = require('../components/c_light');
 
@@ -2316,22 +2231,17 @@ var e_light = exports.e_light = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_multiuser = exports.BABYLON = undefined;
+exports.e_multiuser = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -2398,22 +2308,17 @@ var e_multiuser = exports.e_multiuser = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_portal = exports.BABYLON = undefined;
+exports.e_portal = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -2484,20 +2389,15 @@ var e_portal = exports.e_portal = function () {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.e_scene = exports.BABYLON = undefined;
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+exports.e_scene = undefined;
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 var _utils = require('../utils/utils');
 
@@ -2621,20 +2521,11 @@ Object.defineProperty(exports, 'e_portal', {
 Object.defineProperty(exports, "__esModule", {
    value: true
 });
-exports.lsd = exports.BABYLON = undefined;
+exports.lsd = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('./lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-   enumerable: true,
-   get: function get() {
-      return _babylon.BABYLON;
-   }
-});
 
 var _ces = require('ces');
 
@@ -2651,6 +2542,10 @@ var _systems = require('./systems');
 var systems = _interopRequireWildcard(_systems);
 
 var _Request = require('../xhr/Request');
+
+var _babylon = require('./lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -2898,22 +2793,17 @@ Object.defineProperty(exports, 's_multiuser', {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.s_cameravr = exports.BABYLON = undefined;
+exports.s_cameravr = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-    enumerable: true,
-    get: function get() {
-        return _babylon.BABYLON;
-    }
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -2965,25 +2855,15 @@ var s_cameravr = exports.s_cameravr = function (_CES$System) {
 },{"../lib/babylon":26,"ces":41}],30:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.BABYLON = undefined;
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _babylon = require('../lib/babylon');
-
-Object.defineProperty(exports, 'BABYLON', {
-    enumerable: true,
-    get: function get() {
-        return _babylon.BABYLON;
-    }
-});
 
 var _ces = require('ces');
 
 var CES = _interopRequireWildcard(_ces);
+
+var _babylon = require('../lib/babylon');
+
+var BABYLON = _interopRequireWildcard(_babylon);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -3082,6 +2962,7 @@ module.exports = s_multiuser;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.utils = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -3089,12 +2970,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _babylon = require('../lib/babylon');
 
-Object.defineProperty(exports, 'BABYLON', {
-	enumerable: true,
-	get: function get() {
-		return _babylon.BABYLON;
-	}
-});
+var BABYLON = _interopRequireWildcard(_babylon);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
