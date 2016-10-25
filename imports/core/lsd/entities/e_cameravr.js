@@ -1,8 +1,9 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var c_cameravr = require('../components/c_cameravr');
-var c_cursor = require('../components/c_cursor');
-var c_material = require('../components/c_material');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { c_cameravr } from '../components/c_cameravr';
+import { c_cursor } from '../components/c_cursor';
+import { c_material } from '../components/c_material';
+import { utils } from '../utils/utils';
 /**
  * ...
  * @author Brendon Smith

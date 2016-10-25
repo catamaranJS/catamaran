@@ -1,9 +1,9 @@
-var CES = require('ces');
-var utils = require('./utils/utils');
+import * as CES from 'ces';
+import {utils} from './utils/utils';
 import * as entities from './entities';
 import * as systems from './systems';
 import { Request } from '../xhr/Request';
-var BABYLON = require('./lib/babylon');
+export { BABYLON } from './lib/babylon';
 
 /**
  * ...
@@ -11,7 +11,7 @@ var BABYLON = require('./lib/babylon');
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
- class lsd{
+ export class lsd{
  	constructor(_appendEl = document.body){
  		this._defaults = utils.defaultArgs();
     this._defaultsScene_two = utils.defaultArgs();
@@ -191,4 +191,3 @@ var BABYLON = require('./lib/babylon');
 
 
  }
- module.exports = lsd;

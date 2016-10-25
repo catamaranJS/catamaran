@@ -1,6 +1,7 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var c_camera = require('../components/c_camera');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { c_camera } from '../components/c_camera';
+
 /**
  * ...
  * @author Brendon Smith

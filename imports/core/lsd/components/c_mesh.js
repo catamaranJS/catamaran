@@ -1,6 +1,6 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 var defaults = utils.defaultArgs();
 defaults._name = 'mesh';
 /**
@@ -9,7 +9,7 @@ defaults._name = 'mesh';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-class c_mesh {
+export class c_mesh {
 	constructor(_opts = defaults){
 		this.name = _opts._name + utils.guid();
 		this.obj = null;
@@ -52,4 +52,3 @@ class c_mesh {
 	}
 
 }
-module.exports = c_mesh;

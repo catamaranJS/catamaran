@@ -1,6 +1,6 @@
-var CES = require('CES');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 var defaults = utils.defaultArgs();
 defaults._name = 'camera';
 /**
@@ -9,7 +9,7 @@ defaults._name = 'camera';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
- class c_cameravr {
+ export class c_cameravr {
    constructor(_opts = defaults){
     this.rotationModal = _opts._hasModal;
     if(this.rotationModal){
@@ -205,4 +205,3 @@ toggle() {
     
 
   }
-  module.exports = c_cameravr;

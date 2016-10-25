@@ -1,8 +1,8 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var c_mesh = require('../components/c_mesh');
-var c_material = require('../components/c_material');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
+import { c_mesh } from '../components/c_mesh';
+import { c_material } from '../components/c_material';
 /**
  * ...
  * @author Brendon Smith

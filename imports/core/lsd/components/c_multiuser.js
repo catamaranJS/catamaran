@@ -1,8 +1,9 @@
-var CES = require('CES');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 var defaults = utils.defaultArgs();
 defaults._name = 'multiuser';
+
 /**
  * ...
  * @author Brendon Smith
@@ -10,7 +11,7 @@ defaults._name = 'multiuser';
  * LightWeight 3D System Design engine
  */
 
- class c_multiuser extends CES.Component{
+ export class c_multiuser extends CES.Component{
   constructor(_opts = defaults){
     super();
     this.name = _opts._name;
@@ -247,4 +248,3 @@ debug(){
 
 
 }
-module.exports = c_multiuser;

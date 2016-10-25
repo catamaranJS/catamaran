@@ -1,6 +1,6 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 
 var defaults = utils.defaultArgs();
 defaults._name = 'light';
@@ -12,7 +12,7 @@ defaults._name = 'light';
  * LightWeight 3D System Design engine
  */
 
-class c_light {
+export class c_light {
 	constructor(_opts = defaults){
 		this.name = _opts._name + utils.guid();
 		this.obj = null;
@@ -39,4 +39,3 @@ class c_light {
 	}
 
 }
-module.exports = c_light;

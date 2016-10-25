@@ -1,5 +1,5 @@
-var BABYLON = require('../lib/babylon');
-class utils{
+export { BABYLON } from '../lib/babylon';
+export class utils{
 /**
  * ...
  * @author Brendon Smith
@@ -266,7 +266,7 @@ class utils{
         
 
 }				
-module.exports = utils;
+
 
 
 		

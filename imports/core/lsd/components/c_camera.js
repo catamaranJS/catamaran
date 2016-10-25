@@ -1,6 +1,6 @@
-var CES = require('CES');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 var defaults = utils.defaultArgs();
 defaults._name = 'camera';
 /**
@@ -9,7 +9,7 @@ defaults._name = 'camera';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-class c_camera {
+export class c_camera {
 	constructor(_opts = defaults){
 		this.name = _opts._name;
 		this.obj;
@@ -59,4 +59,3 @@ class c_camera {
 	}
 
 }
-module.exports = c_camera;

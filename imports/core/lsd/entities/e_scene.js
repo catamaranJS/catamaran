@@ -1,7 +1,8 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var c_canvas = require('../components/c_canvas');
-var c_scene = require('../components/c_scene');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
+import { c_canvas } from '../components/c_canvas';
+import { c_scene } from '../components/c_scene';
 /**
  * ...
  * @author Brendon Smith

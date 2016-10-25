@@ -1,6 +1,6 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
-var utils = require('../utils/utils');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
+import { utils } from '../utils/utils';
 var defaults = utils.defaultArgs();
 defaults._name = 'material';
 /**
@@ -9,7 +9,7 @@ defaults._name = 'material';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-class c_curvedplane {
+export class c_curvedplane {
 	constructor(_opts = defaults){
 		this.name = _opts._name + utils.guid();
 		this.obj = null;
@@ -58,4 +58,3 @@ class c_curvedplane {
 	
 
 }
-module.exports = c_curvedplane;

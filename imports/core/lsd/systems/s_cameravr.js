@@ -1,6 +1,5 @@
-
-var CES = require('CES');
-var BABYLON = require('../lib/babylon');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
 
 /**
  * ...

@@ -1,12 +1,12 @@
-var CES = require('ces');
-var BABYLON = require('../lib/babylon');
+import * as CES from 'ces';
+export { BABYLON } from '../lib/babylon';
 /**
  * ...
  * @author Brendon Smith
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-class c_scene {
+export class c_scene {
 	constructor(_name = 'scene'){
 		this.name = _name;
 		this.canvas;
@@ -36,4 +36,3 @@ class c_scene {
 		CES.Component.extend(this.options);
 	}
 }
-module.exports = c_scene;

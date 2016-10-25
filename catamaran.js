@@ -1,7 +1,7 @@
 'use strict';
 //todo remove thsi polyfill
-require('./polyfill');
-var Symbol = require('implement');
+import {polyfill} from './polyfill';
+import {Symbol} from 'implement';
 import {Events} from './imports/core/events/Events';
 import {DOM} from './imports/core/dom/DOM';
 import {Carousel} from './imports/ui/Carousel';
@@ -9,8 +9,8 @@ import {Nav} from './imports/ui/Nav';
 import {PhaserJS} from './imports/ui/Phaser';
 import {Animation} from './imports/ui/Animation';
 import {AniDom} from './imports/ui/AniDom';
-var Tap = require('tap.js');
-var lsd = require('./imports/core/lsd/index.js');
+import {tap} from 'tap.js';
+import {lsd} from './imports/core/lsd/index.js';
 
 
 if (typeof console == "undefined") {
