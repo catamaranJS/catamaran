@@ -7,7 +7,7 @@ import * as BABYLON from '../lib/babylon';
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
- class s_multiuser extends CES.System{
+ export class s_multiuser extends CES.System{
     constructor(_opts){
         super();
         this._opts = _opts;

@@ -2855,6 +2855,11 @@ var s_cameravr = exports.s_cameravr = function (_CES$System) {
 },{"../lib/babylon":26,"ces":41}],30:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.s_multiuser = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _ces = require('ces');
@@ -2879,7 +2884,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * http://seacloud9.org
  * LightWeight 3D System Design engine
  */
-var s_multiuser = function (_CES$System) {
+var s_multiuser = exports.s_multiuser = function (_CES$System) {
     _inherits(s_multiuser, _CES$System);
 
     function s_multiuser(_opts) {
